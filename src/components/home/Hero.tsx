@@ -3,6 +3,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 
+// Hero Page Added
 const Hero = () => {
     return (
         <section className="bg-gradient-primary text-white relative overflow-hidden py-24 md:py-32">

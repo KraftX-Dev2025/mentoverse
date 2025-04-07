@@ -7,6 +7,7 @@ const stats = [
     { number: "50,000+", label: "Reach" },
 ];
 
+// Stats Page Added
 const Stats = () => {
     // Animation variants
     const containerVariants = {
