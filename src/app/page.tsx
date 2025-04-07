@@ -120,8 +120,8 @@ export default function Home() {
                                 mentors who can provide you with personalized
                                 guidance tailored to your specific needs.
                             </p>
-                            <Link href="/about-us" className="btn-primary">
-                                Learn More About Us
+                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
+                                Learn More
                             </Link>
                         </div>
                     </div>

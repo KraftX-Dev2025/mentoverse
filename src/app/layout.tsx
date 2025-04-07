@@ -26,10 +26,10 @@ const inter = Inter({
 // Navigation links object
 const NAV_LINKS = [
     { href: "/", label: "Home" },
-    { href: "/about-us", label: "About Us" },
+    { href: "/about-us", label: "About" },
     { href: "/mentors", label: "Mentors" },
     { href: "/resources", label: "Resources" },
-    { href: "/contact-us", label: "Contact Us" },
+    { href: "/contact-us", label: "Contact" },
 ];
 
 // CTA buttons object
