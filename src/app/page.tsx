@@ -32,13 +32,13 @@ export default function Home() {
                             <div className="flex flex-wrap gap-4">
                                 <Link
                                     href="/services"
-                                    className="btn-secondary"
+                                    className="btn-secondary p-4 rounded-2xl  shadow-lg shadow-white"
                                 >
                                     Explore Now
                                 </Link>
                                 <Link
                                     href="/mentors"
-                                    className="btn-outline border-white text-white hover:bg-white hover:text-primary"
+                                    className="btn-outline border-white text-white hover:bg-white hover:text-primary p-4 rounded-2xl  shadow-lg shadow-white"
                                 >
                                     Meet Our Mentors
                                 </Link>
@@ -305,12 +305,12 @@ export default function Home() {
                             guidance, and take your career to new heights.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary">
+                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                                 Book a Session
                             </Link>
                             <Link
                                 href="/mentors"
-                                className="btn-outline border-white text-white hover:bg-white hover:text-primary"
+                                className="btn-outline border-white text-white hover:bg-white hover:text-primary p-4 rounded-2xl shadow-lg shadow-white"
                             >
                                 Explore Mentors
                             </Link>

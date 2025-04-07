@@ -631,7 +631,7 @@ export default function MentorsPageClient() {
                                                             (exp) => (
                                                                 <span
                                                                     key={exp}
-                                                                    className="text-xs bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full"
+                                                                    className="text-xs text-white bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full"
                                                                 >
                                                                     {exp}
                                                                 </span>
@@ -653,12 +653,12 @@ export default function MentorsPageClient() {
                                                         </div>
                                                         <Link
                                                             href={`/booking?mentor=${mentor.id}`}
-                                                            className="btn-primary text-sm py-2"
+                                                            className="btn-primary text-sm p-4 rounded-2xl shadow-lg shadow-white"
                                                         >
                                                             Book a Session
                                                         </Link>
                                                     </div>
-                                                </div>
+                                                </div> 
                                             </div>
                                         ))}
                                     </div>
@@ -742,7 +742,7 @@ export default function MentorsPageClient() {
                                 </ul>
                                 <Link
                                     href="/contact-us"
-                                    className="btn-secondary"
+                                    className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white"
                                 >
                                     Apply Now
                                 </Link>

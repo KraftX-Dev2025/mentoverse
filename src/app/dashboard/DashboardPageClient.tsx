@@ -611,7 +611,7 @@ export default function DashboardPageClient() {
                                                 </p>
                                                 <Link
                                                     href="/booking"
-                                                    className="mt-4 btn-primary inline-block"
+                                                    className="mt-4 btn-primary inline-block p-4 rounded-2xl shadow-lg shadow-white"
                                                 >
                                                     Book a Session
                                                 </Link>

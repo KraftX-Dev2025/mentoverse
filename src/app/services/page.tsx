@@ -284,7 +284,7 @@ export default function ServicesPage() {
                             </div>
                             <Link
                                 href="/booking?service=career-guidance"
-                                className="btn-primary"
+                                className="btn-primary p-4 rounded-2xl shadow-lg shadow-white"
                             >
                                 Book a Session
                             </Link>
@@ -519,12 +519,12 @@ export default function ServicesPage() {
                             guidance from our mentors.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary">
+                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                                 Book a Session
                             </Link>
                             <Link
                                 href="/mentors"
-                                className="btn-outline border-white text-white hover:bg-white hover:text-primary"
+                                className="btn-outline border-white text-white hover:bg-white hover:text-primar p-4 rounded-2xl shadow-lg shadow-white"
                             >
                                 Browse Mentors
                             </Link>
