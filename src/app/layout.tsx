@@ -5,7 +5,8 @@ import Image from "next/image";
 import { SITE_NAME, SITE_DESCRIPTION, SERVICES } from "@/lib/constants";
 import Footer from "@/components/footer";
 import "./globals.css";
-import logo from "../../public/logo_noBG.webp";
+import logo from "../../public/logo_nobg.png";
+// import logonobg from "../../public/logo_noBG.jpg";
 // import logo2 from "../../public/only_logo.svg";
 
 // Font configuration
@@ -34,15 +35,17 @@ const NAV_LINKS = [
 
 // CTA buttons object
 const CTA_BUTTONS = [
-    { 
-        href: "/booking", 
-        label: "Book a Session", 
-        className: "hidden md:inline-block btn-primary mr-4 p-4 rounded-2xl shadow-lg shadow-white" 
+    {
+        href: "/booking",
+        label: "Book a Session",
+        className:
+            "hidden md:inline-block btn-primary mr-4 p-4 rounded-2xl shadow-lg shadow-white",
     },
-    { 
-        href: "/dashboard", 
-        label: "Login", 
-        className: "hidden md:inline-block btn-secondary mr-4 p-4 rounded-2xl shadow-lg shadow-white" 
+    {
+        href: "/dashboard",
+        label: "Login",
+        className:
+            "hidden md:inline-block btn-secondary mr-4 p-4 rounded-2xl shadow-lg shadow-white",
     },
 ];
 
@@ -81,7 +84,10 @@ export default function RootLayout({
                                     // Special case for Services with dropdown
                                     if (link.label === "Services") {
                                         return (
-                                            <div key={index} className="relative group">
+                                            <div
+                                                key={index}
+                                                className="relative group"
+                                            >
                                                 <Link
                                                     href={link.href}
                                                     className="nav-link flex items-center"
@@ -104,36 +110,44 @@ export default function RootLayout({
                                                 </Link>
                                                 <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-lg z-50">
                                                     <div className="py-2">
-                                                        {SERVICES.map((service) => (
-                                                            <Link
-                                                                key={service.id}
-                                                                href={`/services/${service.id}`}
-                                                                className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
-                                                            >
-                                                                <span className="mr-2">
-                                                                    {service.icon}
-                                                                </span>
-                                                                {service.name}
-                                                            </Link>
-                                                        ))}
+                                                        {SERVICES.map(
+                                                            (service) => (
+                                                                <Link
+                                                                    key={
+                                                                        service.id
+                                                                    }
+                                                                    href={`/services/${service.id}`}
+                                                                    className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
+                                                                >
+                                                                    <span className="mr-2">
+                                                                        {
+                                                                            service.icon
+                                                                        }
+                                                                    </span>
+                                                                    {
+                                                                        service.name
+                                                                    }
+                                                                </Link>
+                                                            )
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
                                         );
                                     }
-                                    
+
                                     // Regular nav links
                                     return (
-                                        <Link 
-                                            key={index} 
-                                            href={link.href} 
+                                        <Link
+                                            key={index}
+                                            href={link.href}
                                             className="nav-link"
                                         >
                                             {link.label}
                                         </Link>
                                     );
                                 })}
-                                
+
                                 {/* Services dropdown handled separately */}
                                 <div className="relative group">
                                     <Link
@@ -209,11 +223,11 @@ export default function RootLayout({
 
                 <main className="flex-grow bg-background">{children}</main>
 
-                <Footer 
-                  logo={logo} 
-                  siteName={SITE_NAME} 
-                  services={SERVICES} 
-                  navLinks={NAV_LINKS} 
+                <Footer
+                    logo={logo}
+                    siteName={SITE_NAME}
+                    services={SERVICES}
+                    navLinks={NAV_LINKS}
                 />
             </body>
         </html>
