@@ -19,7 +19,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="animate-fade-in">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
-                                Fast Track your Career with Mentoverse
+                            Revolutionizing the awareness of people towards their next step in education, career and beyond.
                             </h1>
                             <h2 className="text-xl md:text-2xl mb-8 font-medium text-white opacity-90">
                                 Shaping Your Tomorrow

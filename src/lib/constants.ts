@@ -1,6 +1,6 @@
 // Site constants
 export const SITE_NAME = "Mentoverse";
-export const SITE_DESCRIPTION = "Fast Track your Career with Mentoverse";
+export const SITE_DESCRIPTION = "Revolutionizing the awareness of people towards their next step in education, career and beyond.";
 export const CONTACT_EMAIL = "contact@mentoverse.com";
 
 export const SERVICES = [

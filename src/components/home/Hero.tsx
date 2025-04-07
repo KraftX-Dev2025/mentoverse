@@ -26,7 +26,7 @@ const Hero = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                            Fast Track your Career with Mentoverse
+                        Revolutionizing the awareness of people towards their next step in education, career and beyond.
                         </h1>
                         <h2 className="text-xl md:text-2xl mb-8 font-medium opacity-90">
                             Shaping Your Tomorrow
