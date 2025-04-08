@@ -35,17 +35,17 @@ const NAV_LINKS = [
 
 // CTA buttons object
 const CTA_BUTTONS = [
-    {
-        href: "/booking",
-        label: "Book a Session",
-        className:
-            "hidden md:inline-block btn-primary mr-4 p-4 rounded-2xl shadow-lg shadow-white",
-    },
+    // {
+    //     href: "/booking",
+    //     label: "Book a Session",
+    //     className:
+    //         "hidden md:inline-block btn-primary mr-4 p-4 rounded-2xl shadow-lg shadow-white",
+    // },
     {
         href: "/dashboard",
         label: "Login",
         className:
-            "hidden md:inline-block btn-secondary mr-4 p-4 rounded-2xl shadow-lg shadow-white",
+            "hidden md:inline-block btn-secondary mr-4 p-3 ml-2 rounded-2xl shadow-lg shadow-white",
     },
 ];
 
@@ -63,8 +63,8 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
             <body className="flex flex-col min-h-screen">
-                <header className="bg-white shadow-md sticky top-0 z-50">
-                    <div className="container mx-auto px-4 py-3">
+                <header className="bg-primary text-white shadow-md sticky top-0 z-50">
+                    <div className="container mx-auto px-1 py-3">
                         <div className="flex justify-between items-center">
                             {/* Logo */}
                             <Link href="/" className="flex items-center">
@@ -79,7 +79,7 @@ export default function RootLayout({
                             </Link>
 
                             {/* Primary Navigation */}
-                            <nav className="hidden md:flex items-center space-x-8">
+                            <nav className="hidden md:flex text-white font-bold items-center space-x-8">
                                 {NAV_LINKS.map((link, index) => {
                                     // Special case for Services with dropdown
                                     if (link.label === "Services") {
@@ -141,7 +141,7 @@ export default function RootLayout({
                                         <Link
                                             key={index}
                                             href={link.href}
-                                            className="nav-link"
+                                            className="nav-link text-white"
                                         >
                                             {link.label}
                                         </Link>
@@ -176,7 +176,7 @@ export default function RootLayout({
                                                 <Link
                                                     key={service.id}
                                                     href={`/services/${service.id}`}
-                                                    className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
+                                                    className="block px-4 py-2 text-sm hover:bg-background text-primary hover:text-secondary"
                                                 >
                                                     <span className="mr-2">
                                                         {service.icon}
@@ -221,7 +221,7 @@ export default function RootLayout({
                     </div>
                 </header>
 
-                <main className="flex-grow bg-background">{children}</main>
+                <main className="flex-grow">{children}</main>
 
                 <Footer
                     logo={logo}

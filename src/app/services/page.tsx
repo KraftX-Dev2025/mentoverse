@@ -270,7 +270,7 @@ export default function ServicesPage() {
                                         ))}
                                 </ul>
                             </div>
-                            <div className="flex items-center mb-6">
+                            {/* <div className="flex items-center mb-6">
                                 <div className="text-2xl font-bold mr-2">
                                     {formatCurrency(
                                         servicesWithDetails.find(
@@ -281,7 +281,7 @@ export default function ServicesPage() {
                                 <div className="text-text-secondary">
                                     per session
                                 </div>
-                            </div>
+                            </div> */}
                             <Link
                                 href="/booking?service=career-guidance"
                                 className="btn-primary p-4 rounded-2xl shadow-lg shadow-white"
@@ -393,18 +393,18 @@ export default function ServicesPage() {
                                         </ol>
                                     </div>
 
-                                    <div className="flex items-center mb-6">
+                                    {/* <div className="flex items-center mb-6">
                                         <div className="text-2xl font-bold mr-2">
                                             {formatCurrency(service.price)}
                                         </div>
                                         <div className="text-text-secondary">
                                             per session
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <Link
                                         href={`/booking?service=${service.id}`}
-                                        className="btn-primary"
+                                        className="btn-primary p-3 mt-4 rounded-2xl shadow-lg shadow-black"
                                     >
                                         Book Now
                                     </Link>

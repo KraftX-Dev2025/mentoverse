@@ -81,7 +81,7 @@ export default function ContactUsClient() {
             </section>
 
             {/* Contact Form Section */}
-            <section className="py-16 bg-white">
+            <section className="py-16 bg-white text-white">
                 <div className="container">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Contact Information */}
@@ -89,18 +89,17 @@ export default function ContactUsClient() {
                             <h2 className="text-2xl md:text-3xl font-bold mb-6">
                                 Get in Touch
                             </h2>
-                            <p className="mb-8">
+                            <p className="mb-8 text-primary">
                                 Whether you have a question about our services,
                                 need help with your account, or want to explore
                                 partnership opportunities, our team is ready to
                                 assist you.
                             </p>
-
                             <div className="space-y-6">
                                 <div className="flex items-start">
                                     <div className="w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-4 shrink-0">
                                         <svg
-                                            className="w-5 h-5 text-primary"
+                                            className="w-5 h-5"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -133,7 +132,7 @@ export default function ContactUsClient() {
                                 <div className="flex items-start">
                                     <div className="w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-4 shrink-0">
                                         <svg
-                                            className="w-5 h-5 text-primary"
+                                            className="w-5 h-5"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -166,7 +165,7 @@ export default function ContactUsClient() {
                                 <div className="flex items-start">
                                     <div className="w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-4 shrink-0">
                                         <svg
-                                            className="w-5 h-5 text-primary"
+                                            className="w-5 h-5 text-white"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -187,7 +186,7 @@ export default function ContactUsClient() {
                                         <div className="flex space-x-4 mt-2">
                                             <a
                                                 href="#"
-                                                className="text-primary hover:text-primary-dark transition-colors"
+                                                className="text-primary hover:text-primary-dark transition-colors hover:scale-125"
                                                 aria-label="LinkedIn"
                                             >
                                                 <svg
@@ -201,7 +200,7 @@ export default function ContactUsClient() {
                                             </a>
                                             <a
                                                 href="#"
-                                                className="text-primary hover:text-primary-dark transition-colors"
+                                                className="text-primary hover:text-primary-dark transition-colors hover:scale-125"
                                                 aria-label="Instagram"
                                             >
                                                 <svg
@@ -225,7 +224,7 @@ export default function ContactUsClient() {
 
                         {/* Contact Form */}
                         <div>
-                            <div className="bg-background p-8 rounded-lg shadow-sm">
+                            <div className="bg-background p-8 rounded-xl shadow-lg ">
                                 <h2 className="text-2xl font-bold mb-6">
                                     Send Us a Message
                                 </h2>
@@ -255,7 +254,7 @@ export default function ContactUsClient() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className="form-control"
+                                                className="form-control p-2 rounded-2xl"
                                                 required
                                             />
                                         </div>
@@ -272,7 +271,7 @@ export default function ContactUsClient() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="form-control"
+                                                className="form-control p-2 rounded-2xl"
                                                 required
                                             />
                                         </div>
@@ -292,7 +291,7 @@ export default function ContactUsClient() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className="form-control"
+                                                className="form-control p-2 rounded-2xl"
                                             />
                                         </div>
                                         <div>
@@ -307,7 +306,7 @@ export default function ContactUsClient() {
                                                 name="subject"
                                                 value={formData.subject}
                                                 onChange={handleChange}
-                                                className="form-control"
+                                                className="form-control p-2 rounded-2xl"
                                                 required
                                             >
                                                 <option value="">
@@ -348,14 +347,14 @@ export default function ContactUsClient() {
                                             value={formData.message}
                                             onChange={handleChange}
                                             rows={5}
-                                            className="form-control"
+                                            className="form-control p-2 rounded-2xl"
                                             required
                                         ></textarea>
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="btn-primary w-full"
+                                        className="btn-primary w-1/2 p-3 rounded-2xl shadow-lg shadow-white"
                                         disabled={isSubmitting}
                                     >
                                         {isSubmitting ? (
