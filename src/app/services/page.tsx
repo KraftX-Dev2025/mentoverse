@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { SITE_NAME, SERVICES } from "@/lib/constants";
-import { formatCurrency } from "@/lib/utils";
+// import { formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
     title: `Our Services | ${SITE_NAME} - Shaping Your Tomorrow`,
