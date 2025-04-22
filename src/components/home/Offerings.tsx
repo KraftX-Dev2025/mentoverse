@@ -2,6 +2,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
 
+// Offerings Page Added
 const Offerings = () => {
     // Animation variants
     const containerVariants = {

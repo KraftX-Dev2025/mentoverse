@@ -273,7 +273,7 @@ export default function DashboardPageClient() {
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-                            <Link href="/booking" className="btn-secondary">
+                            <Link href="/booking" className="btn-secondary p-3 rounded-2xl shadow-lg shadow-white">
                                 Book a New Session
                             </Link>
                         </div>

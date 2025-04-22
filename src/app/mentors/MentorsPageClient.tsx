@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mentor } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+// import { formatCurrency } from "@/lib/utils";
 
 export default function MentorsPageClient() {
     const [mentors, setMentors] = useState<Mentor[]>([]);
@@ -387,7 +387,7 @@ export default function MentorsPageClient() {
                                 </div>
 
                                 {/* Price Range */}
-                                <div className="mb-6">
+                                {/* <div className="mb-6">
                                     <h3 className="text-lg font-semibold mb-3">
                                         Price Range (per hour)
                                     </h3>
@@ -443,7 +443,7 @@ export default function MentorsPageClient() {
                                             />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* Reset Filters */}
                                 <button
@@ -639,8 +639,8 @@ export default function MentorsPageClient() {
                                                         )}
                                                     </div>
 
-                                                    <div className="mt-6 flex justify-between items-center">
-                                                        <div>
+                                                    <div className="mt-6 flex items-center">
+                                                        {/* <div>
                                                             <span className="font-bold text-lg">
                                                                 {formatCurrency(
                                                                     mentor.hourlyRate
@@ -650,7 +650,7 @@ export default function MentorsPageClient() {
                                                                 {" "}
                                                                 / hour
                                                             </span>
-                                                        </div>
+                                                        </div> */}
                                                         <Link
                                                             href={`/booking?mentor=${mentor.id}`}
                                                             className="btn-primary text-sm p-4 rounded-2xl shadow-lg shadow-white"

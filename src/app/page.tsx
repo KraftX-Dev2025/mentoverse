@@ -19,7 +19,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="animate-fade-in">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
-                                Fast Track your Career with Mentoverse
+                            Revolutionizing the awareness of people towards their next step in education, career and beyond.
                             </h1>
                             <h2 className="text-xl md:text-2xl mb-8 font-medium text-white opacity-90">
                                 Revolutionizing the awareness of people towards
@@ -121,8 +121,8 @@ export default function Home() {
                                 mentors who can provide you with personalized
                                 guidance tailored to your specific needs.
                             </p>
-                            <Link href="/about-us" className="btn-primary">
-                                Learn More About Us
+                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
+                                Learn More
                             </Link>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ export default function Home() {
             </section>
 
             {/* Our Offerings Section */}
-            <section className="section-padding bg-background">
+            <section className="section-padding bg-background py-[4rem]">
                 <div className="container">
                     <div className="text-center mb-16">
                         <h2 className="section-title">Our Offerings</h2>
@@ -191,14 +191,14 @@ export default function Home() {
             </section>
 
             {/* Stats Showcase Section */}
-            <section className="py-16 bg-gradient-primary text-white">
+            <section className="py-16 bg-gradient-primary">
                 <div className="container">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                             We are good with numbers
                         </h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-primary">
                         {[
                             { number: "5+", label: "Events" },
                             { number: "20+", label: "Mentors" },
@@ -209,10 +209,10 @@ export default function Home() {
                                 key={index}
                                 className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-8 text-center"
                             >
-                                <div className="text-4xl md:text-5xl font-bold mb-2 text-white">
+                                <div className="text-4xl md:text-5xl font-bold mb-2 ">
                                     {stat.number}
                                 </div>
-                                <div className="text-lg text-white opacity-80">
+                                <div className="text-lg opacity-80">
                                     {stat.label}
                                 </div>
                             </div>
@@ -222,7 +222,7 @@ export default function Home() {
             </section>
 
             {/* Testimonials Section */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-white py-[4rem]">
                 <div className="container">
                     <div className="text-center mb-16">
                         <h2 className="section-title">What Our Mentees Say</h2>
