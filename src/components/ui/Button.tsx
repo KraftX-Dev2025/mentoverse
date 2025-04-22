@@ -1,91 +1,128 @@
+// src/components/ui/Button.tsx
 import React from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
-// Icons Added
-export interface ButtonProps {
-    variant?: "primary" | "secondary" | "outline";
-    size?: "sm" | "md" | "lg";
-    children: React.ReactNode;
-    className?: string;
-    disabled?: boolean;
-    onClick?: () => void;
-    type?: "button" | "submit" | "reset";
-    href?: string;
+type ButtonVariant = "primary" | "secondary" | "outline" | "text";
+type ButtonSize = "sm" | "md" | "lg";
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: ButtonVariant;
+    size?: ButtonSize;
     fullWidth?: boolean;
+    isLoading?: boolean;
+    children: React.ReactNode;
 }
 
-const Button = ({
+interface LinkButtonProps {
+    href: string;
+    variant?: ButtonVariant;
+    size?: ButtonSize;
+    fullWidth?: boolean;
+    className?: string;
+    children: React.ReactNode;
+}
+
+export const Button = ({
     variant = "primary",
     size = "md",
-    children,
-    className = "",
-    disabled = false,
-    onClick,
-    type = "button",
-    href,
     fullWidth = false,
+    isLoading = false,
+    className = "",
+    children,
+    ...props
 }: ButtonProps) => {
-    // Base styles for all buttons
-    const baseStyles =
-        "inline-flex items-center justify-center font-medium rounded-2xl transition-all duration-300 shadow-md";
+    const baseClasses =
+        "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
 
-    // Variant-specific styles
-    const variantStyles = {
-        primary:
-            "bg-primary text-white hover:bg-primary/90 shadow-lg focus:ring-2 focus:ring-primary/50",
+    const variantClasses = {
+        primary: "bg-primary text-white hover:bg-opacity-90 focus:ring-primary",
         secondary:
-            "bg-secondary text-white hover:bg-secondary/90 shadow-lg focus:ring-2 focus:ring-secondary/50",
+            "bg-secondary text-white hover:bg-opacity-90 focus:ring-secondary",
         outline:
-            "border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-2 focus:ring-primary/50",
+            "border border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary",
+        text: "text-primary hover:bg-primary hover:bg-opacity-5 focus:ring-primary",
     };
 
-    // Size-specific styles
-    const sizeStyles = {
-        sm: "py-2 px-3 text-sm",
-        md: "py-3 px-5 text-base",
-        lg: "py-4 px-6 text-lg",
+    const sizeClasses = {
+        sm: "px-3 py-1.5 text-sm rounded-md",
+        md: "px-4 py-2 rounded-lg",
+        lg: "px-6 py-3 text-lg rounded-xl",
     };
 
-    // Combine all styles
-    const buttonStyles = `
-    ${baseStyles} 
-    ${variantStyles[variant]} 
-    ${sizeStyles[size]} 
-    ${fullWidth ? "w-full" : ""} 
-    ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} 
-    ${className}
-  `;
+    const widthClass = fullWidth ? "w-full" : "";
 
-    const buttonContent = (
-        <motion.span
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center justify-center"
-        >
-            {children}
-        </motion.span>
-    );
+    const btnClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`;
 
-    // Render as link if href is provided
-    if (href) {
-        return (
-            <Link href={href} className={buttonStyles}>
-                {buttonContent}
-            </Link>
-        );
-    }
-
-    // Otherwise render as button
     return (
         <button
-            type={type}
-            disabled={disabled}
-            onClick={onClick}
-            className={buttonStyles}
+            className={btnClasses}
+            disabled={isLoading || props.disabled}
+            {...props}
         >
-            {buttonContent}
+            {isLoading && (
+                <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                </svg>
+            )}
+            {children}
         </button>
     );
 };
 
-export default Button;
+export const LinkButton = ({
+    href,
+    variant = "primary",
+    size = "md",
+    fullWidth = false,
+    className = "",
+    children,
+}: LinkButtonProps) => {
+    const baseClasses =
+        "inline-flex items-center justify-center font-medium transition-all duration-200";
+
+    const variantClasses = {
+        primary: "bg-primary text-white hover:bg-opacity-90",
+        secondary: "bg-secondary text-white hover:bg-opacity-90",
+        outline:
+            "border border-primary text-primary hover:bg-primary hover:text-white",
+        text: "text-primary hover:bg-primary hover:bg-opacity-5",
+    };
+
+    const sizeClasses = {
+        sm: "px-3 py-1.5 text-sm rounded-md",
+        md: "px-4 py-2 rounded-lg",
+        lg: "px-6 py-3 text-lg rounded-xl",
+    };
+
+    const widthClass = fullWidth ? "w-full" : "";
+
+    const linkClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`;
+
+    return (
+        <Link href={href} className={linkClasses}>
+            {children}
+        </Link>
+    );
+};
+
+// Usage examples:
+// <Button variant="primary" size="md">Click Me</Button>
+// <Button variant="secondary" size="lg" isLoading={true}>Submit</Button>
+// <LinkButton href="/somewhere" variant="outline">Go Somewhere</LinkButton>

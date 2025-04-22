@@ -1,12 +1,11 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { SITE_NAME, SITE_DESCRIPTION, SERVICES } from "@/lib/constants";
+import MainNav from "@/components/navigation/MainNav";
 import Footer from "@/components/footer";
-import Header from "@/components/Header";
 import "./globals.css";
-import logo from "../../public/logo_nobg.png";
-// import logonobg from "../../public/logo_noBG.jpg";
-// import logo2 from "../../public/only_logo.svg";
+import logo from "../../public/logo_noBG.webp";
 
 // Font configuration
 const poppins = Poppins({
@@ -26,10 +25,10 @@ const inter = Inter({
 // Navigation links object
 const NAV_LINKS = [
     { href: "/", label: "Home" },
-    { href: "/about-us", label: "About" },
+    { href: "/about-us", label: "About Us" },
     { href: "/mentors", label: "Mentors" },
     { href: "/resources", label: "Resources" },
-    { href: "/contact-us", label: "Contact" },
+    { href: "/contact-us", label: "Contact Us" },
 ];
 
 // Metadata for SEO
@@ -46,8 +45,10 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
             <body className="flex flex-col min-h-screen">
-                <Header logo={logo} />
-                <main className="flex-grow">{children}</main>
+                <MainNav logo={logo} siteName={SITE_NAME} />
+
+                <main className="flex-grow bg-background">{children}</main>
+
                 <Footer
                     logo={logo}
                     siteName={SITE_NAME}
