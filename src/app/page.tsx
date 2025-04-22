@@ -22,7 +22,8 @@ export default function Home() {
                                 Fast Track your Career with Mentoverse
                             </h1>
                             <h2 className="text-xl md:text-2xl mb-8 font-medium text-white opacity-90">
-                                Shaping Your Tomorrow
+                                Revolutionizing the awareness of people towards
+                                their next step in education, career and beyond.
                             </h2>
                             <p className="text-lg mb-8 max-w-md text-white opacity-80">
                                 Get personalized guidance from industry experts
@@ -305,7 +306,10 @@ export default function Home() {
                             guidance, and take your career to new heights.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link
+                                href="/booking"
+                                className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white"
+                            >
                                 Book a Session
                             </Link>
                             <Link
