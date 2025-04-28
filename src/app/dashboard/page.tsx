@@ -18,12 +18,10 @@ export default function DashboardPage() {
             if (currentUser) {
                 try {
                     const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
-                    const mentorUserRef = doc(db, 'mentor', 'mentorData', 'userData', currentUser.uid);
 
                     const menteeDocSnap = await getDoc(menteeUserRef);
-                    const mentorDocSnap = await getDoc(mentorUserRef);
 
-                    if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
+                    if (menteeDocSnap.exists()) {
                         console.log('User is authenticated and exists in the database.');
                         setUser(currentUser);
                         router.push('/dashboard');
