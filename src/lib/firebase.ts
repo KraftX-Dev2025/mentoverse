@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAMr9wFFYxzxRsbuHefOJifVibEum_qNeQ",
-    authDomain: "mentoverse-web.firebaseapp.com",
-    projectId: "mentoverse-web",
-    storageBucket: "mentoverse-web.firebasestorage.app",
-    messagingSenderId: "361456596911",
-    appId: "1:361456596911:web:4e23ba98b5bff7e663a15a",
-    measurementId: "G-3BMJBJFL2Y"
+    apiKey: process.env.FIREBASE_API,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
