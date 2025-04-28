@@ -509,11 +509,10 @@ export default function BookingPageClient() {
                                 {[1, 2, 3, 4, 5].map((stepNumber) => (
                                     <div
                                         key={stepNumber}
-                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${
-                                            step >= stepNumber
-                                                ? "bg-primary text-white"
-                                                : "bg-white text-text-secondary border border-gray-300"
-                                        }`}
+                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${step >= stepNumber
+                                            ? "bg-primary text-white"
+                                            : "bg-white text-text-secondary border border-gray-300"
+                                            }`}
                                     >
                                         {stepNumber}
                                     </div>
@@ -602,12 +601,11 @@ export default function BookingPageClient() {
                                             {services.map((service) => (
                                                 <div
                                                     key={service.id}
-                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                                                        selectedService?.id ===
+                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedService?.id ===
                                                         service.id
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         handleServiceSelect(
                                                             service
@@ -679,7 +677,7 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-end">
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                             disabled={!selectedService}
                                             onClick={() => goToNextStep()}
                                         >
@@ -747,12 +745,11 @@ export default function BookingPageClient() {
                                             {mentors.map((mentor) => (
                                                 <div
                                                     key={mentor.id}
-                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                                                        selectedMentor?.id ===
+                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedMentor?.id ===
                                                         mentor.id
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         handleMentorSelect(
                                                             mentor
@@ -840,13 +837,13 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className="btn-outline border-primary text-primary"
+                                            className=" border-primary text-primary"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                             disabled={!selectedMentor}
                                             onClick={() => goToNextStep()}
                                         >
@@ -901,13 +898,12 @@ export default function BookingPageClient() {
                                                         (date, index) => (
                                                             <div
                                                                 key={index}
-                                                                className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${
-                                                                    selectedDate &&
+                                                                className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${selectedDate &&
                                                                     selectedDate.toDateString() ===
-                                                                        date.toDateString()
-                                                                        ? "border-primary bg-primary bg-opacity-5"
-                                                                        : "border-gray-200 hover:border-primary"
-                                                                }`}
+                                                                    date.toDateString()
+                                                                    ? "border-primary bg-primary bg-opacity-5"
+                                                                    : "border-gray-200 hover:border-primary"
+                                                                    }`}
                                                                 onClick={() =>
                                                                     handleDateSelect(
                                                                         date
@@ -917,7 +913,7 @@ export default function BookingPageClient() {
                                                                 <div className="text-sm font-medium">
                                                                     {
                                                                         days[
-                                                                            date.getDay()
+                                                                        date.getDay()
                                                                         ]
                                                                     }
                                                                 </div>
@@ -946,7 +942,7 @@ export default function BookingPageClient() {
                                                     </h3>
 
                                                     {availableTimeSlots.length ===
-                                                    0 ? (
+                                                        0 ? (
                                                         <p className="text-text-secondary">
                                                             No time slots
                                                             available for the
@@ -965,12 +961,11 @@ export default function BookingPageClient() {
                                                                         key={
                                                                             index
                                                                         }
-                                                                        className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${
-                                                                            selectedTimeSlot ===
+                                                                        className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${selectedTimeSlot ===
                                                                             timeSlot
-                                                                                ? "border-primary bg-primary bg-opacity-5"
-                                                                                : "border-gray-200 hover:border-primary"
-                                                                        }`}
+                                                                            ? "border-primary bg-primary bg-opacity-5"
+                                                                            : "border-gray-200 hover:border-primary"
+                                                                            }`}
                                                                         onClick={() =>
                                                                             handleTimeSlotSelect(
                                                                                 timeSlot
@@ -994,13 +989,13 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className="btn-outline border-primary text-primary"
+                                            className="border-primary rounded-xl px-4 py-2 text-black"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                             disabled={
                                                 !selectedDate ||
                                                 !selectedTimeSlot
@@ -1034,11 +1029,10 @@ export default function BookingPageClient() {
                                                 name="name"
                                                 value={userData.name}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.name
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
+                                                className={`form-control ${formErrors.name
+                                                    ? "border-red-500"
+                                                    : ""
+                                                    }`}
                                                 placeholder="Enter your full name"
                                                 required
                                             />
@@ -1062,11 +1056,10 @@ export default function BookingPageClient() {
                                                 name="email"
                                                 value={userData.email}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.email
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
+                                                className={`form-control ${formErrors.email
+                                                    ? "border-red-500"
+                                                    : ""
+                                                    }`}
                                                 placeholder="Enter your email address"
                                                 required
                                             />
@@ -1090,11 +1083,10 @@ export default function BookingPageClient() {
                                                 name="phone"
                                                 value={userData.phone}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.phone
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
+                                                className={`form-control ${formErrors.phone
+                                                    ? "border-red-500"
+                                                    : ""
+                                                    }`}
                                                 placeholder="Enter your phone number"
                                                 required
                                             />
@@ -1126,13 +1118,13 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className="btn-outline border-primary text-primary"
+                                            className="border-primary border-2 rounded-xl px-4 py-2 text-black"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                             onClick={() => {
                                                 if (validateUserData()) {
                                                     goToNextStep();
@@ -1159,11 +1151,10 @@ export default function BookingPageClient() {
                                             </h3>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div
-                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${
-                                                        paymentMethod === "card"
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "card"
+                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         setPaymentMethod("card")
                                                     }
@@ -1196,11 +1187,10 @@ export default function BookingPageClient() {
                                                 </div>
 
                                                 <div
-                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${
-                                                        paymentMethod === "upi"
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "upi"
+                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         setPaymentMethod("upi")
                                                     }
@@ -1340,13 +1330,13 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className="btn-outline border-primary text-primary"
+                                            className=" border-primary border-2 rounded-xl px-4 py-2 text-black"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-4 py-2 rounded-xl"
                                             disabled={
                                                 !paymentMethod || isSubmitting
                                             }
@@ -1377,11 +1367,10 @@ export default function BookingPageClient() {
                                                     Processing...
                                                 </span>
                                             ) : (
-                                                `Pay ${
-                                                    selectedService &&
-                                                    formatCurrency(
-                                                        selectedService.price
-                                                    )
+                                                `Pay ${selectedService &&
+                                                formatCurrency(
+                                                    selectedService.price
+                                                )
                                                 }`
                                             )}
                                         </button>
@@ -1482,13 +1471,13 @@ export default function BookingPageClient() {
                                     <div className="flex flex-col md:flex-row justify-center gap-4">
                                         <Link
                                             href="/dashboard"
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                         >
                                             Go to Dashboard
                                         </Link>
                                         <Link
                                             href="/"
-                                            className="btn-outline border-primary text-primary"
+                                            className="border-primary border-2 rounded-xl px-4 py-2 text-black"
                                         >
                                             Back to Home
                                         </Link>
@@ -1498,7 +1487,7 @@ export default function BookingPageClient() {
                         </div>
 
                         {/* Order Summary Sidebar */}
-                        {step < 6 && (
+                        {step > 4 && (
                             <div className="lg:col-span-1">
                                 <div className="bg-white p-6 rounded-lg shadow-sm sticky top-20">
                                     <h2 className="text-xl font-bold mb-6">
@@ -1554,14 +1543,14 @@ export default function BookingPageClient() {
                                         <div className="font-medium">
                                             {selectedDate
                                                 ? selectedDate.toLocaleDateString(
-                                                      "en-US",
-                                                      {
-                                                          weekday: "short",
-                                                          day: "numeric",
-                                                          month: "short",
-                                                          year: "numeric",
-                                                      }
-                                                  )
+                                                    "en-US",
+                                                    {
+                                                        weekday: "short",
+                                                        day: "numeric",
+                                                        month: "short",
+                                                        year: "numeric",
+                                                    }
+                                                )
                                                 : "Not selected"}
                                         </div>
                                         {selectedTimeSlot && (
@@ -1580,8 +1569,8 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price
-                                                      )
+                                                        selectedService.price
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
@@ -1592,9 +1581,9 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price *
-                                                              0.18
-                                                      )
+                                                        selectedService.price *
+                                                        0.18
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
@@ -1603,9 +1592,9 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price *
-                                                              1.18
-                                                      )
+                                                        selectedService.price *
+                                                        1.18
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
