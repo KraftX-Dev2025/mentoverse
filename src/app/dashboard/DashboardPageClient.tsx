@@ -311,8 +311,8 @@ export default function DashboardPageClient() {
                                                     {userRole === "both"
                                                         ? "User & Mentor"
                                                         : userRole === "mentor"
-                                                        ? "Mentor"
-                                                        : "User"}
+                                                            ? "Mentor"
+                                                            : "User"}
                                                 </span>
                                             </div>
                                         </div>
@@ -327,12 +327,11 @@ export default function DashboardPageClient() {
                                     <ul>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${
-                                                    activeTab === "upcoming" ||
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "upcoming" ||
                                                     activeTab === "past"
-                                                        ? "text-primary font-medium"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                    ? "text-primary font-medium"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveTab("upcoming")
                                                 }
@@ -356,11 +355,10 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${
-                                                    activeTab === "mentors"
-                                                        ? "text-primary font-medium"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "mentors"
+                                                    ? "text-primary font-medium"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveTab("mentors")
                                                 }
@@ -384,11 +382,10 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${
-                                                    activeTab === "transactions"
-                                                        ? "text-primary font-medium"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "transactions"
+                                                    ? "text-primary font-medium"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveTab("transactions")
                                                 }
@@ -412,11 +409,10 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${
-                                                    activeTab === "resources"
-                                                        ? "text-primary font-medium"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "resources"
+                                                    ? "text-primary font-medium"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveTab("resources")
                                                 }
@@ -440,38 +436,37 @@ export default function DashboardPageClient() {
                                         </li>
                                         {(userRole === "mentor" ||
                                             userRole === "both") && (
-                                            <li>
-                                                <button
-                                                    className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${
-                                                        activeTab ===
-                                                        "mentor-dashboard"
+                                                <li>
+                                                    <button
+                                                        className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab ===
+                                                            "mentor-dashboard"
                                                             ? "text-primary font-medium"
                                                             : "text-text-secondary"
-                                                    }`}
-                                                    onClick={() =>
-                                                        setActiveTab(
-                                                            "mentor-dashboard"
-                                                        )
-                                                    }
-                                                >
-                                                    <svg
-                                                        className="w-5 h-5 mr-3"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
+                                                            }`}
+                                                        onClick={() =>
+                                                            setActiveTab(
+                                                                "mentor-dashboard"
+                                                            )
+                                                        }
                                                     >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                                        />
-                                                    </svg>
-                                                    Mentor Dashboard
-                                                </button>
-                                            </li>
-                                        )}
+                                                        <svg
+                                                            className="w-5 h-5 mr-3"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                                            />
+                                                        </svg>
+                                                        Mentor Dashboard
+                                                    </button>
+                                                </li>
+                                            )}
                                     </ul>
                                 </nav>
                             </div>
@@ -514,85 +509,62 @@ export default function DashboardPageClient() {
                             {/* User Sessions */}
                             {(activeTab === "upcoming" ||
                                 activeTab === "past") && (
-                                <div className="bg-white rounded-lg shadow-sm p-6">
-                                    {/* Tabs */}
-                                    <div className="flex border-b border-gray-200 mb-6">
-                                        <button
-                                            className={`pb-3 mr-6 font-medium ${
-                                                activeTab === "upcoming"
+                                    <div className="bg-white rounded-lg shadow-sm p-6">
+                                        {/* Tabs */}
+                                        <div className="flex border-b border-gray-200 mb-6">
+                                            <button
+                                                className={`pb-3 mr-6 font-medium ${activeTab === "upcoming"
                                                     ? "text-primary border-b-2 border-primary"
                                                     : "text-text-secondary"
-                                            }`}
-                                            onClick={() =>
-                                                setActiveTab("upcoming")
-                                            }
-                                        >
-                                            Upcoming Sessions
-                                        </button>
-                                        <button
-                                            className={`pb-3 font-medium ${
-                                                activeTab === "past"
+                                                    }`}
+                                                onClick={() =>
+                                                    setActiveTab("upcoming")
+                                                }
+                                            >
+                                                Upcoming Sessions
+                                            </button>
+                                            <button
+                                                className={`pb-3 font-medium ${activeTab === "past"
                                                     ? "text-primary border-b-2 border-primary"
                                                     : "text-text-secondary"
-                                            }`}
-                                            onClick={() => setActiveTab("past")}
-                                        >
-                                            Past Sessions
-                                        </button>
-                                    </div>
+                                                    }`}
+                                                onClick={() => setActiveTab("past")}
+                                            >
+                                                Past Sessions
+                                            </button>
+                                        </div>
 
-                                    {/* Session Content */}
-                                    {loading ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                Loading sessions...
-                                            </p>
-                                        </div>
-                                    ) : error ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-red-500 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                {error}
-                                            </p>
-                                        </div>
-                                    ) : activeTab === "upcoming" ? (
-                                        upcomingSessions.length === 0 ? (
+                                        {/* Session Content */}
+                                        {loading ? (
                                             <div className="text-center py-12">
                                                 <svg
-                                                    className="h-12 w-12 text-gray-400 mx-auto"
+                                                    className="animate-spin h-8 w-8 text-primary mx-auto"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <circle
+                                                        className="opacity-25"
+                                                        cx="12"
+                                                        cy="12"
+                                                        r="10"
+                                                        stroke="currentColor"
+                                                        strokeWidth="4"
+                                                    ></circle>
+                                                    <path
+                                                        className="opacity-75"
+                                                        fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                    ></path>
+                                                </svg>
+                                                <p className="mt-4 text-text-secondary">
+                                                    Loading sessions...
+                                                </p>
+                                            </div>
+                                        ) : error ? (
+                                            <div className="text-center py-12">
+                                                <svg
+                                                    className="h-12 w-12 text-red-500 mx-auto"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -602,27 +574,137 @@ export default function DashboardPageClient() {
                                                         strokeLinecap="round"
                                                         strokeLinejoin="round"
                                                         strokeWidth={2}
-                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                                     />
                                                 </svg>
                                                 <p className="mt-4 text-text-secondary">
-                                                    You don&apos;t have any
-                                                    upcoming sessions.
+                                                    {error}
                                                 </p>
-                                                <Link
-                                                    href="/booking"
-                                                    className="mt-4 btn-primary inline-block p-4 rounded-2xl shadow-lg shadow-white"
-                                                >
-                                                    Book a Session
-                                                </Link>
                                             </div>
-                                        ) : (
-                                            <div className="space-y-4">
-                                                {upcomingSessions.map(
-                                                    (session) => (
+                                        ) : activeTab === "upcoming" ? (
+                                            upcomingSessions.length === 0 ? (
+                                                <div className="text-center py-12">
+                                                    <svg
+                                                        className="h-12 w-12 text-gray-400 mx-auto"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                        />
+                                                    </svg>
+                                                    <p className="mt-4 text-text-secondary">
+                                                        You don&apos;t have any
+                                                        upcoming sessions.
+                                                    </p>
+                                                    <Link
+                                                        href="/booking"
+                                                        className="mt-4 btn-primary inline-block p-4 rounded-2xl shadow-lg shadow-white"
+                                                    >
+                                                        Book a Session
+                                                    </Link>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-4">
+                                                    {upcomingSessions.map(
+                                                        (session) => (
+                                                            <div
+                                                                key={session.id}
+                                                                className="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors"
+                                                            >
+                                                                <div className="flex flex-col md:flex-row md:items-center justify-between">
+                                                                    <div className="mb-3 md:mb-0">
+                                                                        <h3 className="font-semibold">
+                                                                            {getServiceName(
+                                                                                session.serviceId
+                                                                            )}{" "}
+                                                                            with{" "}
+                                                                            {getMentorName(
+                                                                                session.mentorId
+                                                                            )}
+                                                                        </h3>
+                                                                        <p className="text-text-secondary">
+                                                                            {session.date.toLocaleDateString(
+                                                                                "en-US",
+                                                                                {
+                                                                                    weekday:
+                                                                                        "short",
+                                                                                    day: "numeric",
+                                                                                    month: "short",
+                                                                                    year: "numeric",
+                                                                                }
+                                                                            )}{" "}
+                                                                            at{" "}
+                                                                            {session.date.toLocaleTimeString(
+                                                                                "en-US",
+                                                                                {
+                                                                                    hour: "numeric",
+                                                                                    minute: "numeric",
+                                                                                    hour12: true,
+                                                                                }
+                                                                            )}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="flex flex-wrap gap-2">
+                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                            Reschedule
+                                                                        </button>
+                                                                        <button className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
+                                                                            Cancel
+                                                                        </button>
+                                                                        <Link
+                                                                            href="#"
+                                                                            className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors"
+                                                                        >
+                                                                            Join
+                                                                            Session
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
+                                            )
+                                        ) : // Past Sessions
+                                            pastSessions.length === 0 ? (
+                                                <div className="text-center py-12">
+                                                    <svg
+                                                        className="h-12 w-12 text-gray-400 mx-auto"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                        />
+                                                    </svg>
+                                                    <p className="mt-4 text-text-secondary">
+                                                        You haven&apos;t attended any
+                                                        sessions yet.
+                                                    </p>
+                                                    <Link
+                                                        href="/booking"
+                                                        className="mt-4 btn-primary inline-block"
+                                                    >
+                                                        Book Your First Session
+                                                    </Link>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-4">
+                                                    {pastSessions.map((session) => (
                                                         <div
                                                             key={session.id}
-                                                            className="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors"
+                                                            className="border border-gray-200 rounded-lg p-4"
                                                         >
                                                             <div className="flex flex-col md:flex-row md:items-center justify-between">
                                                                 <div className="mb-3 md:mb-0">
@@ -659,108 +741,19 @@ export default function DashboardPageClient() {
                                                                 </div>
                                                                 <div className="flex flex-wrap gap-2">
                                                                     <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
-                                                                        Reschedule
+                                                                        Leave Feedback
                                                                     </button>
-                                                                    <button className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
-                                                                        Cancel
+                                                                    <button className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors">
+                                                                        Book Again
                                                                     </button>
-                                                                    <Link
-                                                                        href="#"
-                                                                        className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors"
-                                                                    >
-                                                                        Join
-                                                                        Session
-                                                                    </Link>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    )
-                                                )}
-                                            </div>
-                                        )
-                                    ) : // Past Sessions
-                                    pastSessions.length === 0 ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-gray-400 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                You haven&apos;t attended any
-                                                sessions yet.
-                                            </p>
-                                            <Link
-                                                href="/booking"
-                                                className="mt-4 btn-primary inline-block"
-                                            >
-                                                Book Your First Session
-                                            </Link>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-4">
-                                            {pastSessions.map((session) => (
-                                                <div
-                                                    key={session.id}
-                                                    className="border border-gray-200 rounded-lg p-4"
-                                                >
-                                                    <div className="flex flex-col md:flex-row md:items-center justify-between">
-                                                        <div className="mb-3 md:mb-0">
-                                                            <h3 className="font-semibold">
-                                                                {getServiceName(
-                                                                    session.serviceId
-                                                                )}{" "}
-                                                                with{" "}
-                                                                {getMentorName(
-                                                                    session.mentorId
-                                                                )}
-                                                            </h3>
-                                                            <p className="text-text-secondary">
-                                                                {session.date.toLocaleDateString(
-                                                                    "en-US",
-                                                                    {
-                                                                        weekday:
-                                                                            "short",
-                                                                        day: "numeric",
-                                                                        month: "short",
-                                                                        year: "numeric",
-                                                                    }
-                                                                )}{" "}
-                                                                at{" "}
-                                                                {session.date.toLocaleTimeString(
-                                                                    "en-US",
-                                                                    {
-                                                                        hour: "numeric",
-                                                                        minute: "numeric",
-                                                                        hour12: true,
-                                                                    }
-                                                                )}
-                                                            </p>
-                                                        </div>
-                                                        <div className="flex flex-wrap gap-2">
-                                                            <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
-                                                                Leave Feedback
-                                                            </button>
-                                                            <button className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors">
-                                                                Book Again
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+                                            )}
+                                    </div>
+                                )}
 
                             {/* My Mentors */}
                             {activeTab === "mentors" && (
@@ -1027,15 +1020,14 @@ export default function DashboardPageClient() {
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center">
                                                                     <span
-                                                                        className={`inline-block px-2 py-1 text-xs rounded-full ${
-                                                                            transaction.status ===
+                                                                        className={`inline-block px-2 py-1 text-xs rounded-full ${transaction.status ===
                                                                             "completed"
-                                                                                ? "bg-green-100 text-green-800"
-                                                                                : transaction.status ===
-                                                                                  "pending"
+                                                                            ? "bg-green-100 text-green-800"
+                                                                            : transaction.status ===
+                                                                                "pending"
                                                                                 ? "bg-yellow-100 text-yellow-800"
                                                                                 : "bg-gray-100 text-gray-800"
-                                                                        }`}
+                                                                            }`}
                                                                     >
                                                                         {
                                                                             transaction.status
@@ -1108,12 +1100,11 @@ export default function DashboardPageClient() {
                                                         className="object-cover"
                                                     />
                                                     <div
-                                                        className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${
-                                                            resource.type ===
+                                                        className={`absolute top-2 left-2 text-xs font-medium px-2 py-1 rounded-full ${resource.type ===
                                                             "video"
-                                                                ? "bg-primary text-white"
-                                                                : "bg-secondary text-white"
-                                                        }`}
+                                                            ? "bg-primary text-white"
+                                                            : "bg-secondary text-white"
+                                                            }`}
                                                     >
                                                         {resource.type}
                                                     </div>
@@ -1127,15 +1118,14 @@ export default function DashboardPageClient() {
                                                     </h3>
                                                     <Link
                                                         href="/resources"
-                                                        className={`text-sm font-medium flex items-center ${
-                                                            resource.type ===
+                                                        className={`text-sm font-medium flex items-center ${resource.type ===
                                                             "video"
-                                                                ? "text-primary"
-                                                                : "text-secondary"
-                                                        }`}
+                                                            ? "text-primary"
+                                                            : "text-secondary"
+                                                            }`}
                                                     >
                                                         {resource.type ===
-                                                        "video"
+                                                            "video"
                                                             ? "Watch Video"
                                                             : "View Document"}
                                                         <svg
@@ -1207,7 +1197,7 @@ export default function DashboardPageClient() {
                                                 <div className="text-3xl font-bold">
                                                     {formatCurrency(
                                                         mentorStats?.totalEarnings ||
-                                                            0
+                                                        0
                                                     )}
                                                 </div>
                                             </div>
@@ -1219,12 +1209,11 @@ export default function DashboardPageClient() {
                                         {/* Tabs */}
                                         <div className="flex border-b border-gray-200 mb-6">
                                             <button
-                                                className={`pb-3 mr-6 font-medium ${
-                                                    activeMentorTab ===
+                                                className={`pb-3 mr-6 font-medium ${activeMentorTab ===
                                                     "upcoming"
-                                                        ? "text-primary border-b-2 border-primary"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                    ? "text-primary border-b-2 border-primary"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveMentorTab(
                                                         "upcoming"
@@ -1234,11 +1223,10 @@ export default function DashboardPageClient() {
                                                 Upcoming Sessions
                                             </button>
                                             <button
-                                                className={`pb-3 mr-6 font-medium ${
-                                                    activeMentorTab === "past"
-                                                        ? "text-primary border-b-2 border-primary"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                className={`pb-3 mr-6 font-medium ${activeMentorTab === "past"
+                                                    ? "text-primary border-b-2 border-primary"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveMentorTab("past")
                                                 }
@@ -1246,12 +1234,11 @@ export default function DashboardPageClient() {
                                                 Past Sessions
                                             </button>
                                             <button
-                                                className={`pb-3 font-medium ${
-                                                    activeMentorTab ===
+                                                className={`pb-3 font-medium ${activeMentorTab ===
                                                     "earnings"
-                                                        ? "text-primary border-b-2 border-primary"
-                                                        : "text-text-secondary"
-                                                }`}
+                                                    ? "text-primary border-b-2 border-primary"
+                                                    : "text-text-secondary"
+                                                    }`}
                                                 onClick={() =>
                                                     setActiveMentorTab(
                                                         "earnings"
@@ -1265,7 +1252,7 @@ export default function DashboardPageClient() {
                                         {/* Mentor Session Content */}
                                         {activeMentorTab === "upcoming" ? (
                                             mentorUpcomingSessions.length ===
-                                            0 ? (
+                                                0 ? (
                                                 <div className="text-center py-12">
                                                     <svg
                                                         className="h-12 w-12 text-gray-400 mx-auto"
@@ -1438,7 +1425,7 @@ export default function DashboardPageClient() {
                                                         <div className="text-2xl font-bold text-primary">
                                                             {formatCurrency(
                                                                 mentorStats?.pendingPayments ||
-                                                                    0
+                                                                0
                                                             )}
                                                         </div>
                                                     </div>
@@ -1496,12 +1483,11 @@ export default function DashboardPageClient() {
                                                                         </td>
                                                                         <td className="px-4 py-3 text-center">
                                                                             <span
-                                                                                className={`inline-block px-2 py-1 text-xs rounded-full ${
-                                                                                    earning.status ===
+                                                                                className={`inline-block px-2 py-1 text-xs rounded-full ${earning.status ===
                                                                                     "paid"
-                                                                                        ? "bg-green-100 text-green-800"
-                                                                                        : "bg-yellow-100 text-yellow-800"
-                                                                                }`}
+                                                                                    ? "bg-green-100 text-green-800"
+                                                                                    : "bg-yellow-100 text-yellow-800"
+                                                                                    }`}
                                                                             >
                                                                                 {
                                                                                     earning.status
