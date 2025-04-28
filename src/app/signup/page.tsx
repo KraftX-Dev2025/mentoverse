@@ -1,21 +1,75 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { auth } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth, db } from '@/lib/firebase';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { createUserDocument } from '@/services/firebaseServices';
+import { getDoc, doc } from 'firebase/firestore';
 
 export default function SignupForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                try {
+                    const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
+                    const mentorUserRef = doc(db, 'mentor', 'mentorData', 'userData', currentUser.uid);
+
+                    const menteeDocSnap = await getDoc(menteeUserRef);
+                    const mentorDocSnap = await getDoc(mentorUserRef);
+
+                    if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
+                        console.log('User is authenticated and exists in the database.');
+                        setUser(currentUser);
+                        router.push('/dashboard');
+                    } else {
+                        console.log('User is authenticated but does not exist in the database.');
+                        await signOut(auth);
+                        setUser(null);
+                        router.push('/signup');
+                    }
+                } catch (error) {
+                    console.error('Error checking user status:', error);
+                    setUser(null);
+                    router.push('/signup');
+                }
+            } else {
+                setUser(null);
+                router.push('/signup');
+            }
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [router]);
+
+    if (isLoading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div className="loading-spinner" style={{ border: '4px solid #e0e0e0', borderTop: '4px solid purple', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite' }}></div>
+                <style jsx>{`
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `}</style>
+            </div>
+        );
+    }
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            await createUserDocument('mentee', user.uid, name, email);
             router.push('/');
         } catch (error: any) {
             console.error('Error signing up:', error.message);
@@ -26,7 +80,9 @@ export default function SignupForm() {
     const handleGoogleSignup = async () => {
         const provider = new GoogleAuthProvider();
         try {
-            await signInWithPopup(auth, provider);
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            await createUserDocument('mentee', user.uid, user.displayName || '', user.email || '');
             router.push('/');
         } catch (error: any) {
             console.error('Google sign-in error:', error.message);
