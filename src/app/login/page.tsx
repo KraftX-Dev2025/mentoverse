@@ -2,16 +2,42 @@
 
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { auth } from '@/lib/firebase';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            router.push('/');
+        } catch (error: any) {
+            console.error('Error logging in:', error.message);
+            alert(error.message);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+            router.push('/');
+        } catch (error: any) {
+            console.error('Google login error:', error.message);
+            alert(error.message);
+        }
+    };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#f5ede3] px-4">
             <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
                 <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">Login to Mentoverse</h2>
-                <form className="space-y-4">
+                <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Email</label>
                         <input
@@ -35,10 +61,8 @@ export default function LoginForm() {
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-purple-600 py-3 text-white transition hover:bg-purple-700"
-                    >
+
+                    <button type="submit" className="w-full rounded-lg bg-purple-600 py-3 text-white transition hover:bg-purple-700">
                         Login
                     </button>
                 </form>
@@ -49,12 +73,12 @@ export default function LoginForm() {
 
                 <button
                     type="button"
+                    onClick={handleGoogleLogin}
                     className="mt-4 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
                 >
                     <FcGoogle size={20} />
                     Login with Google
                 </button>
-
                 <p className="mt-6 text-center text-sm text-gray-600">
                     Don't have an account?{' '}
                     <a href="/signup" className="font-medium text-purple-600 hover:underline">
