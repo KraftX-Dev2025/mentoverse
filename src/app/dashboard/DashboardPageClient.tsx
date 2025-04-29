@@ -273,7 +273,7 @@ export default function DashboardPageClient() {
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-                            <Link href="/booking" className="btn-secondary">
+                            <Link href="/booking" className="btn-secondary py-4 px-4 rounded-xl">
                                 Book a New Session
                             </Link>
                         </div>
@@ -307,7 +307,7 @@ export default function DashboardPageClient() {
                                                 {mockUser.email}
                                             </p>
                                             <div className="mt-2">
-                                                <span className="text-xs bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full">
+                                                <span className="text-xs bg-primary bg-opacity-10 text-white px-2 py-2 rounded-xl">
                                                     {userRole === "both"
                                                         ? "User & Mentor"
                                                         : userRole === "mentor"
@@ -317,7 +317,7 @@ export default function DashboardPageClient() {
                                             </div>
                                         </div>
                                     </div>
-                                    <button className="mt-4 w-full text-sm text-primary border border-primary rounded-md py-1 hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                    <button className="mt-4 w-full text-sm text-black border border-primary rounded-md py-1 hover:bg-primary hover:bg-opacity-5 transition-colors">
                                         Edit Profile
                                     </button>
                                 </div>
@@ -329,7 +329,7 @@ export default function DashboardPageClient() {
                                             <button
                                                 className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "upcoming" ||
                                                     activeTab === "past"
-                                                    ? "text-primary font-medium"
+                                                    ? "text-black font-medium"
                                                     : "text-text-secondary"
                                                     }`}
                                                 onClick={() =>
@@ -651,10 +651,10 @@ export default function DashboardPageClient() {
                                                                         </p>
                                                                     </div>
                                                                     <div className="flex flex-wrap gap-2">
-                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
                                                                             Reschedule
                                                                         </button>
-                                                                        <button className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-black border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
                                                                             Cancel
                                                                         </button>
                                                                         <Link
@@ -740,7 +740,7 @@ export default function DashboardPageClient() {
                                                                     </p>
                                                                 </div>
                                                                 <div className="flex flex-wrap gap-2">
-                                                                    <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                    <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
                                                                         Leave Feedback
                                                                     </button>
                                                                     <button className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors">
@@ -883,7 +883,7 @@ export default function DashboardPageClient() {
                                                                 >
                                                                     Book Again
                                                                 </Link>
-                                                                <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
                                                                     View Profile
                                                                 </button>
                                                             </div>
@@ -1170,7 +1170,7 @@ export default function DashboardPageClient() {
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                             <div className="bg-primary bg-opacity-5 p-4 rounded-lg">
-                                                <div className="text-primary text-sm font-medium mb-1">
+                                                <div className="text-black text-sm font-medium mb-1">
                                                     Total Sessions
                                                 </div>
                                                 <div className="text-3xl font-bold">
@@ -1191,7 +1191,7 @@ export default function DashboardPageClient() {
                                                 </div>
                                             </div>
                                             <div className="bg-secondary bg-opacity-5 p-4 rounded-lg">
-                                                <div className="text-secondary text-sm font-medium mb-1">
+                                                <div className="text-black text-sm font-medium mb-1">
                                                     Earnings
                                                 </div>
                                                 <div className="text-3xl font-bold">
@@ -1429,7 +1429,7 @@ export default function DashboardPageClient() {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <button className="btn-primary">
+                                                    <button className="btn-primary px-4 py-2 text-sm font-medium rounded-xl">
                                                         Withdraw Funds
                                                     </button>
                                                 </div>

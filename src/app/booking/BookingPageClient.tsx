@@ -697,7 +697,7 @@ export default function BookingPageClient() {
                                     {loading.mentors ? (
                                         <div className="text-center py-12">
                                             <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
+                                                className="animate-spin h-8 w-8 text-black mx-auto"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
@@ -747,7 +747,7 @@ export default function BookingPageClient() {
                                                     key={mentor.id}
                                                     className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedMentor?.id ===
                                                         mentor.id
-                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        ? "border-primary border-2 bg-white bg-opacity-5"
                                                         : "border-gray-200 hover:border-primary"
                                                         }`}
                                                     onClick={() =>
@@ -819,7 +819,7 @@ export default function BookingPageClient() {
                                                                             key={
                                                                                 exp
                                                                             }
-                                                                            className="text-xs bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full"
+                                                                            className="text-xs bg-primary bg-opacity-10 text-white px-2 py-2 rounded-full"
                                                                         >
                                                                             {
                                                                                 exp
