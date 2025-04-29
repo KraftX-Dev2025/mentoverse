@@ -219,7 +219,76 @@ export default function AboutUs() {
                     </div>
                 </div>
             </section>
+            {/* Our Vision Section */}
+            <section className="py-16 bg-white">
+                <div className="container">
+                    <div className="text-center mb-16">
+                        <h2 className="section-title">Our Vision</h2>
+                        <p className="section-subtitle">
+                            With you, throughout your educational and
+                            professional life
+                        </p>
+                    </div>
 
+                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
+                        {/* Partner Logos */}
+                        {[
+                            "Mahindra",
+                            "KPMG",
+                            "Aditya Birla Group",
+                            "Kotak",
+                            "JP Morgan",
+                        ].map((partner) => (
+                            <div
+                                key={partner}
+                                className="grayscale hover:grayscale-0 transition-all duration-300"
+                            >
+                                <Image
+                                    src={`/images/partners/${partner
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-")}.svg`}
+                                    alt={`${partner} logo`}
+                                    width={120}
+                                    height={60}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <Image
+                                src="/images/vision-illustration.svg"
+                                alt="Our Vision"
+                                width={500}
+                                height={400}
+                                className="rounded-lg"
+                            />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl md:text-3xl font-bold mb-6">
+                                Bridging the Gap Between Education and Industry
+                            </h3>
+                            <p className="mb-4">
+                                At Mentoverse, we believe that every student and
+                                professional deserves access to quality
+                                mentorship. Our platform connects you with
+                                industry experts who have walked the path you
+                                aspire to take.
+                            </p>
+                            <p className="mb-6">
+                                Whether you&apos;re a CA student, a finance
+                                professional, or a startup founder, we have
+                                mentors who can provide you with personalized
+                                guidance tailored to your specific needs.
+                            </p>
+                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
+                                Learn More
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {/* Team Section */}
             <section className="py-16 md:py-20 bg-background">
                 <div className="container">
