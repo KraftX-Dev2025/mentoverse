@@ -1,17 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Mentor, Service } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 import { FaCreditCard } from "react-icons/fa";
 import { FaGooglePay } from "react-icons/fa";
-import { InlineWidget } from "react-calendly";
-import DateTimeSelector from "./DateTimePicker";
 
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const timeSlots = [
     "09:00 AM",
     "10:00 AM",
@@ -44,12 +40,9 @@ export default function BookingPageClient() {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(
         null
     );
-    const [availableDates, setAvailableDates] = useState<Date[]>([]);
-    const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
 
     // State for data loading
     const [services, setServices] = useState<Service[]>([]);
-    const [mentors, setMentors] = useState<Mentor[]>([]);
     const [loading, setLoading] = useState({
         services: true,
         mentors: true,
@@ -286,7 +279,6 @@ export default function BookingPageClient() {
                     },
                 ];
 
-                setMentors(mockMentors);
                 setLoading((prev) => ({ ...prev, mentors: false }));
 
                 // If a mentor ID is in the URL, pre-select it
@@ -312,42 +304,6 @@ export default function BookingPageClient() {
         fetchData();
     }, [preSelectedServiceId, preSelectedMentorId]);
 
-    // Load available dates when mentor is selected
-    useEffect(() => {
-        if (selectedMentor && step === 3) {
-            setLoading((prev) => ({ ...prev, availability: true }));
-
-            // In a real implementation, you would fetch availability from your API
-            // const fetchAvailability = async () => {
-            //   const response = await fetch(`/api/mentors/${selectedMentor.id}/availability`);
-            //   const data = await response.json();
-            //   setAvailableDates(data.dates);
-            // };
-
-            // Mock data for available dates (next 14 days with some random dates excluded)
-            const mockAvailability = () => {
-                const dates: Date[] = [];
-                const today = new Date();
-
-                for (let i = 1; i <= 14; i++) {
-                    // Add date if it's not a random exclusion (simulate some unavailable days)
-                    if (Math.random() > 0.3) {
-                        const date = new Date(today);
-                        date.setDate(today.getDate() + i);
-                        dates.push(date);
-                    }
-                }
-
-                return dates;
-            };
-
-            // Simulate API delay
-            setTimeout(() => {
-                setAvailableDates(mockAvailability());
-                setLoading((prev) => ({ ...prev, availability: false }));
-            }, 800);
-        }
-    }, [selectedMentor, step]);
 
     // Load available time slots when date is selected
     useEffect(() => {
@@ -364,7 +320,6 @@ export default function BookingPageClient() {
                 return timeSlots.filter(() => Math.random() > 0.3);
             };
 
-            setAvailableTimeSlots(mockTimeSlots());
         }
     }, [selectedDate, selectedMentor]);
 
