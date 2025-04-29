@@ -57,6 +57,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
                         image: "/images/mentors/mentor1.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1500,
                         rating: 4.9,
                     },
@@ -68,6 +69,7 @@ export default function MentorsPageClient() {
                         expertise: ["CA", "Accounting", "Startups"],
                         bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
                         image: "/images/mentors/mentor2.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1200,
                         rating: 4.8,
                     },
@@ -83,6 +85,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Passionate about digital marketing and helping professionals build their personal brand.",
                         image: "/images/mentors/mentor3.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1000,
                         rating: 4.7,
                     },
@@ -98,6 +101,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Worked on numerous M&A deals and helped startups raise capital.",
                         image: "/images/mentors/mentor4.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 2000,
                         rating: 4.9,
                     },
@@ -113,6 +117,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Helping finance professionals navigate their career path and prepare for interviews.",
                         image: "/images/mentors/mentor5.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1800,
                         rating: 4.6,
                     },
@@ -128,6 +133,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Passionate about helping candidates present their best selves to potential employers.",
                         image: "/images/mentors/mentor6.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 950,
                         rating: 4.8,
                     },
@@ -143,6 +149,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Helped over 50 startups with their financial strategy and fundraising efforts.",
                         image: "/images/mentors/mentor7.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1600,
                         rating: 4.9,
                     },
@@ -158,6 +165,7 @@ export default function MentorsPageClient() {
                         ],
                         bio: "Specializes in helping professionals optimize their LinkedIn profile for maximum visibility.",
                         image: "/images/mentors/mentor8.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 900,
                         rating: 4.7,
                     },
@@ -228,10 +236,10 @@ export default function MentorsPageClient() {
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white py-16">
+            <section className="bg-gradient-primary text-white py-4 rounded-b-xl">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white ">
                             Our Mentors
                         </h1>
                         <p className="text-xl opacity-90">
@@ -658,7 +666,7 @@ export default function MentorsPageClient() {
                                                             Book a Session
                                                         </Link>
                                                     </div>
-                                                </div> 
+                                                </div>
                                             </div>
                                         ))}
                                     </div>

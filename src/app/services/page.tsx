@@ -191,16 +191,16 @@ export default function ServicesPage() {
                                         {service.id === "mock-interview"
                                             ? "Practice with industry experts and get real-time feedback to improve your interview skills."
                                             : service.id === "linkedin-review"
-                                            ? "Get your LinkedIn profile optimized by professionals to attract better opportunities."
-                                            : service.id === "cv-resume-review"
-                                            ? "Professional review of your CV/resume to stand out among other candidates."
-                                            : service.id === "group-discussion"
-                                            ? "Learn the art of group discussions with like-minded peers and expert guidance."
-                                            : service.id === "career-guidance"
-                                            ? "Personalized career planning and guidance from industry professionals."
-                                            : "Stay updated with the latest industry trends through our events and webinars."}
+                                                ? "Get your LinkedIn profile optimized by professionals to attract better opportunities."
+                                                : service.id === "cv-resume-review"
+                                                    ? "Professional review of your CV/resume to stand out among other candidates."
+                                                    : service.id === "group-discussion"
+                                                        ? "Learn the art of group discussions with like-minded peers and expert guidance."
+                                                        : service.id === "career-guidance"
+                                                            ? "Personalized career planning and guidance from industry professionals."
+                                                            : "Stay updated with the latest industry trends through our events and webinars."}
                                     </p>
-                                    <span className="text-primary font-medium inline-flex items-center">
+                                    <span className="text-black font-medium inline-flex items-center">
                                         Learn More
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -319,11 +319,10 @@ export default function ServicesPage() {
                     {servicesWithDetails.map((service, index) => (
                         <div key={service.id} id={`${service.id}-section`} className="mb-16 pt-8 -mt-8">
                             <div
-                                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                                    index % 2 === 1
+                                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1
                                         ? "lg:grid-flow-row-dense"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 <div
                                     className={
