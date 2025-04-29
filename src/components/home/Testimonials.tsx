@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
+// Testimonials Page Added
 const testimonials = [
     {
         name: "Rahul Singh",
@@ -80,7 +81,7 @@ const Testimonials = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 py-[4rem]">
                         What Our Mentees Say
                     </h2>
                     <p className="text-lg text-text-secondary max-w-3xl mx-auto">

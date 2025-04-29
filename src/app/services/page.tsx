@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { SITE_NAME, SERVICES } from "@/lib/constants";
-import { formatCurrency } from "@/lib/utils";
+// import { formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
     title: `Our Services | ${SITE_NAME} - Shaping Your Tomorrow`,
@@ -156,7 +156,7 @@ export default function ServicesPage() {
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white py-16">
+            <section id="services-hero" className="bg-gradient-primary text-white py-16">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -171,13 +171,13 @@ export default function ServicesPage() {
             </section>
 
             {/* Services Overview */}
-            <section className="py-16 bg-white">
+            <section id="services-overview" className="py-16 bg-white">
                 <div className="container">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {SERVICES.map((service) => (
                             <Link
                                 key={service.id}
-                                href={`/services/${service.id}`}
+                                href={`/services#${service.id}-section`}
                                 className="group"
                             >
                                 <div className="bg-background rounded-lg p-8 h-full transition-all duration-300 hover:shadow-md hover:bg-primary hover:bg-opacity-5">
@@ -225,7 +225,7 @@ export default function ServicesPage() {
             </section>
 
             {/* Featured Service */}
-            <section className="py-16 bg-background">
+            <section id="featured-service" className="py-16 bg-background">
                 <div className="container">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
@@ -270,7 +270,7 @@ export default function ServicesPage() {
                                         ))}
                                 </ul>
                             </div>
-                            <div className="flex items-center mb-6">
+                            {/* <div className="flex items-center mb-6">
                                 <div className="text-2xl font-bold mr-2">
                                     {formatCurrency(
                                         servicesWithDetails.find(
@@ -281,7 +281,7 @@ export default function ServicesPage() {
                                 <div className="text-text-secondary">
                                     per session
                                 </div>
-                            </div>
+                            </div> */}
                             <Link
                                 href="/booking?service=career-guidance"
                                 className="btn-primary p-4 rounded-2xl shadow-lg shadow-white"
@@ -304,7 +304,7 @@ export default function ServicesPage() {
             </section>
 
             {/* Detailed Services */}
-            <section className="py-16 bg-white">
+            <section id="detailed-services" className="py-16 bg-white">
                 <div className="container">
                     <div className="text-center mb-16">
                         <h2 className="section-title">
@@ -317,7 +317,7 @@ export default function ServicesPage() {
                     </div>
 
                     {servicesWithDetails.map((service, index) => (
-                        <div key={service.id} className="mb-16">
+                        <div key={service.id} id={`${service.id}-section`} className="mb-16 pt-8 -mt-8">
                             <div
                                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1
                                         ? "lg:grid-flow-row-dense"
@@ -392,18 +392,18 @@ export default function ServicesPage() {
                                         </ol>
                                     </div>
 
-                                    <div className="flex items-center mb-6">
+                                    {/* <div className="flex items-center mb-6">
                                         <div className="text-2xl font-bold mr-2">
                                             {formatCurrency(service.price)}
                                         </div>
                                         <div className="text-text-secondary">
                                             per session
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <Link
                                         href={`/booking?service=${service.id}`}
-                                        className="btn-primary"
+                                        className="btn-primary p-3 mt-4 rounded-2xl shadow-lg shadow-black"
                                     >
                                         Book Now
                                     </Link>
@@ -433,7 +433,7 @@ export default function ServicesPage() {
             </section>
 
             {/* FAQs */}
-            <section className="py-16 bg-background">
+            <section id="faqs" className="py-16 bg-background">
                 <div className="container">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold mb-4">
@@ -507,7 +507,7 @@ export default function ServicesPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-16 bg-white">
+            <section id="services-cta" className="py-16 bg-white">
                 <div className="container">
                     <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">

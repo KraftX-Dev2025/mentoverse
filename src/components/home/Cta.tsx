@@ -2,6 +2,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 
+// Cta Page Added
 const Cta = () => {
     return (
         <section className="py-20 bg-background">

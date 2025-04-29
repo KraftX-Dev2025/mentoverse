@@ -5,7 +5,6 @@ import { SITE_NAME } from "@/lib/constants";
 import abhijeet from "../../../public/abhijeet_mutha.webp";
 import aniruddh from "../../../public/aniruddh.webp";
 import aayush from "../../../public/ansh_agarwal.webp";
-// Import react-icons
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { BsLightningCharge, BsEyeFill, BsPeopleFill, BsLightbulbFill, BsSliders } from "react-icons/bs";
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
     description: "Learn about Mentoverse's mission, vision, and the team behind our mentorship platform.",
 };
 
-// Values data
 const VALUES = [
     {
         icon: <BsLightningCharge className="w-8 h-8" />,

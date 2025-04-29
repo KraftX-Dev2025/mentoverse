@@ -19,10 +19,11 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="animate-fade-in">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
-                                Fast Track your Career with Mentoverse
+                            Revolutionizing the awareness of people towards their next step in education, career and beyond.
                             </h1>
                             <h2 className="text-xl md:text-2xl mb-8 font-medium text-white opacity-90">
-                                Shaping Your Tomorrow
+                                Revolutionizing the awareness of people towards
+                                their next step in education, career and beyond.
                             </h2>
                             <p className="text-lg mb-8 max-w-md text-white opacity-80">
                                 Get personalized guidance from industry experts
@@ -60,7 +61,7 @@ export default function Home() {
 
 
             {/* Our Offerings Section */}
-            <section className="section-padding bg-background">
+            <section className="section-padding bg-background py-[4rem]">
                 <div className="container">
                     <div className="text-center mb-16">
                         <h2 className="section-title">Our Offerings</h2>
@@ -121,14 +122,16 @@ export default function Home() {
             </section>
 
             {/* Stats Showcase Section */}
+
             <section className="py-16 bg-gradient-primary text-white mt-4">
+
                 <div className="container">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                             We are good with numbers
                         </h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-primary">
                         {[
                             { number: "5+", label: "Events" },
                             { number: "20+", label: "Mentors" },
@@ -143,6 +146,7 @@ export default function Home() {
                                     {stat.number}
                                 </div>
                                 <div className="text-lg  opacity-80 text-black">
+
                                     {stat.label}
                                 </div>
                             </div>
@@ -152,7 +156,7 @@ export default function Home() {
             </section>
 
             {/* Testimonials Section */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-white py-[4rem]">
                 <div className="container">
                     <div className="text-center mb-16">
                         <h2 className="section-title">What Our Mentees Say</h2>
@@ -236,7 +240,9 @@ export default function Home() {
                             guidance, and take your career to new heights.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
+
                             <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+
                                 Book a Session
                             </Link>
                             <Link

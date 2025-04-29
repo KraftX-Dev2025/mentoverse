@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 
+// Vision Page Added
 const Vision = () => {
     // Animation variants for staggered animations
     const containerVariants = {

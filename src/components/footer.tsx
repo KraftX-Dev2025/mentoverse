@@ -179,6 +179,7 @@ interface FooterProps {
   navLinks: NavLink[];
 }
 
+//Footer Add Social Media Links
 export default function Footer({ logo, siteName, services, navLinks }: FooterProps) {
   return (
     <footer className="bg-darkBackground pt-12 pb-6 bg-primary text-white">

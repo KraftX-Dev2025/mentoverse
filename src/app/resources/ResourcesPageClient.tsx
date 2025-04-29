@@ -474,7 +474,7 @@ export default function ResourcesPageClient() {
                                         placeholder="Your email address"
                                         className="form-control"
                                     />
-                                    <button className="btn-primary whitespace-nowrap">
+                                    <button className="btn-primary whitespace-nowrap p-4 rounded-2xl shadow-lg shadow-white">
                                         Subscribe
                                     </button>
                                 </div>
@@ -505,7 +505,7 @@ export default function ResourcesPageClient() {
                             career journey, and we&apos;ll try our best to
                             create or source them for you.
                         </p>
-                        <Link href="/contact-us" className="btn-secondary">
+                        <Link href="/contact-us" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                             Request a Resource
                         </Link>
                     </div>

@@ -158,12 +158,10 @@
     }
 
     .nav-link {
-        color: var(--color-text-primary);
         font-weight: var(--font-medium);
         transition-property: color;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 200ms;
-
         @variant hover {
             color: var(--color-primary);
         }

@@ -277,7 +277,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-                            <Link href="/booking" className="btn-secondary py-4 px-4 rounded-xl">
+
                                 Book a New Session
                             </Link>
                         </div>
