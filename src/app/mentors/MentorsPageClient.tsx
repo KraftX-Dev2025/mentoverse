@@ -236,10 +236,10 @@ export default function MentorsPageClient() {
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white py-16">
+            <section className="bg-gradient-primary text-white py-4 rounded-b-xl">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white ">
                             Our Mentors
                         </h1>
                         <p className="text-xl opacity-90">

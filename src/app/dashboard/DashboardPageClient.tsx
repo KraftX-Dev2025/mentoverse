@@ -307,12 +307,8 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                 {userData.email}
                                             </p>
                                             <div className="mt-2">
-                                                <span className="text-xs bg-primary bg-opacity-10 text-white px-2 py-2 rounded-xl">
-                                                    {userRole === "both"
-                                                        ? "User & Mentor"
-                                                        : userRole === "mentor"
-                                                            ? "Mentor"
-                                                            : "User"}
+                                                <span className="text-xs bg-primary bg-opacity-10 text-white px-3 py-2 rounded-lg">
+                                                    {userData.role.toUpperCase()}
                                                 </span>
                                             </div>
                                         </div>
