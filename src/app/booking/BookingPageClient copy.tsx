@@ -6,8 +6,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Mentor, Service } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { FaCreditCard } from "react-icons/fa";
-import { FaGooglePay } from "react-icons/fa";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const timeSlots = [
@@ -464,7 +462,7 @@ export default function BookingPageClient() {
             )}`;
             setBookingReference(mockReference);
             setBookingSuccess(true);
-            setStep(4); // Move to success step
+            setStep(6); // Move to success step
         } catch {
             setError(
                 "Failed to complete your booking. Please try again later."
@@ -473,6 +471,11 @@ export default function BookingPageClient() {
             setIsSubmitting(false);
         }
     };
+    const steps = preSelectedMentorId
+        ? ["Choose Service", "Pick Date & Time", "Your Details", "Payment"]
+        : ["Choose Service", "Select Mentor", "Pick Date & Time", "Your Details", "Payment"];
+
+    const effectiveStep = preSelectedMentorId && step >= 2 ? step - 1 : step;
 
     return (
         <>
@@ -496,44 +499,39 @@ export default function BookingPageClient() {
             <section className="py-12 bg-background">
                 <div className="container">
                     {/* Booking Steps */}
-                    {step < 5 && (
+                    {step < 6 && (
                         <div className="mb-12">
                             <div className="flex justify-between items-center relative">
                                 {/* Progress Bar */}
                                 <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 z-0">
                                     <div
                                         className="h-full bg-primary transition-all duration-300"
-                                        style={{ width: `${(step - 1) * 33.33}%` }}
+                                        style={{ width: `${(step - 1) * 25}%` }}
                                     ></div>
                                 </div>
 
                                 {/* Step Indicators */}
-                                {[1, 2, 3, 4].map((stepNumber) => (
+                                {steps.map((label, index) => (
                                     <div
-                                        key={stepNumber}
-                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${step >= stepNumber
+                                        key={index}
+                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${effectiveStep >= index + 1
                                             ? "bg-primary text-white"
                                             : "bg-white text-text-secondary border border-gray-300"
                                             }`}
                                     >
-                                        {stepNumber}
+                                        {index + 1}
                                     </div>
                                 ))}
+
                             </div>
 
                             <div className="flex justify-between mt-2 text-sm text-text-secondary">
-                                <div className="text-center w-36 -ml-14">
-                                    Choose Service
-                                </div>
-                                <div className="text-center w-36 -ml-14 ">
-                                    Your Details
-                                </div>
-                                <div className="text-center w-36 -ml-14">
-                                    Payment
-                                </div>
-                                <div className="text-center w-36 -ml-14">
-                                    Success
-                                </div>
+                                {steps.map((label, index) => (
+                                    <div key={index} className="text-center w-36 -ml-14">
+                                        {label}
+                                    </div>
+                                ))}
+
                             </div>
                         </div>
                     )}
@@ -687,7 +685,329 @@ export default function BookingPageClient() {
                             )}
 
                             {/* Step 2: Select Mentor */}
+                            {/* {step === 2 && !preSelectedMentorId && (
+
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <h2 className="text-2xl font-bold mb-6">
+                                        Select a Mentor
+                                    </h2>
+
+                                    {loading.mentors ? (
+                                        <div className="text-center py-12">
+                                            <svg
+                                                className="animate-spin h-8 w-8 text-black mx-auto"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                            <p className="mt-4 text-text-secondary">
+                                                Loading mentors...
+                                            </p>
+                                        </div>
+                                    ) : error ? (
+                                        <div className="text-center py-12">
+                                            <svg
+                                                className="h-12 w-12 text-red-500 mx-auto"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                />
+                                            </svg>
+                                            <p className="mt-4 text-text-secondary">
+                                                {error}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {mentors.map((mentor) => (
+                                                <div
+                                                    key={mentor.id}
+                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedMentor?.id ===
+                                                        mentor.id
+                                                        ? "border-primary border-2 bg-white bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
+                                                    onClick={() =>
+                                                        handleMentorSelect(
+                                                            mentor
+                                                        )
+                                                    }
+                                                >
+                                                    <div className="flex items-center">
+                                                        <div className="w-16 h-16 rounded-full overflow-hidden mr-4 shrink-0">
+                                                            <Image
+                                                                src={
+                                                                    mentor.image
+                                                                }
+                                                                alt={
+                                                                    mentor.name
+                                                                }
+                                                                width={64}
+                                                                height={64}
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <div className="flex justify-between">
+                                                                <div>
+                                                                    <h3 className="text-lg font-semibold">
+                                                                        {
+                                                                            mentor.name
+                                                                        }
+                                                                    </h3>
+                                                                    <p className="text-primary text-sm">
+                                                                        {
+                                                                            mentor.title
+                                                                        }
+                                                                    </p>
+                                                                    <p className="text-text-secondary text-sm">
+                                                                        {
+                                                                            mentor.company
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                                <div className="text-right">
+                                                                    <div className="font-bold">
+                                                                        {formatCurrency(
+                                                                            mentor.hourlyRate
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="flex items-center justify-end mt-1">
+                                                                        <span className="text-secondary font-semibold mr-1">
+                                                                            {
+                                                                                mentor.rating
+                                                                            }
+                                                                        </span>
+                                                                        <span className="text-secondary">
+                                                                            ★
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <p className="text-text-secondary text-sm mt-2 line-clamp-2">
+                                                                {mentor.bio}
+                                                            </p>
+
+                                                            <div className="mt-3 flex flex-wrap gap-2">
+                                                                {mentor.expertise.map(
+                                                                    (exp) => (
+                                                                        <span
+                                                                            key={
+                                                                                exp
+                                                                            }
+                                                                            className="text-xs bg-primary bg-opacity-10 text-white px-2 py-2 rounded-full"
+                                                                        >
+                                                                            {
+                                                                                exp
+                                                                            }
+                                                                        </span>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    <div className="mt-8 flex justify-between">
+                                        <button
+                                            className=" border-primary text-primary"
+                                            onClick={() => goToPreviousStep()}
+                                        >
+                                            Back
+                                        </button>
+                                        <button
+                                            className="btn-primary px-2 py-2 rounded-xl"
+                                            disabled={!selectedMentor}
+                                            onClick={() => goToNextStep()}
+                                        >
+                                            Continue
+                                        </button>
+                                    </div>
+                                </div>
+                            )} */}
+
+                            {/* Step 3: Pick Date & Time */}
                             {step === 2 && (
+                                <div className="bg-white p-6 rounded-lg shadow-sm">
+                                    <h2 className="text-2xl font-bold mb-6">
+                                        Select Date & Time
+                                    </h2>
+
+                                    {/* {loading.availability ? (
+                                        <div className="text-center py-12">
+                                            <svg
+                                                className="animate-spin h-8 w-8 text-primary mx-auto"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                            <p className="mt-4 text-text-secondary">
+                                                Loading availability...
+                                            </p>
+                                        </div>
+                                    ) : ( */}
+                                    <>
+                                        {/* Date Selection */}
+                                        <div className="mb-8">
+                                            <h3 className="text-lg font-semibold mb-4">
+                                                Select Date
+                                            </h3>
+                                            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                                                {availableDates.map(
+                                                    (date, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${selectedDate &&
+                                                                selectedDate.toDateString() ===
+                                                                date.toDateString()
+                                                                ? "border-primary bg-primary bg-opacity-5"
+                                                                : "border-gray-200 hover:border-primary"
+                                                                }`}
+                                                            onClick={() =>
+                                                                handleDateSelect(
+                                                                    date
+                                                                )
+                                                            }
+                                                        >
+                                                            <div className="text-sm font-medium">
+                                                                {
+                                                                    days[
+                                                                    date.getDay()
+                                                                    ]
+                                                                }
+                                                            </div>
+                                                            <div className="text-lg font-semibold">
+                                                                {date.getDate()}
+                                                            </div>
+                                                            <div className="text-xs text-text-secondary">
+                                                                {date.toLocaleDateString(
+                                                                    "en-US",
+                                                                    {
+                                                                        month: "short",
+                                                                    }
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Time Slot Selection */}
+                                        {selectedDate && (
+                                            <div>
+                                                <h3 className="text-lg font-semibold mb-4">
+                                                    Select Time
+                                                </h3>
+
+                                                {availableTimeSlots.length ===
+                                                    0 ? (
+                                                    <p className="text-text-secondary">
+                                                        No time slots
+                                                        available for the
+                                                        selected date.
+                                                        Please choose
+                                                        another date.
+                                                    </p>
+                                                ) : (
+                                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                                                        {availableTimeSlots.map(
+                                                            (
+                                                                timeSlot,
+                                                                index
+                                                            ) => (
+                                                                <div
+                                                                    key={
+                                                                        index
+                                                                    }
+                                                                    className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${selectedTimeSlot ===
+                                                                        timeSlot
+                                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                                        : "border-gray-200 hover:border-primary"
+                                                                        }`}
+                                                                    onClick={() =>
+                                                                        handleTimeSlotSelect(
+                                                                            timeSlot
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <div className="text-sm font-medium">
+                                                                        {
+                                                                            timeSlot
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </>
+                                    {/* )} */}
+
+                                    <div className="mt-8 flex justify-between">
+                                        <button
+                                            className="border-primary rounded-xl px-4 py-2 text-black"
+                                            onClick={() => goToPreviousStep()}
+                                        >
+                                            Back
+                                        </button>
+                                        <button
+                                            className="btn-primary px-2 py-2 rounded-xl"
+                                            disabled={
+                                                !selectedDate ||
+                                                !selectedTimeSlot
+                                            }
+                                            onClick={() => goToNextStep()}
+                                        >
+                                            Continue
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Step 4: Your Details */}
+                            {step === 4 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
                                     <h2 className="text-2xl font-bold mb-6">
                                         Your Details
@@ -707,7 +1027,7 @@ export default function BookingPageClient() {
                                                 name="name"
                                                 value={userData.name}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.name
+                                                className={`form-control ${formErrors.name
                                                     ? "border-red-500"
                                                     : ""
                                                     }`}
@@ -734,7 +1054,7 @@ export default function BookingPageClient() {
                                                 name="email"
                                                 value={userData.email}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.email
+                                                className={`form-control ${formErrors.email
                                                     ? "border-red-500"
                                                     : ""
                                                     }`}
@@ -761,7 +1081,7 @@ export default function BookingPageClient() {
                                                 name="phone"
                                                 value={userData.phone}
                                                 onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.phone
+                                                className={`form-control ${formErrors.phone
                                                     ? "border-red-500"
                                                     : ""
                                                     }`}
@@ -787,7 +1107,7 @@ export default function BookingPageClient() {
                                                 name="message"
                                                 value={userData.message}
                                                 onChange={handleUserDataChange}
-                                                className="form-control px-2 py-2 rounded-xl"
+                                                className="form-control"
                                                 placeholder="Share any specific topics or questions you'd like to discuss"
                                                 rows={4}
                                             ></textarea>
@@ -815,7 +1135,8 @@ export default function BookingPageClient() {
                                 </div>
                             )}
 
-                            {step === 3 && (
+                            {/* Step 5: Payment */}
+                            {step === 5 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
                                     <h2 className="text-2xl font-bold mb-6">
                                         Payment
@@ -829,16 +1150,28 @@ export default function BookingPageClient() {
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div
                                                     className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "card"
-                                                        ? "border-primary bg-purple-300 bg-opacity-5"
+                                                        ? "border-primary bg-primary bg-opacity-5"
                                                         : "border-gray-200 hover:border-primary"
                                                         }`}
                                                     onClick={() =>
                                                         setPaymentMethod("card")
                                                     }
                                                 >
-                                                    <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
-                                                        <FaCreditCard />
-
+                                                    <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
+                                                        <svg
+                                                            className="w-5 h-5 text-primary"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                                            />
+                                                        </svg>
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -853,16 +1186,28 @@ export default function BookingPageClient() {
 
                                                 <div
                                                     className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "upi"
-                                                        ? "border-primary bg-purple-300 bg-opacity-5"
+                                                        ? "border-primary bg-primary bg-opacity-5"
                                                         : "border-gray-200 hover:border-primary"
                                                         }`}
                                                     onClick={() =>
                                                         setPaymentMethod("upi")
                                                     }
                                                 >
-                                                    <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
-                                                        <FaGooglePay />
-
+                                                    <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
+                                                        <svg
+                                                            className="w-5 h-5 text-primary"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                                            />
+                                                        </svg>
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -889,7 +1234,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="card-name"
-                                                        className="form-control px-2 py-2 rounded-xl"
+                                                        className="form-control"
                                                         placeholder="As it appears on the card"
                                                     />
                                                 </div>
@@ -904,7 +1249,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="card-number"
-                                                        className="form-control px-2 py-2 rounded-xl"
+                                                        className="form-control"
                                                         placeholder="1234 5678 9012 3456"
                                                     />
                                                 </div>
@@ -920,7 +1265,7 @@ export default function BookingPageClient() {
                                                         <input
                                                             type="text"
                                                             id="card-expiry"
-                                                            className="form-control px-2 py-2 rounded-xl"
+                                                            className="form-control"
                                                             placeholder="MM/YY"
                                                         />
                                                     </div>
@@ -954,7 +1299,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="upi-id"
-                                                        className="form-control px-2 py-2 rounded-xl"
+                                                        className="form-control"
                                                         placeholder="yourname@upi"
                                                     />
                                                 </div>
@@ -965,7 +1310,7 @@ export default function BookingPageClient() {
                                             </div>
                                         )}
 
-                                        <div className="p-4 bg-purple-200 bg-opacity-5 rounded-lg">
+                                        <div className="p-4 bg-primary bg-opacity-5 rounded-lg">
                                             <h3 className="text-lg font-semibold mb-2">
                                                 Cancellation Policy
                                             </h3>
@@ -1031,8 +1376,8 @@ export default function BookingPageClient() {
                                 </div>
                             )}
 
-                            {/* Step 4: Your Details */}
-                            {step === 4 && (
+                            {/* Step 6: Success */}
+                            {step === 6 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <svg
@@ -1137,17 +1482,16 @@ export default function BookingPageClient() {
                                     </div>
                                 </div>
                             )}
-
-
                         </div>
 
                         {/* Order Summary Sidebar */}
-                        {step > 2 && (
+                        {step > 4 && (
                             <div className="lg:col-span-1">
                                 <div className="bg-white p-6 rounded-lg shadow-sm sticky top-20">
                                     <h2 className="text-xl font-bold mb-6">
                                         Booking Summary
                                     </h2>
+
                                     {/* Service */}
                                     <div className="mb-4 pb-4 border-b border-gray-100">
                                         <div className="text-text-secondary text-sm mb-1">
@@ -1289,9 +1633,8 @@ export default function BookingPageClient() {
                             </div>
                         )}
                     </div>
-
                 </div>
-            </section >
+            </section>
         </>
     );
 }
