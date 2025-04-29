@@ -23,7 +23,7 @@ export default function DashboardPage() {
 
                     if (menteeDocSnap.exists()) {
                         console.log('User is authenticated and exists in the database.');
-                        setUser(currentUser);
+                        setUser(menteeDocSnap.data() as User);
                         router.push('/dashboard');
                     } else {
                         console.log('User is authenticated but does not exist in the database.');
@@ -61,5 +61,5 @@ export default function DashboardPage() {
         );
     }
 
-    return <DashboardPageClient />;
+    return <DashboardPageClient userData={user} />;
 }
