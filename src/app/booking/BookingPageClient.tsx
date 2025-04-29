@@ -8,6 +8,8 @@ import { Mentor, Service } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 import { FaCreditCard } from "react-icons/fa";
 import { FaGooglePay } from "react-icons/fa";
+import { InlineWidget } from "react-calendly";
+import DateTimeSelector from "./DateTimePicker";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const timeSlots = [
@@ -81,6 +83,22 @@ export default function BookingPageClient() {
     // Success status
     const [, setBookingSuccess] = useState(false);
     const [bookingReference, setBookingReference] = useState("");
+    const [calendlyEventDetails, setCalendlyEventDetails] = useState<any>(null);
+    useEffect(() => {
+        const handleCalendlyEvent = (e: any) => {
+            console.log("Calendly event:", e.data);
+            if (e?.data?.event === "calendly.event_scheduled") {
+                console.log("Calendly event scheduled:", e.data.payload);
+                setCalendlyEventDetails(e.data.payload);
+            }
+        };
+        console.log("Adding Calendly event listener");
+        window.addEventListener("message", handleCalendlyEvent);
+
+        return () => {
+            window.removeEventListener("message", handleCalendlyEvent);
+        };
+    }, []);
 
     // Load services and mentors
     useEffect(() => {
@@ -218,6 +236,7 @@ export default function BookingPageClient() {
                         ],
                         bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
                         image: "/images/mentors/mentor1.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1500,
                         rating: 4.9,
                     },
@@ -229,6 +248,7 @@ export default function BookingPageClient() {
                         expertise: ["CA", "Accounting", "Startups"],
                         bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
                         image: "/images/mentors/mentor2.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1200,
                         rating: 4.8,
                     },
@@ -244,6 +264,7 @@ export default function BookingPageClient() {
                         ],
                         bio: "Passionate about digital marketing and helping professionals build their personal brand.",
                         image: "/images/mentors/mentor3.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1000,
                         rating: 4.7,
                     },
@@ -259,6 +280,7 @@ export default function BookingPageClient() {
                         ],
                         bio: "Worked on numerous M&A deals and helped startups raise capital.",
                         image: "/images/mentors/mentor4.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 2000,
                         rating: 4.9,
                     },
@@ -687,133 +709,48 @@ export default function BookingPageClient() {
                             )}
 
                             {/* Step 2: Select Mentor */}
-                            {step === 2 && (
+                            {step === 2 && selectedMentor?.calendlyUrl && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h2 className="text-2xl font-bold mb-6">
-                                        Your Details
-                                    </h2>
+                                    <h2 className="text-2xl font-bold mb-6">Schedule with {selectedMentor.name}</h2>
 
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label
-                                                htmlFor="name"
-                                                className="form-label"
-                                            >
-                                                Full Name*
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                value={userData.name}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.name
-                                                    ? "border-red-500"
-                                                    : ""
-                                                    }`}
-                                                placeholder="Enter your full name"
-                                                required
-                                            />
-                                            {formErrors.name && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.name}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="email"
-                                                className="form-label"
-                                            >
-                                                Email Address*
-                                            </label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                value={userData.email}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.email
-                                                    ? "border-red-500"
-                                                    : ""
-                                                    }`}
-                                                placeholder="Enter your email address"
-                                                required
-                                            />
-                                            {formErrors.email && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.email}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="phone"
-                                                className="form-label"
-                                            >
-                                                Phone Number*
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                id="phone"
-                                                name="phone"
-                                                value={userData.phone}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control px-2 py-2 rounded-xl ${formErrors.phone
-                                                    ? "border-red-500"
-                                                    : ""
-                                                    }`}
-                                                placeholder="Enter your phone number"
-                                                required
-                                            />
-                                            {formErrors.phone && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.phone}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="message"
-                                                className="form-label"
-                                            >
-                                                Message to Mentor (Optional)
-                                            </label>
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                value={userData.message}
-                                                onChange={handleUserDataChange}
-                                                className="form-control px-2 py-2 rounded-xl"
-                                                placeholder="Share any specific topics or questions you'd like to discuss"
-                                                rows={4}
-                                            ></textarea>
-                                        </div>
+                                    <div className="rounded-lg overflow-hidden h-[700px]">
+                                        <iframe
+                                            src={selectedMentor.calendlyUrl}
+                                            width="100%"
+                                            height="100%"
+                                            title="Calendly Scheduler"
+                                            allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"
+                                        ></iframe>
                                     </div>
 
-                                    <div className="mt-8 flex justify-between">
+                                    <div className="mt-6 text-sm text-text-secondary">
+                                        After booking, you will receive a confirmation email and calendar invite.
+                                    </div>
+
+                                    <div className="mt-6 flex justify-end">
                                         <button
-                                            className="border-primary border-2 rounded-xl px-4 py-2 text-black"
-                                            onClick={() => goToPreviousStep()}
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            className="btn-primary px-2 py-2 rounded-xl"
+                                            className="btn-primary px-4 py-2 rounded-xl"
                                             onClick={() => {
-                                                if (validateUserData()) {
-                                                    goToNextStep();
+                                                if (calendlyEventDetails) {
+                                                    const date = new Date(calendlyEventDetails.event.start_time);
+                                                    setSelectedDate(date);
+                                                    setSelectedTimeSlot(date.toLocaleTimeString([], {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                    }));
                                                 }
+                                                goToNextStep();
                                             }}
                                         >
-                                            Continue to Payment
+                                            Continue
                                         </button>
+
                                     </div>
                                 </div>
                             )}
+
+
+
 
                             {step === 3 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -1085,23 +1022,7 @@ export default function BookingPageClient() {
                                                 {selectedMentor?.name}
                                             </span>
                                         </div>
-                                        <div className="flex justify-between mb-2">
-                                            <span className="text-text-secondary">
-                                                Date & Time:
-                                            </span>
-                                            <span className="font-semibold">
-                                                {selectedDate?.toLocaleDateString(
-                                                    "en-US",
-                                                    {
-                                                        weekday: "short",
-                                                        day: "numeric",
-                                                        month: "short",
-                                                        year: "numeric",
-                                                    }
-                                                )}{" "}
-                                                at {selectedTimeSlot}
-                                            </span>
-                                        </div>
+
                                         <div className="flex justify-between">
                                             <span className="text-text-secondary">
                                                 Amount Paid:
@@ -1115,11 +1036,11 @@ export default function BookingPageClient() {
                                         </div>
                                     </div>
 
-                                    <p className="text-sm text-text-secondary mb-6">
+                                    {/* <p className="text-sm text-text-secondary mb-6">
                                         The session link will be sent to your
                                         email ({userData.email}) 15 minutes
                                         before the scheduled time.
-                                    </p>
+                                    </p> */}
 
                                     <div className="flex flex-col md:flex-row justify-center gap-4">
                                         <Link
@@ -1189,7 +1110,7 @@ export default function BookingPageClient() {
                                         )}
                                     </div>
 
-                                    {/* Date & Time */}
+                                    {/* Date & Time
                                     <div className="mb-4 pb-4 border-b border-gray-100">
                                         <div className="text-text-secondary text-sm mb-1">
                                             Date & Time
@@ -1212,7 +1133,7 @@ export default function BookingPageClient() {
                                                 {selectedTimeSlot}
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
 
                                     {/* Pricing */}
                                     <div className="mb-6">
