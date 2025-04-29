@@ -43,7 +43,7 @@ interface MentorStats {
     pendingPayments: number;
 }
 
-export default function DashboardPageClient() {
+export default function DashboardPageClient({ userData }: { userData: any }) {
     const [activeTab, setActiveTab] = useState("upcoming");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -64,6 +64,8 @@ export default function DashboardPageClient() {
     const [mentorUpcomingSessions] = useState<Booking[]>([]);
     const [mentorPastSessions] = useState<Booking[]>([]);
     const [mentorEarnings, setMentorEarnings] = useState<MentorEarning[]>([]);
+
+    console.log("user data", userData);
 
     // Fetch dashboard data
     useEffect(() => {
@@ -137,6 +139,7 @@ export default function DashboardPageClient() {
                         ],
                         bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
                         image: "/images/mentors/mentor1.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1500,
                         rating: 4.9,
                     },
@@ -148,6 +151,7 @@ export default function DashboardPageClient() {
                         expertise: ["CA", "Accounting", "Startups"],
                         bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
                         image: "/images/mentors/mentor2.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1200,
                         rating: 4.8,
                     },
@@ -261,19 +265,19 @@ export default function DashboardPageClient() {
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white py-12">
+            <section className="bg-gradient-primary text-white py-4 rounded-b-2xl">
                 <div className="container">
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <div>
-                            <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
                                 Dashboard
                             </h1>
                             <p className="opacity-90">
-                                Welcome back, {mockUser.name}
+                                Welcome back, {userData.name}
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-                            <Link href="/booking" className="btn-secondary p-3 rounded-2xl shadow-lg shadow-white">
+
                                 Book a New Session
                             </Link>
                         </div>
@@ -291,33 +295,25 @@ export default function DashboardPageClient() {
                                 {/* User Profile */}
                                 <div className="p-6 border-b border-gray-100">
                                     <div className="flex items-center">
-                                        <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                                            <Image
-                                                src={mockUser.image}
-                                                alt={mockUser.name}
-                                                fill
-                                                className="object-cover"
-                                            />
+                                        <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mr-4">
+                                            {userData.name?.charAt(0).toUpperCase() || "?"}
                                         </div>
+
                                         <div>
                                             <h3 className="font-semibold text-lg">
-                                                {mockUser.name}
+                                                {userData.name}
                                             </h3>
                                             <p className="text-text-secondary text-sm">
-                                                {mockUser.email}
+                                                {userData.email}
                                             </p>
                                             <div className="mt-2">
-                                                <span className="text-xs bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full">
-                                                    {userRole === "both"
-                                                        ? "User & Mentor"
-                                                        : userRole === "mentor"
-                                                            ? "Mentor"
-                                                            : "User"}
+                                                <span className="text-xs bg-primary bg-opacity-10 text-white px-3 py-2 rounded-lg">
+                                                    {userData.role.toUpperCase()}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button className="mt-4 w-full text-sm text-primary border border-primary rounded-md py-1 hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                    <button className="mt-4 w-full text-sm text-black border border-primary rounded-md py-1 hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                         Edit Profile
                                     </button>
                                 </div>
@@ -327,9 +323,9 @@ export default function DashboardPageClient() {
                                     <ul>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "upcoming" ||
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-purple-300 hover:bg-opacity-5 transition-colors ${activeTab === "upcoming" ||
                                                     activeTab === "past"
-                                                    ? "text-primary font-medium"
+                                                    ? "text-black font-medium"
                                                     : "text-text-secondary"
                                                     }`}
                                                 onClick={() =>
@@ -355,7 +351,7 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "mentors"
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-purple-300 hover:bg-opacity-5 transition-colors ${activeTab === "mentors"
                                                     ? "text-primary font-medium"
                                                     : "text-text-secondary"
                                                     }`}
@@ -382,7 +378,7 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "transactions"
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-purple-300 hover:bg-opacity-5 transition-colors ${activeTab === "transactions"
                                                     ? "text-primary font-medium"
                                                     : "text-text-secondary"
                                                     }`}
@@ -409,7 +405,7 @@ export default function DashboardPageClient() {
                                         </li>
                                         <li>
                                             <button
-                                                className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab === "resources"
+                                                className={`flex items-center w-full px-6 py-3 hover:bg-purple-300 hover:bg-opacity-5 transition-colors ${activeTab === "resources"
                                                     ? "text-primary font-medium"
                                                     : "text-text-secondary"
                                                     }`}
@@ -438,7 +434,7 @@ export default function DashboardPageClient() {
                                             userRole === "both") && (
                                                 <li>
                                                     <button
-                                                        className={`flex items-center w-full px-6 py-3 hover:bg-primary hover:bg-opacity-5 transition-colors ${activeTab ===
+                                                        className={`flex items-center w-full px-6 py-3 hover:bg-purple-300 hover:bg-opacity-5 transition-colors ${activeTab ===
                                                             "mentor-dashboard"
                                                             ? "text-primary font-medium"
                                                             : "text-text-secondary"
@@ -651,10 +647,10 @@ export default function DashboardPageClient() {
                                                                         </p>
                                                                     </div>
                                                                     <div className="flex flex-wrap gap-2">
-                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                                                             Reschedule
                                                                         </button>
-                                                                        <button className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-black border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:bg-opacity-5 transition-colors">
                                                                             Cancel
                                                                         </button>
                                                                         <Link
@@ -740,7 +736,7 @@ export default function DashboardPageClient() {
                                                                     </p>
                                                                 </div>
                                                                 <div className="flex flex-wrap gap-2">
-                                                                    <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                    <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                                                         Leave Feedback
                                                                     </button>
                                                                     <button className="bg-primary text-white rounded-md px-3 py-1 text-sm hover:bg-opacity-90 transition-colors">
@@ -883,7 +879,7 @@ export default function DashboardPageClient() {
                                                                 >
                                                                     Book Again
                                                                 </Link>
-                                                                <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                <button className="text-black border border-primary rounded-md px-3 py-1 text-sm hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                                                     View Profile
                                                                 </button>
                                                             </div>
@@ -1169,8 +1165,8 @@ export default function DashboardPageClient() {
                                         </h2>
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                            <div className="bg-primary bg-opacity-5 p-4 rounded-lg">
-                                                <div className="text-primary text-sm font-medium mb-1">
+                                            <div className="bg-purple-300 bg-opacity-5 p-4 rounded-lg">
+                                                <div className="text-black text-sm font-medium mb-1">
                                                     Total Sessions
                                                 </div>
                                                 <div className="text-3xl font-bold">
@@ -1191,7 +1187,7 @@ export default function DashboardPageClient() {
                                                 </div>
                                             </div>
                                             <div className="bg-secondary bg-opacity-5 p-4 rounded-lg">
-                                                <div className="text-secondary text-sm font-medium mb-1">
+                                                <div className="text-black text-sm font-medium mb-1">
                                                     Earnings
                                                 </div>
                                                 <div className="text-3xl font-bold">
@@ -1316,7 +1312,7 @@ export default function DashboardPageClient() {
                                                                         </p>
                                                                     </div>
                                                                     <div className="flex flex-wrap gap-2">
-                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                                                             Reschedule
                                                                         </button>
                                                                         <Link
@@ -1398,7 +1394,7 @@ export default function DashboardPageClient() {
                                                                         </p>
                                                                     </div>
                                                                     <div className="flex flex-wrap gap-2">
-                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-primary hover:bg-opacity-5 transition-colors">
+                                                                        <button className="text-primary border border-primary rounded-md px-3 py-1 text-sm hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
                                                                             View
                                                                             Notes
                                                                         </button>
@@ -1429,7 +1425,7 @@ export default function DashboardPageClient() {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <button className="btn-primary">
+                                                    <button className="btn-primary px-4 py-2 text-sm font-medium rounded-xl">
                                                         Withdraw Funds
                                                     </button>
                                                 </div>

@@ -22,7 +22,8 @@ export default function Home() {
                             Revolutionizing the awareness of people towards their next step in education, career and beyond.
                             </h1>
                             <h2 className="text-xl md:text-2xl mb-8 font-medium text-white opacity-90">
-                                Shaping Your Tomorrow
+                                Revolutionizing the awareness of people towards
+                                their next step in education, career and beyond.
                             </h2>
                             <p className="text-lg mb-8 max-w-md text-white opacity-80">
                                 Get personalized guidance from industry experts
@@ -57,76 +58,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Our Vision Section */}
-            <section className="py-16 bg-white">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="section-title">Our Vision</h2>
-                        <p className="section-subtitle">
-                            With you, throughout your educational and
-                            professional life
-                        </p>
-                    </div>
 
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
-                        {/* Partner Logos */}
-                        {[
-                            "Mahindra",
-                            "KPMG",
-                            "Aditya Birla Group",
-                            "Kotak",
-                            "JP Morgan",
-                        ].map((partner) => (
-                            <div
-                                key={partner}
-                                className="grayscale hover:grayscale-0 transition-all duration-300"
-                            >
-                                <Image
-                                    src={`/images/partners/${partner
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")}.svg`}
-                                    alt={`${partner} logo`}
-                                    width={120}
-                                    height={60}
-                                />
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <Image
-                                src="/images/vision-illustration.svg"
-                                alt="Our Vision"
-                                width={500}
-                                height={400}
-                                className="rounded-lg"
-                            />
-                        </div>
-                        <div>
-                            <h3 className="text-2xl md:text-3xl font-bold mb-6">
-                                Bridging the Gap Between Education and Industry
-                            </h3>
-                            <p className="mb-4">
-                                At Mentoverse, we believe that every student and
-                                professional deserves access to quality
-                                mentorship. Our platform connects you with
-                                industry experts who have walked the path you
-                                aspire to take.
-                            </p>
-                            <p className="mb-6">
-                                Whether you&apos;re a CA student, a finance
-                                professional, or a startup founder, we have
-                                mentors who can provide you with personalized
-                                guidance tailored to your specific needs.
-                            </p>
-                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
-                                Learn More
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Our Offerings Section */}
             <section className="section-padding bg-background py-[4rem]">
@@ -153,14 +85,14 @@ export default function Home() {
                                         {service.id === "mock-interview"
                                             ? "Practice with industry experts and get real-time feedback to improve your interview skills."
                                             : service.id === "linkedin-review"
-                                            ? "Get your LinkedIn profile optimized by professionals to attract better opportunities."
-                                            : service.id === "cv-resume-review"
-                                            ? "Professional review of your CV/resume to stand out among other candidates."
-                                            : service.id === "group-discussion"
-                                            ? "Learn the art of group discussions with like-minded peers and expert guidance."
-                                            : service.id === "career-guidance"
-                                            ? "Personalized career planning and guidance from industry professionals."
-                                            : "Stay updated with the latest industry trends through our events and webinars."}
+                                                ? "Get your LinkedIn profile optimized by professionals to attract better opportunities."
+                                                : service.id === "cv-resume-review"
+                                                    ? "Professional review of your CV/resume to stand out among other candidates."
+                                                    : service.id === "group-discussion"
+                                                        ? "Learn the art of group discussions with like-minded peers and expert guidance."
+                                                        : service.id === "career-guidance"
+                                                            ? "Personalized career planning and guidance from industry professionals."
+                                                            : "Stay updated with the latest industry trends through our events and webinars."}
                                     </p>
                                     <Link
                                         href={`/services/${service.id}`}
@@ -190,7 +122,9 @@ export default function Home() {
             </section>
 
             {/* Stats Showcase Section */}
-            <section className="py-16 bg-gradient-primary">
+
+            <section className="py-16 bg-gradient-primary text-white mt-4">
+
                 <div className="container">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
@@ -208,10 +142,11 @@ export default function Home() {
                                 key={index}
                                 className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-8 text-center"
                             >
-                                <div className="text-4xl md:text-5xl font-bold mb-2 ">
+                                <div className="text-4xl md:text-5xl font-bold mb-2 text-black">
                                     {stat.number}
                                 </div>
-                                <div className="text-lg opacity-80">
+                                <div className="text-lg  opacity-80 text-black">
+
                                     {stat.label}
                                 </div>
                             </div>
@@ -305,7 +240,9 @@ export default function Home() {
                             guidance, and take your career to new heights.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+
+                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+
                                 Book a Session
                             </Link>
                             <Link

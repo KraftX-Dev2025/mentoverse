@@ -10,6 +10,7 @@ export interface Mentor {
     image: string;
     hourlyRate: number;
     rating: number;
+    calendlyUrl: string;
 }
 
 export interface Service {

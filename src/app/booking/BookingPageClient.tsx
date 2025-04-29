@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Mentor, Service } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
+import { FaCreditCard } from "react-icons/fa";
+import { FaGooglePay } from "react-icons/fa";
 
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const timeSlots = [
     "09:00 AM",
     "10:00 AM",
@@ -40,12 +40,9 @@ export default function BookingPageClient() {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(
         null
     );
-    const [availableDates, setAvailableDates] = useState<Date[]>([]);
-    const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
 
     // State for data loading
     const [services, setServices] = useState<Service[]>([]);
-    const [mentors, setMentors] = useState<Mentor[]>([]);
     const [loading, setLoading] = useState({
         services: true,
         mentors: true,
@@ -79,6 +76,22 @@ export default function BookingPageClient() {
     // Success status
     const [, setBookingSuccess] = useState(false);
     const [bookingReference, setBookingReference] = useState("");
+    const [calendlyEventDetails, setCalendlyEventDetails] = useState<any>(null);
+    useEffect(() => {
+        const handleCalendlyEvent = (e: any) => {
+            console.log("Calendly event:", e.data);
+            if (e?.data?.event === "calendly.event_scheduled") {
+                console.log("Calendly event scheduled:", e.data.payload);
+                setCalendlyEventDetails(e.data.payload);
+            }
+        };
+        console.log("Adding Calendly event listener");
+        window.addEventListener("message", handleCalendlyEvent);
+
+        return () => {
+            window.removeEventListener("message", handleCalendlyEvent);
+        };
+    }, []);
 
     // Load services and mentors
     useEffect(() => {
@@ -216,6 +229,7 @@ export default function BookingPageClient() {
                         ],
                         bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
                         image: "/images/mentors/mentor1.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1500,
                         rating: 4.9,
                     },
@@ -227,6 +241,7 @@ export default function BookingPageClient() {
                         expertise: ["CA", "Accounting", "Startups"],
                         bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
                         image: "/images/mentors/mentor2.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1200,
                         rating: 4.8,
                     },
@@ -242,6 +257,7 @@ export default function BookingPageClient() {
                         ],
                         bio: "Passionate about digital marketing and helping professionals build their personal brand.",
                         image: "/images/mentors/mentor3.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 1000,
                         rating: 4.7,
                     },
@@ -257,12 +273,12 @@ export default function BookingPageClient() {
                         ],
                         bio: "Worked on numerous M&A deals and helped startups raise capital.",
                         image: "/images/mentors/mentor4.jpg",
+                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
                         hourlyRate: 2000,
                         rating: 4.9,
                     },
                 ];
 
-                setMentors(mockMentors);
                 setLoading((prev) => ({ ...prev, mentors: false }));
 
                 // If a mentor ID is in the URL, pre-select it
@@ -288,42 +304,6 @@ export default function BookingPageClient() {
         fetchData();
     }, [preSelectedServiceId, preSelectedMentorId]);
 
-    // Load available dates when mentor is selected
-    useEffect(() => {
-        if (selectedMentor && step === 3) {
-            setLoading((prev) => ({ ...prev, availability: true }));
-
-            // In a real implementation, you would fetch availability from your API
-            // const fetchAvailability = async () => {
-            //   const response = await fetch(`/api/mentors/${selectedMentor.id}/availability`);
-            //   const data = await response.json();
-            //   setAvailableDates(data.dates);
-            // };
-
-            // Mock data for available dates (next 14 days with some random dates excluded)
-            const mockAvailability = () => {
-                const dates: Date[] = [];
-                const today = new Date();
-
-                for (let i = 1; i <= 14; i++) {
-                    // Add date if it's not a random exclusion (simulate some unavailable days)
-                    if (Math.random() > 0.3) {
-                        const date = new Date(today);
-                        date.setDate(today.getDate() + i);
-                        dates.push(date);
-                    }
-                }
-
-                return dates;
-            };
-
-            // Simulate API delay
-            setTimeout(() => {
-                setAvailableDates(mockAvailability());
-                setLoading((prev) => ({ ...prev, availability: false }));
-            }, 800);
-        }
-    }, [selectedMentor, step]);
 
     // Load available time slots when date is selected
     useEffect(() => {
@@ -340,7 +320,6 @@ export default function BookingPageClient() {
                 return timeSlots.filter(() => Math.random() > 0.3);
             };
 
-            setAvailableTimeSlots(mockTimeSlots());
         }
     }, [selectedDate, selectedMentor]);
 
@@ -462,7 +441,7 @@ export default function BookingPageClient() {
             )}`;
             setBookingReference(mockReference);
             setBookingSuccess(true);
-            setStep(6); // Move to success step
+            setStep(4); // Move to success step
         } catch {
             setError(
                 "Failed to complete your booking. Please try again later."
@@ -494,26 +473,25 @@ export default function BookingPageClient() {
             <section className="py-12 bg-background">
                 <div className="container">
                     {/* Booking Steps */}
-                    {step < 6 && (
+                    {step < 5 && (
                         <div className="mb-12">
                             <div className="flex justify-between items-center relative">
                                 {/* Progress Bar */}
                                 <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 z-0">
                                     <div
                                         className="h-full bg-primary transition-all duration-300"
-                                        style={{ width: `${(step - 1) * 25}%` }}
+                                        style={{ width: `${(step - 1) * 33.33}%` }}
                                     ></div>
                                 </div>
 
                                 {/* Step Indicators */}
-                                {[1, 2, 3, 4, 5].map((stepNumber) => (
+                                {[1, 2, 3, 4].map((stepNumber) => (
                                     <div
                                         key={stepNumber}
-                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${
-                                            step >= stepNumber
-                                                ? "bg-primary text-white"
-                                                : "bg-white text-text-secondary border border-gray-300"
-                                        }`}
+                                        className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${step >= stepNumber
+                                            ? "bg-primary text-white"
+                                            : "bg-white text-text-secondary border border-gray-300"
+                                            }`}
                                     >
                                         {stepNumber}
                                     </div>
@@ -524,17 +502,14 @@ export default function BookingPageClient() {
                                 <div className="text-center w-36 -ml-14">
                                     Choose Service
                                 </div>
-                                <div className="text-center w-36 -ml-14">
-                                    Select Mentor
-                                </div>
-                                <div className="text-center w-36 -ml-14">
-                                    Pick Date & Time
-                                </div>
-                                <div className="text-center w-36 -ml-14">
+                                <div className="text-center w-36 -ml-14 ">
                                     Your Details
                                 </div>
                                 <div className="text-center w-36 -ml-14">
                                     Payment
+                                </div>
+                                <div className="text-center w-36 -ml-14">
+                                    Success
                                 </div>
                             </div>
                         </div>
@@ -602,12 +577,11 @@ export default function BookingPageClient() {
                                             {services.map((service) => (
                                                 <div
                                                     key={service.id}
-                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                                                        selectedService?.id ===
+                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedService?.id ===
                                                         service.id
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                        ? "border-primary bg-primary bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         handleServiceSelect(
                                                             service
@@ -679,7 +653,7 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-end">
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                             disabled={!selectedService}
                                             onClick={() => goToNextStep()}
                                         >
@@ -690,463 +664,50 @@ export default function BookingPageClient() {
                             )}
 
                             {/* Step 2: Select Mentor */}
-                            {step === 2 && (
+                            {step === 2 && selectedMentor?.calendlyUrl && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h2 className="text-2xl font-bold mb-6">
-                                        Select a Mentor
-                                    </h2>
+                                    <h2 className="text-2xl font-bold mb-6">Schedule with {selectedMentor.name}</h2>
 
-                                    {loading.mentors ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                Loading mentors...
-                                            </p>
-                                        </div>
-                                    ) : error ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-red-500 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                {error}
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-4">
-                                            {mentors.map((mentor) => (
-                                                <div
-                                                    key={mentor.id}
-                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                                                        selectedMentor?.id ===
-                                                        mentor.id
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
-                                                    onClick={() =>
-                                                        handleMentorSelect(
-                                                            mentor
-                                                        )
-                                                    }
-                                                >
-                                                    <div className="flex items-center">
-                                                        <div className="w-16 h-16 rounded-full overflow-hidden mr-4 shrink-0">
-                                                            <Image
-                                                                src={
-                                                                    mentor.image
-                                                                }
-                                                                alt={
-                                                                    mentor.name
-                                                                }
-                                                                width={64}
-                                                                height={64}
-                                                                className="object-cover"
-                                                            />
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            <div className="flex justify-between">
-                                                                <div>
-                                                                    <h3 className="text-lg font-semibold">
-                                                                        {
-                                                                            mentor.name
-                                                                        }
-                                                                    </h3>
-                                                                    <p className="text-primary text-sm">
-                                                                        {
-                                                                            mentor.title
-                                                                        }
-                                                                    </p>
-                                                                    <p className="text-text-secondary text-sm">
-                                                                        {
-                                                                            mentor.company
-                                                                        }
-                                                                    </p>
-                                                                </div>
-                                                                <div className="text-right">
-                                                                    <div className="font-bold">
-                                                                        {formatCurrency(
-                                                                            mentor.hourlyRate
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="flex items-center justify-end mt-1">
-                                                                        <span className="text-secondary font-semibold mr-1">
-                                                                            {
-                                                                                mentor.rating
-                                                                            }
-                                                                        </span>
-                                                                        <span className="text-secondary">
-                                                                            ★
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <p className="text-text-secondary text-sm mt-2 line-clamp-2">
-                                                                {mentor.bio}
-                                                            </p>
-
-                                                            <div className="mt-3 flex flex-wrap gap-2">
-                                                                {mentor.expertise.map(
-                                                                    (exp) => (
-                                                                        <span
-                                                                            key={
-                                                                                exp
-                                                                            }
-                                                                            className="text-xs bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full"
-                                                                        >
-                                                                            {
-                                                                                exp
-                                                                            }
-                                                                        </span>
-                                                                    )
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    <div className="mt-8 flex justify-between">
-                                        <button
-                                            className="btn-outline border-primary text-primary"
-                                            onClick={() => goToPreviousStep()}
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            className="btn-primary"
-                                            disabled={!selectedMentor}
-                                            onClick={() => goToNextStep()}
-                                        >
-                                            Continue
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Step 3: Pick Date & Time */}
-                            {step === 3 && (
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h2 className="text-2xl font-bold mb-6">
-                                        Select Date & Time
-                                    </h2>
-
-                                    {loading.availability ? (
-                                        <div className="text-center py-12">
-                                            <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
-                                            <p className="mt-4 text-text-secondary">
-                                                Loading availability...
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            {/* Date Selection */}
-                                            <div className="mb-8">
-                                                <h3 className="text-lg font-semibold mb-4">
-                                                    Select Date
-                                                </h3>
-                                                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-                                                    {availableDates.map(
-                                                        (date, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${
-                                                                    selectedDate &&
-                                                                    selectedDate.toDateString() ===
-                                                                        date.toDateString()
-                                                                        ? "border-primary bg-primary bg-opacity-5"
-                                                                        : "border-gray-200 hover:border-primary"
-                                                                }`}
-                                                                onClick={() =>
-                                                                    handleDateSelect(
-                                                                        date
-                                                                    )
-                                                                }
-                                                            >
-                                                                <div className="text-sm font-medium">
-                                                                    {
-                                                                        days[
-                                                                            date.getDay()
-                                                                        ]
-                                                                    }
-                                                                </div>
-                                                                <div className="text-lg font-semibold">
-                                                                    {date.getDate()}
-                                                                </div>
-                                                                <div className="text-xs text-text-secondary">
-                                                                    {date.toLocaleDateString(
-                                                                        "en-US",
-                                                                        {
-                                                                            month: "short",
-                                                                        }
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            {/* Time Slot Selection */}
-                                            {selectedDate && (
-                                                <div>
-                                                    <h3 className="text-lg font-semibold mb-4">
-                                                        Select Time
-                                                    </h3>
-
-                                                    {availableTimeSlots.length ===
-                                                    0 ? (
-                                                        <p className="text-text-secondary">
-                                                            No time slots
-                                                            available for the
-                                                            selected date.
-                                                            Please choose
-                                                            another date.
-                                                        </p>
-                                                    ) : (
-                                                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                                                            {availableTimeSlots.map(
-                                                                (
-                                                                    timeSlot,
-                                                                    index
-                                                                ) => (
-                                                                    <div
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        className={`p-2 border rounded-lg text-center cursor-pointer transition-all duration-200 ${
-                                                                            selectedTimeSlot ===
-                                                                            timeSlot
-                                                                                ? "border-primary bg-primary bg-opacity-5"
-                                                                                : "border-gray-200 hover:border-primary"
-                                                                        }`}
-                                                                        onClick={() =>
-                                                                            handleTimeSlotSelect(
-                                                                                timeSlot
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <div className="text-sm font-medium">
-                                                                            {
-                                                                                timeSlot
-                                                                            }
-                                                                        </div>
-                                                                    </div>
-                                                                )
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </>
-                                    )}
-
-                                    <div className="mt-8 flex justify-between">
-                                        <button
-                                            className="btn-outline border-primary text-primary"
-                                            onClick={() => goToPreviousStep()}
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            className="btn-primary"
-                                            disabled={
-                                                !selectedDate ||
-                                                !selectedTimeSlot
-                                            }
-                                            onClick={() => goToNextStep()}
-                                        >
-                                            Continue
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Step 4: Your Details */}
-                            {step === 4 && (
-                                <div className="bg-white p-6 rounded-lg shadow-sm">
-                                    <h2 className="text-2xl font-bold mb-6">
-                                        Your Details
-                                    </h2>
-
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label
-                                                htmlFor="name"
-                                                className="form-label"
-                                            >
-                                                Full Name*
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                value={userData.name}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.name
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
-                                                placeholder="Enter your full name"
-                                                required
-                                            />
-                                            {formErrors.name && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.name}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="email"
-                                                className="form-label"
-                                            >
-                                                Email Address*
-                                            </label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                value={userData.email}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.email
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
-                                                placeholder="Enter your email address"
-                                                required
-                                            />
-                                            {formErrors.email && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.email}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="phone"
-                                                className="form-label"
-                                            >
-                                                Phone Number*
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                id="phone"
-                                                name="phone"
-                                                value={userData.phone}
-                                                onChange={handleUserDataChange}
-                                                className={`form-control ${
-                                                    formErrors.phone
-                                                        ? "border-red-500"
-                                                        : ""
-                                                }`}
-                                                placeholder="Enter your phone number"
-                                                required
-                                            />
-                                            {formErrors.phone && (
-                                                <p className="text-red-500 text-xs mt-1">
-                                                    {formErrors.phone}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                htmlFor="message"
-                                                className="form-label"
-                                            >
-                                                Message to Mentor (Optional)
-                                            </label>
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                value={userData.message}
-                                                onChange={handleUserDataChange}
-                                                className="form-control"
-                                                placeholder="Share any specific topics or questions you'd like to discuss"
-                                                rows={4}
-                                            ></textarea>
-                                        </div>
+                                    <div className="rounded-lg overflow-hidden h-[700px]">
+                                        <iframe
+                                            src={selectedMentor.calendlyUrl}
+                                            width="100%"
+                                            height="100%"
+                                            title="Calendly Scheduler"
+                                            allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"
+                                        ></iframe>
                                     </div>
 
-                                    <div className="mt-8 flex justify-between">
+                                    <div className="mt-6 text-sm text-text-secondary">
+                                        After booking, you will receive a confirmation email and calendar invite.
+                                    </div>
+
+                                    <div className="mt-6 flex justify-end">
                                         <button
-                                            className="btn-outline border-primary text-primary"
-                                            onClick={() => goToPreviousStep()}
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            className="btn-primary"
+                                            className="btn-primary px-4 py-2 rounded-xl"
                                             onClick={() => {
-                                                if (validateUserData()) {
-                                                    goToNextStep();
+                                                if (calendlyEventDetails) {
+                                                    const date = new Date(calendlyEventDetails.event.start_time);
+                                                    setSelectedDate(date);
+                                                    setSelectedTimeSlot(date.toLocaleTimeString([], {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                    }));
                                                 }
+                                                goToNextStep();
                                             }}
                                         >
-                                            Continue to Payment
+                                            Continue
                                         </button>
+
                                     </div>
                                 </div>
                             )}
 
-                            {/* Step 5: Payment */}
-                            {step === 5 && (
+
+
+
+                            {step === 3 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
                                     <h2 className="text-2xl font-bold mb-6">
                                         Payment
@@ -1159,30 +720,17 @@ export default function BookingPageClient() {
                                             </h3>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div
-                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${
-                                                        paymentMethod === "card"
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "card"
+                                                        ? "border-primary bg-purple-300 bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         setPaymentMethod("card")
                                                     }
                                                 >
-                                                    <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
-                                                        <svg
-                                                            className="w-5 h-5 text-primary"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                                                            />
-                                                        </svg>
+                                                    <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
+                                                        <FaCreditCard />
+
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -1196,30 +744,17 @@ export default function BookingPageClient() {
                                                 </div>
 
                                                 <div
-                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${
-                                                        paymentMethod === "upi"
-                                                            ? "border-primary bg-primary bg-opacity-5"
-                                                            : "border-gray-200 hover:border-primary"
-                                                    }`}
+                                                    className={`border rounded-lg p-4 flex items-center cursor-pointer transition-all duration-200 ${paymentMethod === "upi"
+                                                        ? "border-primary bg-purple-300 bg-opacity-5"
+                                                        : "border-gray-200 hover:border-primary"
+                                                        }`}
                                                     onClick={() =>
                                                         setPaymentMethod("upi")
                                                     }
                                                 >
-                                                    <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
-                                                        <svg
-                                                            className="w-5 h-5 text-primary"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                                            />
-                                                        </svg>
+                                                    <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
+                                                        <FaGooglePay />
+
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -1246,7 +781,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="card-name"
-                                                        className="form-control"
+                                                        className="form-control px-2 py-2 rounded-xl"
                                                         placeholder="As it appears on the card"
                                                     />
                                                 </div>
@@ -1261,7 +796,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="card-number"
-                                                        className="form-control"
+                                                        className="form-control px-2 py-2 rounded-xl"
                                                         placeholder="1234 5678 9012 3456"
                                                     />
                                                 </div>
@@ -1277,7 +812,7 @@ export default function BookingPageClient() {
                                                         <input
                                                             type="text"
                                                             id="card-expiry"
-                                                            className="form-control"
+                                                            className="form-control px-2 py-2 rounded-xl"
                                                             placeholder="MM/YY"
                                                         />
                                                     </div>
@@ -1311,7 +846,7 @@ export default function BookingPageClient() {
                                                     <input
                                                         type="text"
                                                         id="upi-id"
-                                                        className="form-control"
+                                                        className="form-control px-2 py-2 rounded-xl"
                                                         placeholder="yourname@upi"
                                                     />
                                                 </div>
@@ -1322,7 +857,7 @@ export default function BookingPageClient() {
                                             </div>
                                         )}
 
-                                        <div className="p-4 bg-primary bg-opacity-5 rounded-lg">
+                                        <div className="p-4 bg-purple-200 bg-opacity-5 rounded-lg">
                                             <h3 className="text-lg font-semibold mb-2">
                                                 Cancellation Policy
                                             </h3>
@@ -1340,13 +875,13 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className="btn-outline border-primary text-primary"
+                                            className=" border-primary border-2 rounded-xl px-4 py-2 text-black"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary px-4 py-2 rounded-xl"
                                             disabled={
                                                 !paymentMethod || isSubmitting
                                             }
@@ -1377,11 +912,10 @@ export default function BookingPageClient() {
                                                     Processing...
                                                 </span>
                                             ) : (
-                                                `Pay ${
-                                                    selectedService &&
-                                                    formatCurrency(
-                                                        selectedService.price
-                                                    )
+                                                `Pay ${selectedService &&
+                                                formatCurrency(
+                                                    selectedService.price
+                                                )
                                                 }`
                                             )}
                                         </button>
@@ -1389,8 +923,8 @@ export default function BookingPageClient() {
                                 </div>
                             )}
 
-                            {/* Step 6: Success */}
-                            {step === 6 && (
+                            {/* Step 4: Your Details */}
+                            {step === 4 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <svg
@@ -1443,23 +977,7 @@ export default function BookingPageClient() {
                                                 {selectedMentor?.name}
                                             </span>
                                         </div>
-                                        <div className="flex justify-between mb-2">
-                                            <span className="text-text-secondary">
-                                                Date & Time:
-                                            </span>
-                                            <span className="font-semibold">
-                                                {selectedDate?.toLocaleDateString(
-                                                    "en-US",
-                                                    {
-                                                        weekday: "short",
-                                                        day: "numeric",
-                                                        month: "short",
-                                                        year: "numeric",
-                                                    }
-                                                )}{" "}
-                                                at {selectedTimeSlot}
-                                            </span>
-                                        </div>
+
                                         <div className="flex justify-between">
                                             <span className="text-text-secondary">
                                                 Amount Paid:
@@ -1473,38 +991,39 @@ export default function BookingPageClient() {
                                         </div>
                                     </div>
 
-                                    <p className="text-sm text-text-secondary mb-6">
+                                    {/* <p className="text-sm text-text-secondary mb-6">
                                         The session link will be sent to your
                                         email ({userData.email}) 15 minutes
                                         before the scheduled time.
-                                    </p>
+                                    </p> */}
 
                                     <div className="flex flex-col md:flex-row justify-center gap-4">
                                         <Link
                                             href="/dashboard"
-                                            className="btn-primary"
+                                            className="btn-primary px-2 py-2 rounded-xl"
                                         >
                                             Go to Dashboard
                                         </Link>
                                         <Link
                                             href="/"
-                                            className="btn-outline border-primary text-primary"
+                                            className="border-primary border-2 rounded-xl px-4 py-2 text-black"
                                         >
                                             Back to Home
                                         </Link>
                                     </div>
                                 </div>
                             )}
+
+
                         </div>
 
                         {/* Order Summary Sidebar */}
-                        {step < 6 && (
+                        {step > 2 && (
                             <div className="lg:col-span-1">
                                 <div className="bg-white p-6 rounded-lg shadow-sm sticky top-20">
                                     <h2 className="text-xl font-bold mb-6">
                                         Booking Summary
                                     </h2>
-
                                     {/* Service */}
                                     <div className="mb-4 pb-4 border-b border-gray-100">
                                         <div className="text-text-secondary text-sm mb-1">
@@ -1546,7 +1065,7 @@ export default function BookingPageClient() {
                                         )}
                                     </div>
 
-                                    {/* Date & Time */}
+                                    {/* Date & Time
                                     <div className="mb-4 pb-4 border-b border-gray-100">
                                         <div className="text-text-secondary text-sm mb-1">
                                             Date & Time
@@ -1554,14 +1073,14 @@ export default function BookingPageClient() {
                                         <div className="font-medium">
                                             {selectedDate
                                                 ? selectedDate.toLocaleDateString(
-                                                      "en-US",
-                                                      {
-                                                          weekday: "short",
-                                                          day: "numeric",
-                                                          month: "short",
-                                                          year: "numeric",
-                                                      }
-                                                  )
+                                                    "en-US",
+                                                    {
+                                                        weekday: "short",
+                                                        day: "numeric",
+                                                        month: "short",
+                                                        year: "numeric",
+                                                    }
+                                                )
                                                 : "Not selected"}
                                         </div>
                                         {selectedTimeSlot && (
@@ -1569,7 +1088,7 @@ export default function BookingPageClient() {
                                                 {selectedTimeSlot}
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
 
                                     {/* Pricing */}
                                     <div className="mb-6">
@@ -1580,8 +1099,8 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price
-                                                      )
+                                                        selectedService.price
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
@@ -1592,9 +1111,9 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price *
-                                                              0.18
-                                                      )
+                                                        selectedService.price *
+                                                        0.18
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
@@ -1603,9 +1122,9 @@ export default function BookingPageClient() {
                                             <span>
                                                 {selectedService
                                                     ? formatCurrency(
-                                                          selectedService.price *
-                                                              1.18
-                                                      )
+                                                        selectedService.price *
+                                                        1.18
+                                                    )
                                                     : "-"}
                                             </span>
                                         </div>
@@ -1646,8 +1165,9 @@ export default function BookingPageClient() {
                             </div>
                         )}
                     </div>
+
                 </div>
-            </section>
+            </section >
         </>
     );
 }
