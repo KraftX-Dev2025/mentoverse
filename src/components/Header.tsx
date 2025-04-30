@@ -6,6 +6,7 @@ import { StaticImageData } from "next/image";
 import { SITE_NAME, SERVICES } from "@/lib/constants";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { NAV_LINKS } from "@/lib/constants";
 
 // const CTA_BUTTONS = [
 //     {
@@ -22,15 +23,6 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 //     },
 // ];
 
-// Navigation links object
-const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/about-us", label: "About" },
-    { href: "/mentors", label: "Mentors" },
-    { href: "/resources", label: "Resources" },
-    { href: "/contact-us", label: "Contact" },
-];
-
 interface HeaderProps {
     logo: StaticImageData;
 }
@@ -38,7 +30,7 @@ interface HeaderProps {
 export default function Header({ logo }: HeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isServiceOpen, setIsServiceOpen] = useState(false);
-    
+
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleServices = () => setIsServiceOpen(!isServiceOpen);
 
@@ -97,13 +89,13 @@ export default function Header({ logo }: HeaderProps) {
                         >
                             Login
                         </Link>
-                        <button 
-                            className="md:hidden focus:outline-none" 
+                        <button
+                            className="md:hidden focus:outline-none"
                             onClick={toggleMenu}
                             aria-label="Toggle menu"
                         >
-                            {isMenuOpen ? 
-                                <FaTimes className="h-6 w-6 text-primary" /> : 
+                            {isMenuOpen ?
+                                <FaTimes className="h-6 w-6 text-primary" /> :
                                 <FaBars className="h-6 w-6 text-primary" />
                             }
                         </button>
@@ -124,20 +116,20 @@ export default function Header({ logo }: HeaderProps) {
                                     {link.label}
                                 </Link>
                             ))}
-                            
+
                             {/* Mobile Services Dropdown */}
                             <div className="py-2 px-4">
-                                <button 
+                                <button
                                     className="flex items-center justify-between w-full text-left text-black font-medium"
                                     onClick={toggleServices}
                                 >
                                     <span>Services</span>
-                                    {isServiceOpen ? 
-                                        <FiChevronUp className="h-4 w-4 text-primary" /> : 
+                                    {isServiceOpen ?
+                                        <FiChevronUp className="h-4 w-4 text-primary" /> :
                                         <FiChevronDown className="h-4 w-4 text-primary" />
                                     }
                                 </button>
-                                
+
                                 {isServiceOpen && (
                                     <div className="mt-2 space-y-2 pl-4">
                                         {SERVICES.map((service) => (
@@ -154,7 +146,7 @@ export default function Header({ logo }: HeaderProps) {
                                     </div>
                                 )}
                             </div>
-                            
+
                             {/* Mobile Login Button */}
                             <Link
                                 href="/dashboard"

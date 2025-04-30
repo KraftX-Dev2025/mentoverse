@@ -1,26 +1,36 @@
-// src/components/navigation/MainNav.tsx
 "use client";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { StaticImageData } from "next/image";
-import { SERVICES } from "@/lib/constants";
+import {
+    Home,
+    Info,
+    Users,
+    Briefcase,
+    BookOpen,
+    MessageSquare,
+    ChevronDown,
+    Menu,
+    X
+} from "lucide-react";
+import { SERVICES, NAV_LINKS } from "@/lib/constants";
 import { LinkButton } from "../ui/Button";
-
-// Navigation links
-const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/about-us", label: "About Us" },
-    { href: "/mentors", label: "Mentors" },
-    { href: "/services", label: "Services", hasDropdown: true },
-    { href: "/resources", label: "Resources" },
-    { href: "/contact-us", label: "Contact Us" },
-];
 
 interface MainNavProps {
     logo: StaticImageData;
     siteName: string;
 }
+
+// Map icon names to lucide components
+const iconComponents = {
+    Home: <Home className="h-5 w-5 mr-2" />,
+    Info: <Info className="h-5 w-5 mr-2" />,
+    Users: <Users className="h-5 w-5 mr-2" />,
+    Briefcase: <Briefcase className="h-5 w-5 mr-2" />,
+    BookOpen: <BookOpen className="h-5 w-5 mr-2" />,
+    MessageSquare: <MessageSquare className="h-5 w-5 mr-2" />
+};
 
 export default function MainNav({ logo, siteName }: MainNavProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,13 +40,13 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
             <div className="container mx-auto px-4 py-3">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center">
+                    <Link href="/" className="flex items-center mb-2 sm:mb-4">
                         <Image
                             src={logo}
                             alt={siteName}
                             width={220}
                             height={60}
-                            className="object-contain h-12 w-auto"
+                            className="object-cover w-auto h-[2.5rem]"
                             priority
                         />
                     </Link>
@@ -52,21 +62,9 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                             href={link.href}
                                             className="nav-link flex items-center"
                                         >
+                                            {iconComponents[link.icon as keyof typeof iconComponents]}
                                             {link.label}
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-4 w-4 ml-1"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 9l-7 7-7-7"
-                                                />
-                                            </svg>
+                                            <ChevronDown className="h-4 w-4 ml-1" />
                                         </Link>
                                         <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-lg z-50">
                                             <div className="py-2">
@@ -93,8 +91,9 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 <Link
                                     key={index}
                                     href={link.href}
-                                    className="nav-link"
+                                    className="nav-link flex items-center"
                                 >
+                                    {iconComponents[link.icon as keyof typeof iconComponents]}
                                     {link.label}
                                 </Link>
                             );
@@ -125,29 +124,11 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                             className="md:hidden focus:outline-none ml-4"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-primary"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                {mobileMenuOpen ? (
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                ) : (
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                )}
-                            </svg>
+                            {mobileMenuOpen ? (
+                                <X className="h-6 w-6 text-primary" />
+                            ) : (
+                                <Menu className="h-6 w-6 text-primary" />
+                            )}
                         </button>
                     </div>
                 </div>
@@ -164,8 +145,9 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                         <div className="flex items-center justify-between">
                                             <Link
                                                 href={link.href}
-                                                className="font-medium"
+                                                className="font-medium flex items-center"
                                             >
+                                                {iconComponents[link.icon as keyof typeof iconComponents]}
                                                 {link.label}
                                             </Link>
                                         </div>
@@ -191,8 +173,9 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 <Link
                                     key={index}
                                     href={link.href}
-                                    className="py-2 font-medium"
+                                    className="py-2 font-medium flex items-center"
                                 >
+                                    {iconComponents[link.icon as keyof typeof iconComponents]}
                                     {link.label}
                                 </Link>
                             );

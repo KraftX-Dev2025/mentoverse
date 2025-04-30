@@ -5,7 +5,8 @@ import { SITE_NAME, SITE_DESCRIPTION, SERVICES } from "@/lib/constants";
 import MainNav from "@/components/navigation/MainNav";
 import Footer from "@/components/footer";
 import "./globals.css";
-import logo from "../../public/logo_noBG.webp";
+import logo from "../../public/logo_noBG.jpg"
+import logo2 from "../../public/logo_noBG.webp"
 
 // Font configuration
 const poppins = Poppins({
@@ -50,7 +51,7 @@ export default function RootLayout({
                 <main className="flex-grow bg-background">{children}</main>
 
                 <Footer
-                    logo={logo}
+                    logo={logo2}
                     siteName={SITE_NAME}
                     services={SERVICES}
                     navLinks={NAV_LINKS}

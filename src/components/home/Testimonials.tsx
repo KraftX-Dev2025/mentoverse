@@ -2,38 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-
-// Testimonials Page Added
-const testimonials = [
-    {
-        name: "Rahul Singh",
-        role: "CA Student",
-        image: "/placeholder.webp",
-        text: "The one-on-one sessions with my mentor helped me clear my CA finals. The guidance was practical and exactly what I needed.",
-        rating: 5,
-    },
-    {
-        name: "Priya Sharma",
-        role: "Finance Professional",
-        image: "/placeholder.webp",
-        text: "My LinkedIn profile review session was eye-opening. I'm getting 3x more profile views and better connection requests now.",
-        rating: 5,
-    },
-    {
-        name: "Amit Patel",
-        role: "Startup Founder",
-        image: "/placeholder.webp",
-        text: "The financial compliance guidance I received helped me navigate the complex regulatory landscape for my startup.",
-        rating: 5,
-    },
-    {
-        name: "Neha Desai",
-        role: "Marketing Manager",
-        image: "/placeholder.webp",
-        text: "I was struggling with interview preparation until I connected with a mentor through Mentoverse. Their guidance was invaluable.",
-        rating: 5,
-    },
-];
+import { testimonials } from "@/lib/constants";
 
 const Testimonials = () => {
     const [activeIndex, setActiveIndex] = useState(0);

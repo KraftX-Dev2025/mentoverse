@@ -1,11 +1,5 @@
 import { motion } from "framer-motion";
-
-const stats = [
-    { number: "5+", label: "Events" },
-    { number: "20+", label: "Mentors" },
-    { number: "3,000+", label: "Community" },
-    { number: "50,000+", label: "Reach" },
-];
+import { stats } from "@/lib/constants";
 
 // Stats Page Added
 const Stats = () => {

@@ -1,110 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { SITE_NAME } from "@/lib/constants";
+import {
+    Zap,
+    Users,
+    Lightbulb,
+    SlidersHorizontal,
+    Eye,
+    Linkedin,
+    CalendarClock,
+    CreditCard
+} from "lucide-react";
+import { ABOUT_METADATA, VALUES, TEAM_MEMBERS } from "@/lib/constants";
 import abhijeet from "../../../public/abhijeet_mutha.webp";
 import aniruddh from "../../../public/aniruddh.webp";
 import aayush from "../../../public/ansh_agarwal.webp";
-import { FaCalendarAlt } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa6";
-import { BsLightningCharge, BsEyeFill, BsPeopleFill, BsLightbulbFill, BsSliders } from "react-icons/bs";
-import { SiRazorpay } from "react-icons/si";
 
-export const metadata: Metadata = {
-    title: `About Us | ${SITE_NAME} - Shaping Your Tomorrow`,
-    description: "Learn about Mentoverse's mission, vision, and the team behind our mentorship platform.",
+export const metadata: Metadata = ABOUT_METADATA;
+
+// Map icon names to lucide components
+const iconComponents = {
+    Zap: <Zap className="w-8 h-8" />,
+    Users: <Users className="w-8 h-8" />,
+    Lightbulb: <Lightbulb className="w-8 h-8" />,
+    SlidersHorizontal: <SlidersHorizontal className="w-8 h-8" />,
+    Eye: <Eye className="w-8 h-8" />,
+    Linkedin: <Linkedin className="w-5 h-5" />,
+    CalendarClock: <CalendarClock className="w-5 h-5" />,
+    CreditCard: <CreditCard className="w-5 h-5" />
 };
 
-const VALUES = [
-    {
-        icon: <BsLightningCharge className="w-8 h-8" />,
-        title: "Trust & Integrity",
-        description: "We build relationships based on trust and maintain the highest standards of integrity in all our interactions.",
-    },
-    {
-        icon: <BsPeopleFill className="w-8 h-8" />,
-        title: "Community",
-        description: "We foster a supportive community where mentors and mentees can connect, learn, and grow together.",
-    },
-    {
-        icon: <BsLightbulbFill className="w-8 h-8" />,
-        title: "Innovation",
-        description: "We continuously seek innovative ways to improve our platform and provide better mentorship experiences.",
-    },
-    {
-        icon: <BsSliders className="w-8 h-8" />,
-        title: "Personalization",
-        description: "We believe in tailored guidance that addresses the unique needs and goals of each individual.",
-    },
-];
-
-// Team members data
-const TEAM_MEMBERS = [
-    {
-        name: "Abhijeet Mutha",
-        role: "Co-Founder",
-        image: abhijeet,
-        bio: "Investment Banker | Co - Founder | CA (AIR 21, AIR 14) | Ex- J.P. Morgan | KPMG | National Athlete | All views are personal",
-        socialLinks: [
-            {
-                name: "LinkedIn",
-                href: "https://www.linkedin.com/in/abhijeet-mutha",
-                icon: <FaLinkedin />,
-            },
-            {
-                name: "Calendly",
-                href: "https://calendly.com/anirudhramesh/30min",
-                icon: <FaCalendarAlt />,
-            },
-            {
-                name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
-                icon: <SiRazorpay />,
-            },
-        ],
-    },
-    {
-        name: "Anirudh Ramesh",
-        role: "Co-Founder",
-        image: aniruddh,
-        bio: "Bain & Company | Jobtech Alliance | Co-founder: Mentoverse, Mudiyum Foundation",
-        socialLinks: [
-            {
-                name: "LinkedIn",
-                href: "https://www.linkedin.com/in/anirudhramesh17/",
-                icon: <FaLinkedin />,
-            },
-            {
-                name: "Calendly",
-                href: "https://calendly.com/anirudhramesh/30min",
-                icon: <FaCalendarAlt />,
-            },
-            {
-                name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
-                icon: <SiRazorpay />,
-            },
-        ],
-    },
-    {
-        name: "Aayush Agarwal",
-        role: "Co-Founder",
-        image: aayush,
-        bio: "Senior Associate (Investments) at Temasek | CA (AIR 8, 2) | CFA (All levels) | B.Com Gold Medalist - St. Xavier's College",
-        socialLinks: [
-            {
-                name: "LinkedIn",
-                href: "https://www.linkedin.com/in/aayush-agarwal-ca/",
-                icon: <FaLinkedin />,
-            },
-            {
-                name: "Calendly",
-                href: "https://calendly.com/anirudhramesh/30min",
-                icon: <FaCalendarAlt />,
-            },
-        ],
-    },
-];
+// Map image paths to imported images
+const teamMemberImages = {
+    "/abhijeet_mutha.webp": abhijeet,
+    "/aniruddh.webp": aniruddh,
+    "/aayush.webp": aayush
+};
 
 export default function AboutUs() {
     return (
@@ -113,7 +44,7 @@ export default function AboutUs() {
             <section className="bg-gradient-primary text-white py-16 md:py-20">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6">About Us</h1>
+                        <h1 className="text-4xl text-white md:text-5xl font-bold mb-6">About Us</h1>
                         <p className="text-xl opacity-90">
                             Learn about Mentoverse&apos;s mission, vision, and the team behind our mentorship platform.
                         </p>
@@ -163,7 +94,7 @@ export default function AboutUs() {
                         {/* Mission */}
                         <div className="bg-white p-8 rounded-lg shadow-md">
                             <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                                <BsLightningCharge className="w-8 h-8 text-primary" />
+                                <Zap className="w-8 h-8 text-primary" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Mission</h2>
                             <p className="mb-4">
@@ -179,7 +110,7 @@ export default function AboutUs() {
                         {/* Vision */}
                         <div className="bg-white p-8 rounded-lg shadow-md">
                             <div className="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                                <BsEyeFill className="w-8 h-8 text-secondary" />
+                                <Eye className="w-8 h-8 text-secondary" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Vision</h2>
                             <p className="mb-4">
@@ -209,7 +140,9 @@ export default function AboutUs() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {VALUES.map((value, index) => (
                             <div key={index} className="bg-background p-6 rounded-lg">
-                                <div className="text-primary mb-4">{value.icon}</div>
+                                <div className="text-primary mb-4">
+                                    {iconComponents[value.iconName as keyof typeof iconComponents]}
+                                </div>
                                 <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
                                 <p>{value.description}</p>
                             </div>
@@ -217,6 +150,7 @@ export default function AboutUs() {
                     </div>
                 </div>
             </section>
+
             {/* Our Vision Section */}
             <section className="py-16 bg-white">
                 <div className="container">
@@ -287,6 +221,7 @@ export default function AboutUs() {
                     </div>
                 </div>
             </section>
+
             {/* Team Section */}
             <section className="py-16 md:py-20 bg-background">
                 <div className="container">
@@ -300,7 +235,7 @@ export default function AboutUs() {
                             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md">
                                 <div className="h-64 relative">
                                     <Image
-                                        src={member.image}
+                                        src={teamMemberImages[member.imageSrc as keyof typeof teamMemberImages]}
                                         alt={member.name}
                                         fill
                                         style={{ objectFit: "contain" }}
@@ -322,7 +257,7 @@ export default function AboutUs() {
                                                 className="text-primary transition-all duration-300 text-lg hover:scale-125"
                                                 aria-label={social.name}
                                             >
-                                                <span className="h-5 w-5 inline-block">{social.icon}</span>
+                                                {iconComponents[social.iconName as keyof typeof iconComponents]}
                                             </a>
                                         ))}
                                     </div>
