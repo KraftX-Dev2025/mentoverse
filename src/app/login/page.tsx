@@ -3,15 +3,12 @@
 import { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { auth, db } from '@/lib/firebase';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, User } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { getDoc, doc } from 'firebase/firestore';
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,24 +23,19 @@ export default function LoginForm() {
 
                     if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
                         console.log('User is authenticated and exists in the database.');
-                        setUser(currentUser);
                         router.push('/dashboard');
                     } else {
                         console.log('User is authenticated but does not exist in the database.');
                         await signOut(auth);
-                        setUser(null);
                         router.push('/login');
                     }
                 } catch (error) {
                     console.error('Error checking user status:', error);
-                    setUser(null);
                     router.push('/login');
                 }
             } else {
-                setUser(null);
                 router.push('/login');
             }
-            setIsLoading(false);
         });
 
         return () => unsubscribe();
@@ -118,7 +110,7 @@ export default function LoginForm() {
                     Login with Google
                 </button>
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Don't have an account?{' '}
+                    Dont have an account?{' '}
                     <a href="/signup" className="font-medium text-purple-600 hover:underline">
                         Sign Up
                     </a>

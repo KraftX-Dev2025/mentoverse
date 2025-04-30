@@ -8,20 +8,6 @@ import { formatCurrency } from "@/lib/utils";
 import { FaCreditCard } from "react-icons/fa";
 import { FaGooglePay } from "react-icons/fa";
 
-const timeSlots = [
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 PM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM",
-    "05:00 PM",
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-];
 
 export default function BookingPageClient() {
     const searchParams = useSearchParams();
@@ -50,14 +36,6 @@ export default function BookingPageClient() {
     });
     const [error, setError] = useState<string | null>(null);
 
-    // User data for form
-    const [userData, setUserData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-    });
-
     // Payment data
     const [paymentMethod, setPaymentMethod] = useState<"card" | "upi" | null>(
         null
@@ -65,13 +43,6 @@ export default function BookingPageClient() {
 
     // Loading indicator for submit button
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // Form validation
-    const [formErrors, setFormErrors] = useState({
-        name: "",
-        email: "",
-        phone: "",
-    });
 
     // Success status
     const [, setBookingSuccess] = useState(false);
@@ -316,9 +287,7 @@ export default function BookingPageClient() {
             // };
 
             // Mock data for available time slots (random selection of the predefined time slots)
-            const mockTimeSlots = () => {
-                return timeSlots.filter(() => Math.random() > 0.3);
-            };
+
 
         }
     }, [selectedDate, selectedMentor]);
@@ -329,35 +298,6 @@ export default function BookingPageClient() {
         setStep(2); // Move to mentor selection
     };
 
-    // Handle mentor selection
-    const handleMentorSelect = (mentor: Mentor) => {
-        setSelectedMentor(mentor);
-        setStep(3); // Move to date/time selection
-    };
-
-    // Handle date selection
-    const handleDateSelect = (date: Date) => {
-        setSelectedDate(date);
-        setSelectedTimeSlot(null); // Reset time slot when date changes
-    };
-
-    // Handle time slot selection
-    const handleTimeSlotSelect = (timeSlot: string) => {
-        setSelectedTimeSlot(timeSlot);
-    };
-
-    // Handle user data form changes
-    const handleUserDataChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setUserData((prev) => ({ ...prev, [name]: value }));
-
-        // Clear validation error when field is changed
-        if (formErrors[name as keyof typeof formErrors]) {
-            setFormErrors((prev) => ({ ...prev, [name]: "" }));
-        }
-    };
 
     // Navigate to next step
     const goToNextStep = () => {

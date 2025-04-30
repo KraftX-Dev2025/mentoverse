@@ -6,17 +6,6 @@ import Link from "next/link";
 import { Booking, Mentor } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 
-// Mock user data
-const mockUser = {
-    id: "user123",
-    name: "Rahul Sharma",
-    email: "rahul.sharma@example.com",
-    phone: "+91 9876543210",
-    image: "/images/users/profile.jpg",
-    role: "user" as const,
-    joinedOn: new Date("2023-10-15"),
-};
-
 // Define types for various state objects
 interface Transaction {
     id: string;
@@ -277,7 +266,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-
+                            <Link href="/mentors">
                                 Book a New Session
                             </Link>
                         </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { auth, db } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { createUserDocument } from '@/services/firebaseServices';
 import { getDoc, doc } from 'firebase/firestore';
@@ -13,7 +13,6 @@ export default function SignupForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -28,21 +27,17 @@ export default function SignupForm() {
 
                     if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
                         console.log('User is authenticated and exists in the database.');
-                        setUser(currentUser);
                         router.push('/dashboard');
                     } else {
                         console.log('User is authenticated but does not exist in the database.');
                         await signOut(auth);
-                        setUser(null);
                         router.push('/signup');
                     }
                 } catch (error) {
                     console.error('Error checking user status:', error);
-                    setUser(null);
                     router.push('/signup');
                 }
             } else {
-                setUser(null);
                 router.push('/signup');
             }
             setIsLoading(false);
