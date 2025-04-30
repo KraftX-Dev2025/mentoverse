@@ -11,7 +11,7 @@ import {
     CalendarClock,
     CreditCard
 } from "lucide-react";
-import { ABOUT_METADATA, VALUES, TEAM_MEMBERS } from "@/lib/constants";
+import { ABOUT_METADATA, VALUES, TEAM_MEMBERS, PARTNER_BRANDS, ABOUT_US_PAGE_CONTENT } from "@/lib/constants";
 import abhijeet from "../../../public/abhijeet_mutha.webp";
 import aniruddh from "../../../public/aniruddh.webp";
 import aayush from "../../../public/ansh_agarwal.webp";
@@ -44,9 +44,9 @@ export default function AboutUs() {
             <section className="bg-gradient-primary text-white py-16 md:py-20">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-4xl text-white md:text-5xl font-bold mb-6">About Us</h1>
+                        <h1 className="text-4xl text-white md:text-5xl font-bold mb-6">{ABOUT_US_PAGE_CONTENT.hero.title}</h1>
                         <p className="text-xl opacity-90">
-                            Learn about Mentoverse&apos;s mission, vision, and the team behind our mentorship platform.
+                            {ABOUT_US_PAGE_CONTENT.hero.subtitle}
                         </p>
                     </div>
                 </div>
@@ -57,22 +57,12 @@ export default function AboutUs() {
                 <div className="container">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
-                            <p className="mb-4">
-                                {`Mentoverse was born out of a simple observation: there's a significant gap between academic
-                                education and real-world industry requirements. This gap often leaves students and early-career
-                                professionals struggling to navigate their career paths effectively.`}
-                            </p>
-                            <p className="mb-4">
-                                {`Founded by Abhijeet, Aniruddh, and Ansh, Mentoverse started with a focus on providing
-                                mentorship in finance and CA domains, areas where personalized guidance can make a
-                                substantial difference.`}
-                            </p>
-                            <p>
-                                {`Today, we've expanded our vision to include various industries while maintaining our core
-                                expertise in finance, CA, and startup advisory. Our goal is to be with you throughout your
-                                educational and professional journey, providing the guidance you need when you need it most.`}
-                            </p>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6">{ABOUT_US_PAGE_CONTENT.story.title}</h2>
+                            {ABOUT_US_PAGE_CONTENT.story.paragraphs.map((paragraph, index) => (
+                                <p key={index} className="mb-4">
+                                    {paragraph}
+                                </p>
+                            ))}
                         </div>
                         <div className="order-first md:order-last">
                             <Image
@@ -96,15 +86,12 @@ export default function AboutUs() {
                             <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
                                 <Zap className="w-8 h-8 text-primary" />
                             </div>
-                            <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Mission</h2>
-                            <p className="mb-4">
-                                {`To democratize access to quality mentorship and career guidance, enabling students and
-                                professionals to make informed decisions about their careers and achieve their full potential.`}
-                            </p>
-                            <p>
-                                {`We strive to bridge the gap between education and industry by connecting mentees with
-                                experienced professionals who can provide real-world insights and guidance.`}
-                            </p>
+                            <h2 className="text-2xl md:text-3xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.mission.title}</h2>
+                            {ABOUT_US_PAGE_CONTENT.mission.paragraphs.map((paragraph, index) => (
+                                <p key={index} className="mb-4">
+                                    {paragraph}
+                                </p>
+                            ))}
                         </div>
 
                         {/* Vision */}
@@ -112,16 +99,12 @@ export default function AboutUs() {
                             <div className="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
                                 <Eye className="w-8 h-8 text-secondary" />
                             </div>
-                            <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Vision</h2>
-                            <p className="mb-4">
-                                {`To create a world where every individual has access to the mentorship they need to navigate
-                                their career journey successfully. We envision Mentoverse as the go-to platform for career
-                                guidance across various industries.`}
-                            </p>
-                            <p>
-                                {`Our focus on niche areas like CA, finance, and startup advisory sets us apart, providing
-                                specialized guidance where it's most needed.`}
-                            </p>
+                            <h2 className="text-2xl md:text-3xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.vision.title}</h2>
+                            {ABOUT_US_PAGE_CONTENT.vision.paragraphs.map((paragraph, index) => (
+                                <p key={index} className="mb-4">
+                                    {paragraph}
+                                </p>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -131,9 +114,9 @@ export default function AboutUs() {
             <section className="py-16 md:py-20 bg-white">
                 <div className="container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Values</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.values.title}</h2>
                         <p className="text-lg max-w-3xl mx-auto">
-                            The principles that guide our approach to mentorship and career guidance
+                            {ABOUT_US_PAGE_CONTENT.values.subtitle}
                         </p>
                     </div>
 
@@ -155,30 +138,21 @@ export default function AboutUs() {
             <section className="py-16 bg-white">
                 <div className="container">
                     <div className="text-center mb-16">
-                        <h2 className="section-title">Our Vision</h2>
+                        <h2 className="section-title font-bold">{ABOUT_US_PAGE_CONTENT.vision.title}</h2>
                         <p className="section-subtitle">
-                            With you, throughout your educational and
-                            professional life
+                            {ABOUT_US_PAGE_CONTENT.vision.subtitle}
                         </p>
                     </div>
 
                     <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
                         {/* Partner Logos */}
-                        {[
-                            "Mahindra",
-                            "KPMG",
-                            "Aditya Birla Group",
-                            "Kotak",
-                            "JP Morgan",
-                        ].map((partner) => (
+                        {PARTNER_BRANDS.map((partner) => (
                             <div
                                 key={partner}
-                                className="grayscale hover:grayscale-0 transition-all duration-300"
+                                className="transition-all duration-300"
                             >
                                 <Image
-                                    src={`/images/partners/${partner
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")}.svg`}
+                                    src={`/images/partners/${partner}`}
                                     alt={`${partner} logo`}
                                     width={120}
                                     height={60}
@@ -199,21 +173,13 @@ export default function AboutUs() {
                         </div>
                         <div>
                             <h3 className="text-2xl md:text-3xl font-bold mb-6">
-                                Bridging the Gap Between Education and Industry
+                                {ABOUT_US_PAGE_CONTENT.bridgingGap.title}
                             </h3>
-                            <p className="mb-4">
-                                At Mentoverse, we believe that every student and
-                                professional deserves access to quality
-                                mentorship. Our platform connects you with
-                                industry experts who have walked the path you
-                                aspire to take.
-                            </p>
-                            <p className="mb-6">
-                                Whether you&apos;re a CA student, a finance
-                                professional, or a startup founder, we have
-                                mentors who can provide you with personalized
-                                guidance tailored to your specific needs.
-                            </p>
+                            {ABOUT_US_PAGE_CONTENT.bridgingGap.paragraphs.map((paragraph, index) => (
+                                <p key={index} className="mb-4">
+                                    {paragraph}
+                                </p>
+                            ))}
                             <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
                                 Learn More
                             </Link>
@@ -226,8 +192,8 @@ export default function AboutUs() {
             <section className="py-16 md:py-20 bg-background">
                 <div className="container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet Our Team</h2>
-                        <p className="text-lg max-w-3xl mx-auto">The passionate individuals behind Mentoverse</p>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.team.title}</h2>
+                        <p className="text-lg max-w-3xl mx-auto">{ABOUT_US_PAGE_CONTENT.team.subtitle}</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -272,10 +238,9 @@ export default function AboutUs() {
             <section className="py-16 bg-white">
                 <div className="container">
                     <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Join Our Journey</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{ABOUT_US_PAGE_CONTENT.cta.title}</h2>
                         <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-white opacity-90">
-                            {`Whether you're looking for guidance or want to become a mentor, we'd love to have you be a part of
-                            Mentoverse.`}
+                            {ABOUT_US_PAGE_CONTENT.cta.content}
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">

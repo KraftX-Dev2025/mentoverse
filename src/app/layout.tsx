@@ -6,7 +6,7 @@ import MainNav from "@/components/navigation/MainNav";
 import Footer from "@/components/navigation/Footer";
 import "./globals.css";
 import logo from "../../public/logo_noBG.jpg"
-import logo2 from "../../public/logo_noBG.webp"
+import logo2 from "../../public/logo_nobg.png"
 
 // Font configuration
 const poppins = Poppins({

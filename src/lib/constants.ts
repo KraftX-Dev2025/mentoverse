@@ -16,6 +16,98 @@ export const SERVICES = [
     { id: "events-webinars", name: "Events & Webinars", icon: "🎤" },
 ];
 
+export const AVATAR_COLORS = [
+    "bg-red-500",
+    "bg-blue-500",
+    "bg-green-500",
+    "bg-yellow-500",
+    "bg-pink-500",
+    "bg-purple-500",
+    "bg-indigo-500",
+    "bg-teal-500",
+    "bg-orange-500",
+];
+
+// Add this to your existing constants.ts file
+
+export const ABOUT_US_PAGE_CONTENT = {
+    hero: {
+        title: "About Us",
+        subtitle: "Learn about Mentoverse's mission, vision, and the team behind our mentorship platform."
+    },
+    story: {
+        title: "Our Story",
+        paragraphs: [
+            "Mentoverse was born out of a simple observation: there's a significant gap between academic education and real-world industry requirements. This gap often leaves students and early-career professionals struggling to navigate their career paths effectively.",
+            "Founded by Abhijeet, Aniruddh, and Ansh, Mentoverse started with a focus on providing mentorship in finance and CA domains, areas where personalized guidance can make a substantial difference.",
+            "Today, we've expanded our vision to include various industries while maintaining our core expertise in finance, CA, and startup advisory. Our goal is to be with you throughout your educational and professional journey, providing the guidance you need when you need it most."
+        ]
+    },
+    mission: {
+        title: "Our Mission",
+        paragraphs: [
+            "To democratize access to quality mentorship and career guidance, enabling students and professionals to make informed decisions about their careers and achieve their full potential.",
+            "We strive to bridge the gap between education and industry by connecting mentees with experienced professionals who can provide real-world insights and guidance."
+        ]
+    },
+    vision: {
+        title: "Our Vision",
+        paragraphs: [
+            "To create a world where every individual has access to the mentorship they need to navigate their career journey successfully. We envision Mentoverse as the go-to platform for career guidance across various industries.",
+            "Our focus on niche areas like CA, finance, and startup advisory sets us apart, providing specialized guidance where it's most needed."
+        ],
+        subtitle: "With you, throughout your educational and professional life"
+    },
+    values: {
+        title: "Our Values",
+        subtitle: "The principles that guide our approach to mentorship and career guidance"
+    },
+    bridgingGap: {
+        title: "Bridging the Gap Between Education and Industry",
+        paragraphs: [
+            "At Mentoverse, we believe that every student and professional deserves access to quality mentorship. Our platform connects you with industry experts who have walked the path you aspire to take.",
+            "Whether you're a CA student, a finance professional, or a startup founder, we have mentors who can provide you with personalized guidance tailored to your specific needs."
+        ]
+    },
+    team: {
+        title: "Meet Our Team",
+        subtitle: "The passionate individuals behind Mentoverse"
+    },
+
+    cta: {
+        title: "Join Our Journey",
+        content: "Whether you're looking for guidance or want to become a mentor, we'd love to have you be a part of Mentoverse."
+    }
+};
+
+export const PARTNER_BRANDS = [
+    "aditya_logo.png",
+    "bain_logo.png",
+    "bcg_logo.png",
+    "deloitte_logo.png",
+    "ey_logo.png",
+    "genpact_logo.png",
+    "itc_logo.png",
+    "jp_logo.png",
+    "kotak_logo.png",
+    "kpmg_logo.png",
+    "mahindra_logo.png",
+    "pwc_logo.png"
+];
+
+export const EXPERTISE_AREAS = [
+    "Finance",
+    "Accounting",
+    "CA",
+    "Marketing",
+    "Startups",
+    "Career Guidance",
+    "Interview Preparation",
+    "Resume Building",
+    "LinkedIn Optimization",
+    "Corporate Strategy",
+];
+
 export const BRAND_COLORS = {
     primary: "#8A4FFF", // Purple
     secondary: "#FD9850", // Orange

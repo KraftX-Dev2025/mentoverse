@@ -1,4 +1,5 @@
 // TypeScript type definitions
+import { StaticImageData } from "next/image";
 
 export interface Mentor {
     id: string;
@@ -72,4 +73,22 @@ export interface MentorStats {
     averageRating: number;
     totalEarnings: number;
     pendingPayments: number;
+}
+
+export interface FooterService {
+    id: string;
+    name: string;
+    icon: string;
+}
+
+export type NavLink = {
+    href: string;
+    label: string;
+};
+
+export interface FooterProps {
+    logo: StaticImageData;
+    siteName: string;
+    services: FooterService[];
+    navLinks: NavLink[];
 }

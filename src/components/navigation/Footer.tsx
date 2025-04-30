@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { StaticImageData } from "next/image";
 import {
   Facebook,
   Twitter,
@@ -11,18 +10,7 @@ import {
   Phone
 } from "lucide-react";
 import { LEGAL_LINKS, SOCIAL_LINKS, CONTACT_INFO } from "@/lib/constants";
-
-// Type definitions
-type Service = {
-  id: string;
-  name: string;
-  icon: React.ReactNode;
-};
-
-type NavLink = {
-  href: string;
-  label: string;
-};
+import { FooterProps } from "@/lib/types";
 
 // Map icon names to lucide components
 const iconComponents = {
@@ -34,13 +22,6 @@ const iconComponents = {
   Mail: <Mail className="h-6 w-6 mr-2 text-white mt-0.5 hover:text-secondary" />,
   Phone: <Phone className="h-6 w-6 mr-2 mt-0.5 text-white hover:text-secondary" />
 };
-
-interface FooterProps {
-  logo: StaticImageData;
-  siteName: string;
-  services: Service[];
-  navLinks: NavLink[];
-}
 
 export default function Footer({ logo, siteName, services, navLinks }: FooterProps) {
   return (
@@ -58,7 +39,7 @@ export default function Footer({ logo, siteName, services, navLinks }: FooterPro
                 className="object-contain h-16 w-auto"
               />
             </Link>
-            <p className="text-sm opacity-80 mb-4">
+            <p className="text-md font-bold mb-4">
               Shaping Your Tomorrow - Fast track your career with personalized mentorship and
               expert guidance.
             </p>
@@ -78,7 +59,7 @@ export default function Footer({ logo, siteName, services, navLinks }: FooterPro
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
+            <h4 className="font-bold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -92,11 +73,11 @@ export default function Footer({ logo, siteName, services, navLinks }: FooterPro
 
           {/* Column 3: Services */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Our Services</h4>
+            <h4 className="font-bold text-lg mb-4">Our Services</h4>
             <ul className="space-y-2">
               {services.slice(0, 5).map((service) => (
                 <li key={service.id}>
-                  <Link href={`/services/${service.id}`} className="footer-link text-white">
+                  <Link href={`/services#${service.id}-section`} className="footer-link text-white">
                     {service.name}
                   </Link>
                 </li>
@@ -106,7 +87,7 @@ export default function Footer({ logo, siteName, services, navLinks }: FooterPro
 
           {/* Column 4: Contact */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
+            <h4 className="font-bold text-lg mb-4">Contact Us</h4>
             <ul className="space-y-3">
               {CONTACT_INFO.map((item) => (
                 <li key={item.id} className="flex items-start">

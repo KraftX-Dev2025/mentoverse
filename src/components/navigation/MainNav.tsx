@@ -67,7 +67,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     </Link>
 
                     {/* Primary Navigation - Desktop */}
-                    <nav className="hidden md:flex items-center space-x-8">
+                    <nav className="hidden xl:flex items-center space-x-8">
                         {NAV_LINKS
                             .filter(link => {
                                 if (user && (link.label === "Home" || link.label === "About")) return false;
@@ -91,7 +91,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                                     {SERVICES.map((service) => (
                                                         <Link
                                                             key={service.id}
-                                                            href={`/services/${service.id}`}
+                                                            href={`/services#${service.id}-section`}
                                                             className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
                                                         >
                                                             <span className="mr-2">
@@ -122,7 +122,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                     {/* CTA Buttons & Mobile Menu Trigger */}
                     <div className="flex items-center">
-                        <div className="hidden md:flex items-center space-x-4">
+                        <div className="hidden xl:flex items-center space-x-4">
                             <LinkButton
                                 href="/booking"
                                 variant="primary"
@@ -153,7 +153,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                         {/* Mobile Menu Trigger */}
                         <button
-                            className="md:hidden focus:outline-none ml-4"
+                            className="xl:hidden focus:outline-none ml-4"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             {mobileMenuOpen ? (
@@ -168,7 +168,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden bg-white border-t border-gray-100 py-4 px-4">
+                <div className="flex items-center justify-center bg-white border-t overflow-x-auto border-gray-100 py-4 px-4">
                     <nav className="flex flex-col space-y-4">
                         {NAV_LINKS.map((link, index) => {
                             if (link.hasDropdown) {
@@ -187,7 +187,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                             {SERVICES.map((service) => (
                                                 <Link
                                                     key={service.id}
-                                                    href={`/services/${service.id}`}
+                                                    href={`/services#${service.id}-section`}
                                                     className="block py-1 text-sm text-text-secondary"
                                                 >
                                                     <span className="mr-2">
