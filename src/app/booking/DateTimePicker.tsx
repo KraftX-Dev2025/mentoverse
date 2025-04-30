@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-
-const allTimeSlots = [
-    "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-    "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"
-];
+import { timeSlots } from "@/lib/constants";
 
 export default function DateTimeSelector({
     selectedDate,
@@ -38,7 +34,7 @@ export default function DateTimeSelector({
     useEffect(() => {
         if (selectedDate) {
             // Simulate time slot filtering
-            const slots = allTimeSlots.filter(() => Math.random() > 0.3);
+            const slots = timeSlots.filter(() => Math.random() > 0.3);
             setAvailableTimeSlots(slots);
         } else {
             setAvailableTimeSlots([]);

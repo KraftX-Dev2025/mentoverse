@@ -36,7 +36,7 @@ export interface Booking {
     mentorId: string;
     serviceId: string;
     date: Date;
-    status: "pending" | "confirmed" | "cancelled" | "completed";
+    status: "confirmed" | "pending" | "cancelled" | "completed";
     amount: number;
 }
 

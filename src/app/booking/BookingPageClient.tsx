@@ -4,9 +4,17 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Mentor, Service } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { FaCreditCard } from "react-icons/fa";
+import {
+    CreditCard,
+    Loader,
+    AlertCircle,
+    CheckCircle,
+    Mail,
+    Check
+} from "lucide-react";
 import { FaGooglePay } from "react-icons/fa";
 import { timeSlots } from "@/lib/constants";
+import { MOCK_SERVICES, MOCK_MENTORS } from "@/lib/mock-data";
 
 export default function BookingPageClient() {
     const searchParams = useSearchParams();
@@ -25,7 +33,6 @@ export default function BookingPageClient() {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(
         null
     );
-
     // State for data loading
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState({
@@ -34,7 +41,6 @@ export default function BookingPageClient() {
         availability: false,
     });
     const [error, setError] = useState<string | null>(null);
-
     // User data for form
     const [userData, setUserData] = useState({
         name: "",
@@ -42,15 +48,12 @@ export default function BookingPageClient() {
         phone: "",
         message: "",
     });
-
     // Payment data
     const [paymentMethod, setPaymentMethod] = useState<"card" | "upi" | null>(
         null
     );
-
     // Loading indicator for submit button
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     // Form validation
     const [formErrors, setFormErrors] = useState({
         name: "",
@@ -86,98 +89,10 @@ export default function BookingPageClient() {
                 // In a real implementation, you would fetch from your API
                 // const servicesResponse = await fetch('/api/services');
                 // const servicesData = await servicesResponse.json();
-
                 // Using mock data for now
-                const mockServices: Service[] = [
-                    {
-                        id: "mock-interview",
-                        name: "1 on 1 Personal Mock Interview",
-                        description:
-                            "Practice with industry experts and get real-time feedback to improve your interview skills.",
-                        price: 1500,
-                        icon: "🎯",
-                        benefits: [
-                            "Practice with experienced interviewers",
-                            "Get honest, constructive feedback",
-                            "Learn industry-specific techniques",
-                            "Identify improvement areas",
-                        ],
-                    },
-                    {
-                        id: "linkedin-review",
-                        name: "LinkedIn Profile Review",
-                        description:
-                            "Get your LinkedIn profile optimized by professionals to attract better opportunities.",
-                        price: 1200,
-                        icon: "👔",
-                        benefits: [
-                            "Stand out to recruiters",
-                            "Learn LinkedIn algorithm optimization",
-                            "Improve your profile's searchability",
-                            "Get a comprehensive report",
-                        ],
-                    },
-                    {
-                        id: "cv-resume-review",
-                        name: "CV Resume Review",
-                        description:
-                            "Professional review of your CV/resume to stand out among other candidates.",
-                        price: 1200,
-                        icon: "📄",
-                        benefits: [
-                            "Get professional assessment",
-                            "Highlight achievements and skills",
-                            "Make your resume ATS-friendly",
-                            "Increase interview callback rate",
-                        ],
-                    },
-                    {
-                        id: "group-discussion",
-                        name: "Group Discussion",
-                        description:
-                            "Learn the art of group discussions with like-minded peers and expert guidance.",
-                        price: 800,
-                        icon: "👥",
-                        benefits: [
-                            "Practice in a realistic environment",
-                            "Learn effective communication",
-                            "Develop leadership skills",
-                            "Network with peers",
-                        ],
-                    },
-                    {
-                        id: "career-guidance",
-                        name: "1 on 1 Career Guidance",
-                        description:
-                            "Personalized career planning and guidance from industry professionals.",
-                        price: 1800,
-                        icon: "🧭",
-                        benefits: [
-                            "Get clarity on career path",
-                            "Develop a personalized roadmap",
-                            "Learn about industry trends",
-                            "Identify skill gaps",
-                        ],
-                    },
-                    {
-                        id: "events-webinars",
-                        name: "Events & Webinars",
-                        description:
-                            "Stay updated with the latest industry trends through our events and webinars.",
-                        price: 500,
-                        icon: "🎤",
-                        benefits: [
-                            "Learn from industry leaders",
-                            "Stay updated with trends",
-                            "Network with professionals",
-                            "Access recordings",
-                        ],
-                    },
-                ];
-
+                const mockServices: Service[] = MOCK_SERVICES;
                 setServices(mockServices);
                 setLoading((prev) => ({ ...prev, services: false }));
-
                 // If a service ID is in the URL, pre-select it
                 if (preSelectedServiceId) {
                     const service =
@@ -199,74 +114,9 @@ export default function BookingPageClient() {
                 // In a real implementation, you would fetch from your API
                 // const mentorsResponse = await fetch('/api/mentors');
                 // const mentorsData = await mentorsResponse.json();
-
                 // Using mock data for now
-                const mockMentors: Mentor[] = [
-                    {
-                        id: "1",
-                        name: "Rajiv Mehta",
-                        title: "Senior Finance Manager",
-                        company: "Mahindra Group",
-                        expertise: [
-                            "Finance",
-                            "Career Guidance",
-                            "Corporate Strategy",
-                        ],
-                        bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
-                        image: "/images/mentors/mentor1.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1500,
-                        rating: 4.9,
-                    },
-                    {
-                        id: "2",
-                        name: "Priya Sharma",
-                        title: "Chartered Accountant",
-                        company: "KPMG",
-                        expertise: ["CA", "Accounting", "Startups"],
-                        bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
-                        image: "/images/mentors/mentor2.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1200,
-                        rating: 4.8,
-                    },
-                    {
-                        id: "3",
-                        name: "Akash Gupta",
-                        title: "Marketing Director",
-                        company: "Aditya Birla Group",
-                        expertise: [
-                            "Marketing",
-                            "Career Guidance",
-                            "LinkedIn Optimization",
-                        ],
-                        bio: "Passionate about digital marketing and helping professionals build their personal brand.",
-                        image: "/images/mentors/mentor3.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1000,
-                        rating: 4.7,
-                    },
-                    {
-                        id: "4",
-                        name: "Sneha Patel",
-                        title: "Investment Banker",
-                        company: "Kotak Investment Banking",
-                        expertise: [
-                            "Finance",
-                            "Startups",
-                            "Corporate Strategy",
-                        ],
-                        bio: "Worked on numerous M&A deals and helped startups raise capital.",
-                        image: "/images/mentors/mentor4.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 2000,
-                        rating: 4.9,
-                    },
-                ];
-
+                const mockMentors: Mentor[] = MOCK_MENTORS;
                 setLoading((prev) => ({ ...prev, mentors: false }));
-
-                // If a mentor ID is in the URL, pre-select it
                 if (preSelectedMentorId) {
                     const mentor =
                         mockMentors.find((m) => m.id === preSelectedMentorId) ||
@@ -299,12 +149,10 @@ export default function BookingPageClient() {
             //   const data = await response.json();
             //   setAvailableTimeSlots(data.timeSlots);
             // };
-
             // Mock data for available time slots (random selection of the predefined time slots)
             const mockTimeSlots = () => {
                 return timeSlots.filter(() => Math.random() > 0.3);
             };
-
         }
     }, [selectedDate, selectedMentor]);
 
@@ -442,7 +290,7 @@ export default function BookingPageClient() {
             <section className="bg-gradient-primary text-white py-12">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                        <h1 className="text-3xl md:text-4xl text-white font-bold mb-4">
                             Book Your Mentoring Session
                         </h1>
                         <p className="text-lg opacity-90">
@@ -513,46 +361,18 @@ export default function BookingPageClient() {
 
                                     {loading.services ? (
                                         <div className="text-center py-12">
-                                            <svg
+                                            <Loader
                                                 className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
+                                            />
                                             <p className="mt-4 text-text-secondary">
                                                 Loading services...
                                             </p>
                                         </div>
                                     ) : error ? (
                                         <div className="text-center py-12">
-                                            <svg
+                                            <AlertCircle
                                                 className="h-12 w-12 text-red-500 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
+                                            />
                                             <p className="mt-4 text-text-secondary">
                                                 {error}
                                             </p>
@@ -562,16 +382,11 @@ export default function BookingPageClient() {
                                             {services.map((service) => (
                                                 <div
                                                     key={service.id}
-                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedService?.id ===
-                                                        service.id
-                                                        ? "border-primary bg-primary bg-opacity-5"
-                                                        : "border-gray-200 hover:border-primary"
+                                                    className={`border rounded-lg p-4 cursor-pointer transition-all duration-200 ${selectedService?.id === service.id
+                                                            ? "border-primary bg-primary bg-opacity-5"
+                                                            : "border-gray-200 hover:border-primary"
                                                         }`}
-                                                    onClick={() =>
-                                                        handleServiceSelect(
-                                                            service
-                                                        )
-                                                    }
+                                                    onClick={() => handleServiceSelect(service)}
                                                 >
                                                     <div className="flex items-start">
                                                         <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-xl text-primary mr-4 shrink-0">
@@ -580,54 +395,28 @@ export default function BookingPageClient() {
                                                         <div>
                                                             <div className="flex justify-between">
                                                                 <h3 className="text-lg font-semibold">
-                                                                    {
-                                                                        service.name
-                                                                    }
+                                                                    {service.name}
                                                                 </h3>
                                                                 <div className="font-bold">
-                                                                    {formatCurrency(
-                                                                        service.price
-                                                                    )}
+                                                                    {formatCurrency(service.price)}
                                                                 </div>
                                                             </div>
                                                             <p className="text-text-secondary text-sm mt-1">
-                                                                {
-                                                                    service.description
-                                                                }
+                                                                {service.description}
                                                             </p>
 
                                                             <div className="mt-3 grid grid-cols-2 gap-2">
-                                                                {service.benefits.map(
-                                                                    (
-                                                                        benefit,
-                                                                        index
-                                                                    ) => (
-                                                                        <div
-                                                                            key={
-                                                                                index
-                                                                            }
-                                                                            className="flex items-center text-xs text-text-secondary"
-                                                                        >
-                                                                            <svg
-                                                                                className="w-4 h-4 text-primary mr-1 shrink-0"
-                                                                                fill="currentColor"
-                                                                                viewBox="0 0 20 20"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                            >
-                                                                                <path
-                                                                                    fillRule="evenodd"
-                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                                                    clipRule="evenodd"
-                                                                                />
-                                                                            </svg>
-                                                                            <span>
-                                                                                {
-                                                                                    benefit
-                                                                                }
-                                                                            </span>
-                                                                        </div>
-                                                                    )
-                                                                )}
+                                                                {service.benefits.map((benefit, index) => (
+                                                                    <div
+                                                                        key={index}
+                                                                        className="flex items-center text-xs text-text-secondary"
+                                                                    >
+                                                                        <CheckCircle
+                                                                            className="w-4 h-4 text-primary mr-1 shrink-0"
+                                                                        />
+                                                                        <span>{benefit}</span>
+                                                                    </div>
+                                                                ))}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -714,8 +503,7 @@ export default function BookingPageClient() {
                                                     }
                                                 >
                                                     <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
-                                                        <FaCreditCard />
-
+                                                        <CreditCard />
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -860,48 +648,23 @@ export default function BookingPageClient() {
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            className=" border-primary border-2 rounded-xl px-4 py-2 text-black"
+                                            className="border-primary border-2 rounded-xl px-4 py-2 text-black"
                                             onClick={() => goToPreviousStep()}
                                         >
                                             Back
                                         </button>
                                         <button
                                             className="btn-primary px-4 py-2 rounded-xl"
-                                            disabled={
-                                                !paymentMethod || isSubmitting
-                                            }
+                                            disabled={!paymentMethod || isSubmitting}
                                             onClick={handleSubmit}
                                         >
                                             {isSubmitting ? (
                                                 <span className="flex items-center">
-                                                    <svg
-                                                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <circle
-                                                            className="opacity-25"
-                                                            cx="12"
-                                                            cy="12"
-                                                            r="10"
-                                                            stroke="currentColor"
-                                                            strokeWidth="4"
-                                                        ></circle>
-                                                        <path
-                                                            className="opacity-75"
-                                                            fill="currentColor"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                        ></path>
-                                                    </svg>
+                                                    <Loader className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" />
                                                     Processing...
                                                 </span>
                                             ) : (
-                                                `Pay ${selectedService &&
-                                                formatCurrency(
-                                                    selectedService.price
-                                                )
-                                                }`
+                                                `Pay ${selectedService && formatCurrency(selectedService.price)}`
                                             )}
                                         </button>
                                     </div>
@@ -912,20 +675,7 @@ export default function BookingPageClient() {
                             {step === 4 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <svg
-                                            className="w-10 h-10 text-green-600"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M5 13l4 4L19 7"
-                                            />
-                                        </svg>
+                                        <Check className="w-10 h-10 text-green-600" strokeWidth={2} />
                                     </div>
 
                                     <h2 className="text-2xl font-bold mb-2">
@@ -998,8 +748,6 @@ export default function BookingPageClient() {
                                     </div>
                                 </div>
                             )}
-
-
                         </div>
 
                         {/* Order Summary Sidebar */}
@@ -1115,7 +863,6 @@ export default function BookingPageClient() {
                                         </div>
                                     </div>
 
-                                    {/* Help */}
                                     <div className="bg-background p-4 rounded-lg">
                                         <h3 className="font-semibold mb-2">
                                             Need Help?
@@ -1129,20 +876,7 @@ export default function BookingPageClient() {
                                             href="mailto:support@mentoverse.com"
                                             className="text-primary text-sm font-medium flex items-center"
                                         >
-                                            <svg
-                                                className="w-4 h-4 mr-1"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                                />
-                                            </svg>
+                                            <Mail className="w-4 h-4 mr-1" />
                                             support@mentoverse.com
                                         </a>
                                     </div>

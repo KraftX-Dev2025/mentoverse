@@ -1,5 +1,5 @@
 // src/lib/mock-data.ts
-import { Mentor, Service, Booking, Resource, User } from "./types";
+import { Mentor, Service, Booking, Resource, User, MentorStats } from "./types";
 
 // Mock Mentors
 export const MOCK_MENTORS: Mentor[] = [
@@ -355,6 +355,149 @@ export const TIME_SLOTS = [
     "07:00 PM",
     "08:00 PM",
 ];
+
+export const MOCK_TRANSACTIONS = [
+    {
+        id: "trans1",
+        date: new Date(
+            new Date().setDate(new Date().getDate() - 2)
+        ),
+        description: "Mock Interview with Rajiv Mehta",
+        amount: -1500,
+        status: "completed",
+    },
+    {
+        id: "trans2",
+        date: new Date(
+            new Date().setDate(new Date().getDate() - 10)
+        ),
+        description: "LinkedIn Review with Akash Gupta",
+        amount: -1200,
+        status: "completed",
+    },
+];
+
+export const MOCK_MENTOR_EARNINGS = [
+    {
+        id: "earning1",
+        date: new Date(
+            new Date().setDate(new Date().getDate() - 5)
+        ),
+        description: "Resume Review for Vikram Singh",
+        amount: 1080, // After platform fee
+        status: "paid",
+    },
+    {
+        id: "earning2",
+        date: new Date(
+            new Date().setDate(new Date().getDate() - 12)
+        ),
+        description: "Career Guidance for Sanya Kapoor",
+        amount: 1080, // After platform fee
+        status: "paid",
+    },
+    {
+        id: "earning3",
+        date: new Date(
+            new Date().setDate(new Date().getDate() + 7)
+        ), // Future payment date
+        description: "Mock Interview for Neha Desai",
+        amount: 1080, // After platform fee
+        status: "pending",
+    },
+];
+
+export const MOCK_Upcoming_Sessions: Booking[] = [
+    {
+        id: "booking1",
+        userId: "user123",
+        mentorId: "mentor1",
+        serviceId: "mock-interview",
+        date: new Date(
+            new Date().setDate(new Date().getDate() + 2)
+        ),
+        status: "confirmed",
+        amount: 1500,
+    },
+    {
+        id: "booking2",
+        userId: "user123",
+        mentorId: "mentor2",
+        serviceId: "career-guidance",
+        date: new Date(
+            new Date().setDate(new Date().getDate() + 5)
+        ),
+        status: "confirmed",
+        amount: 1800,
+    },
+];
+
+export const MOCK_PAST_SESSIONS: Booking[] = [
+    {
+        id: "booking3",
+        userId: "user123",
+        mentorId: "mentor3",
+        serviceId: "linkedin-review",
+        date: new Date(new Date().setDate(new Date().getDate() - 10)),
+        status: "completed",
+        amount: 1200,
+    },
+    {
+        id: "booking4",
+        userId: "user123",
+        mentorId: "mentor4",
+        serviceId: "cv-resume-review",
+        date: new Date(new Date().setDate(new Date().getDate() - 15)),
+        status: "completed",
+        amount: 1200,
+    },
+];
+
+export const MockMentorStats: MentorStats = {
+    totalSessions: 26,
+    completedSessions: 24,
+    upcomingSessions: 2,
+    averageRating: 4.8,
+    totalEarnings: 28800,
+    pendingPayments: 3600,
+};
+
+export const RESOURCE_CADRS = [
+    {
+        id: "1",
+        title: "How to Crack CA Final Exams",
+        type: "video",
+        category: "CA Preparation",
+        imageUrl:
+            "/images/resources/video-1.jpg",
+    },
+    {
+        id: "2",
+        title: "Resume Template for Finance Professionals",
+        type: "document",
+        category: "Resume Building",
+        imageUrl:
+            "/images/resources/document-1.jpg",
+    },
+    {
+        id: "3",
+        title: "Mastering LinkedIn for Career Growth",
+        type: "video",
+        category:
+            "LinkedIn Optimization",
+        imageUrl:
+            "/images/resources/video-2.jpg",
+    },
+    {
+        id: "4",
+        title: "Financial Compliance Guide for Startups",
+        type: "document",
+        category: "Startup Guidance",
+        imageUrl:
+            "/images/resources/document-2.jpg",
+    },
+]
+
 
 // Helper function to get mentor by ID
 export const getMentorById = (id: string): Mentor | undefined => {

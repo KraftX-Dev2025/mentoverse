@@ -9,6 +9,8 @@ import { Transaction, MentorStats, MentorEarning } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { MOCK_MENTOR_EARNINGS, MOCK_MENTORS, MOCK_PAST_SESSIONS, MOCK_TRANSACTIONS, MOCK_Upcoming_Sessions, MockMentorStats, RESOURCE_CADRS } from "@/lib/mock-data";
+import { Calendar, Users, CreditCard, BookOpen, BarChart, Mail, Clock, AlertCircle, ArrowRight, Loader } from 'lucide-react';
 
 export default function DashboardPageClient({ userData }: { userData: any }) {
     const [activeTab, setActiveTab] = useState("upcoming");
@@ -36,158 +38,22 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const mockUpcomingSessions: Booking[] = [
-                    {
-                        id: "booking1",
-                        userId: "user123",
-                        mentorId: "mentor1",
-                        serviceId: "mock-interview",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() + 2)
-                        ),
-                        status: "confirmed",
-                        amount: 1500,
-                    },
-                    {
-                        id: "booking2",
-                        userId: "user123",
-                        mentorId: "mentor2",
-                        serviceId: "career-guidance",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() + 5)
-                        ),
-                        status: "confirmed",
-                        amount: 1800,
-                    },
-                ];
-
-                const mockPastSessions: Booking[] = [
-                    {
-                        id: "booking3",
-                        userId: "user123",
-                        mentorId: "mentor3",
-                        serviceId: "linkedin-review",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 10)
-                        ),
-                        status: "completed",
-                        amount: 1200,
-                    },
-                    {
-                        id: "booking4",
-                        userId: "user123",
-                        mentorId: "mentor4",
-                        serviceId: "cv-resume-review",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 15)
-                        ),
-                        status: "completed",
-                        amount: 1200,
-                    },
-                ];
-                const mockMentors: Mentor[] = [
-                    {
-                        id: "mentor1",
-                        name: "Rajiv Mehta",
-                        title: "Senior Finance Manager",
-                        company: "Mahindra Group",
-                        expertise: [
-                            "Finance",
-                            "Career Guidance",
-                            "Corporate Strategy",
-                        ],
-                        bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
-                        image: "/images/mentors/mentor1.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1500,
-                        rating: 4.9,
-                    },
-                    {
-                        id: "mentor2",
-                        name: "Priya Sharma",
-                        title: "Chartered Accountant",
-                        company: "KPMG",
-                        expertise: ["CA", "Accounting", "Startups"],
-                        bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
-                        image: "/images/mentors/mentor2.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1200,
-                        rating: 4.8,
-                    },
-                ];
-
-                const mockTransactions: Transaction[] = [
-                    {
-                        id: "trans1",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 2)
-                        ),
-                        description: "Mock Interview with Rajiv Mehta",
-                        amount: -1500,
-                        status: "completed",
-                    },
-                    {
-                        id: "trans2",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 10)
-                        ),
-                        description: "LinkedIn Review with Akash Gupta",
-                        amount: -1200,
-                        status: "completed",
-                    },
-                ];
-
-                const mockMentorEarnings: MentorEarning[] = [
-                    {
-                        id: "earning1",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 5)
-                        ),
-                        description: "Resume Review for Vikram Singh",
-                        amount: 1080, // After platform fee
-                        status: "paid",
-                    },
-                    {
-                        id: "earning2",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() - 12)
-                        ),
-                        description: "Career Guidance for Sanya Kapoor",
-                        amount: 1080, // After platform fee
-                        status: "paid",
-                    },
-                    {
-                        id: "earning3",
-                        date: new Date(
-                            new Date().setDate(new Date().getDate() + 7)
-                        ), // Future payment date
-                        description: "Mock Interview for Neha Desai",
-                        amount: 1080, // After platform fee
-                        status: "pending",
-                    },
-                ];
-
-                const mockMentorStats: MentorStats = {
-                    totalSessions: 26,
-                    completedSessions: 24,
-                    upcomingSessions: 2,
-                    averageRating: 4.8,
-                    totalEarnings: 28800,
-                    pendingPayments: 3600,
-                };
-
+                const mockUpcomingSessions: Booking[] = MOCK_Upcoming_Sessions;
+                const mockPastSessions: Booking[] = MOCK_PAST_SESSIONS;
+                const mockMentors: Mentor[] = MOCK_MENTORS;
+                const mockTransactions: Transaction[] = MOCK_TRANSACTIONS;
+                const mockMentorEarnings: MentorEarning[] = MOCK_MENTOR_EARNINGS;
+                const mockMentorStats: MentorStats = MockMentorStats;
                 // Set the fetched data
                 setUpcomingSessions(mockUpcomingSessions);
                 setPastSessions(mockPastSessions);
                 setMentors(mockMentors);
                 setTransactions(mockTransactions);
-
                 // Set mentor data if user is also a mentor
                 if (userRole === "mentor" || userRole === "both") {
                     setMentorEarnings(mockMentorEarnings);
                     setMentorStats(mockMentorStats);
                 }
-
                 setLoading(false);
             } catch (error) {
                 setError(
@@ -217,7 +83,6 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
             "career-guidance": "Career Guidance",
             "events-webinars": "Events & Webinars",
         };
-
         return services[serviceId] || "Unknown Service";
     };
 
@@ -304,20 +169,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     setActiveTab("upcoming")
                                                 }
                                             >
-                                                <svg
-                                                    className="w-5 h-5 mr-3"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                                    />
-                                                </svg>
+                                                <Calendar className="w-5 h-5 mr-3" />
                                                 Sessions
                                             </button>
                                         </li>
@@ -331,20 +183,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     setActiveTab("mentors")
                                                 }
                                             >
-                                                <svg
-                                                    className="w-5 h-5 mr-3"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                                    />
-                                                </svg>
+                                                <Users className="w-5 h-5 mr-3" />
                                                 My Mentors
                                             </button>
                                         </li>
@@ -358,20 +197,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     setActiveTab("transactions")
                                                 }
                                             >
-                                                <svg
-                                                    className="w-5 h-5 mr-3"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                                                    />
-                                                </svg>
+                                                <CreditCard className="w-5 h-5 mr-3" />
                                                 Transactions
                                             </button>
                                         </li>
@@ -385,20 +211,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     setActiveTab("resources")
                                                 }
                                             >
-                                                <svg
-                                                    className="w-5 h-5 mr-3"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                                                    />
-                                                </svg>
+                                                <BookOpen className="w-5 h-5 mr-3" />
                                                 Resources
                                             </button>
                                         </li>
@@ -417,20 +230,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                             )
                                                         }
                                                     >
-                                                        <svg
-                                                            className="w-5 h-5 mr-3"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                                            />
-                                                        </svg>
+                                                        <BarChart className="w-5 h-5 mr-3" />
                                                         Mentor Dashboard
                                                     </button>
                                                 </li>
@@ -453,20 +253,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                     href="/contact-us"
                                     className="text-primary text-sm font-medium flex items-center"
                                 >
-                                    <svg
-                                        className="w-4 h-4 mr-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                        />
-                                    </svg>
+                                    <Mail className="w-4 h-4 mr-1" />
                                     Contact Support
                                 </Link>
                             </div>
@@ -505,46 +292,14 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                         {/* Session Content */}
                                         {loading ? (
                                             <div className="text-center py-12">
-                                                <svg
-                                                    className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        className="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        strokeWidth="4"
-                                                    ></circle>
-                                                    <path
-                                                        className="opacity-75"
-                                                        fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
-                                                </svg>
+                                                <Loader className="animate-spin h-8 w-8 text-primary mx-auto" />
                                                 <p className="mt-4 text-text-secondary">
                                                     Loading sessions...
                                                 </p>
                                             </div>
                                         ) : error ? (
                                             <div className="text-center py-12">
-                                                <svg
-                                                    className="h-12 w-12 text-red-500 mx-auto"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                    />
-                                                </svg>
+                                                <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
                                                 <p className="mt-4 text-text-secondary">
                                                     {error}
                                                 </p>
@@ -552,20 +307,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                         ) : activeTab === "upcoming" ? (
                                             upcomingSessions.length === 0 ? (
                                                 <div className="text-center py-12">
-                                                    <svg
-                                                        className="h-12 w-12 text-gray-400 mx-auto"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                                        />
-                                                    </svg>
+                                                    <Calendar className="h-12 w-12 text-gray-400 mx-auto" />
                                                     <p className="mt-4 text-text-secondary">
                                                         You don&apos;t have any
                                                         upcoming sessions.
@@ -639,23 +381,11 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     )}
                                                 </div>
                                             )
-                                        ) : // Past Sessions
+                                        ) :
+                                            // Past Sessions
                                             pastSessions.length === 0 ? (
                                                 <div className="text-center py-12">
-                                                    <svg
-                                                        className="h-12 w-12 text-gray-400 mx-auto"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                        />
-                                                    </svg>
+                                                    <Clock className="h-12 w-12 text-gray-400 mx-auto" />
                                                     <p className="mt-4 text-text-secondary">
                                                         You haven&apos;t attended any
                                                         sessions yet.
@@ -732,66 +462,21 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
 
                                     {loading ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
+                                            <Loader className="animate-spin h-8 w-8 text-primary mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 Loading mentors...
                                             </p>
                                         </div>
                                     ) : error ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-red-500 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
+                                            <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 {error}
                                             </p>
                                         </div>
                                     ) : mentors.length === 0 ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-gray-400 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                                />
-                                            </svg>
+                                            <Users className="h-12 w-12 text-gray-400 mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 You haven&apos;t booked any
                                                 mentors yet.
@@ -873,66 +558,21 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
 
                                     {loading ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="animate-spin h-8 w-8 text-primary mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
+                                            <Loader className="animate-spin h-8 w-8 text-primary mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 Loading transactions...
                                             </p>
                                         </div>
                                     ) : error ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-red-500 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                />
-                                            </svg>
+                                            <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 {error}
                                             </p>
                                         </div>
                                     ) : transactions.length === 0 ? (
                                         <div className="text-center py-12">
-                                            <svg
-                                                className="h-12 w-12 text-gray-400 mx-auto"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                                                />
-                                            </svg>
+                                            <CreditCard className="h-12 w-12 text-gray-400 mx-auto" />
                                             <p className="mt-4 text-text-secondary">
                                                 You don&apos;t have any
                                                 transactions yet.
@@ -1021,41 +661,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* Resource Cards */}
-                                        {[
-                                            {
-                                                id: "1",
-                                                title: "How to Crack CA Final Exams",
-                                                type: "video",
-                                                category: "CA Preparation",
-                                                imageUrl:
-                                                    "/images/resources/video-1.jpg",
-                                            },
-                                            {
-                                                id: "2",
-                                                title: "Resume Template for Finance Professionals",
-                                                type: "document",
-                                                category: "Resume Building",
-                                                imageUrl:
-                                                    "/images/resources/document-1.jpg",
-                                            },
-                                            {
-                                                id: "3",
-                                                title: "Mastering LinkedIn for Career Growth",
-                                                type: "video",
-                                                category:
-                                                    "LinkedIn Optimization",
-                                                imageUrl:
-                                                    "/images/resources/video-2.jpg",
-                                            },
-                                            {
-                                                id: "4",
-                                                title: "Financial Compliance Guide for Startups",
-                                                type: "document",
-                                                category: "Startup Guidance",
-                                                imageUrl:
-                                                    "/images/resources/document-2.jpg",
-                                            },
-                                        ].map((resource) => (
+                                        {RESOURCE_CADRS.map((resource) => (
                                             <div
                                                 key={resource.id}
                                                 className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-all"
@@ -1096,26 +702,12 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                             "video"
                                                             ? "Watch Video"
                                                             : "View Document"}
-                                                        <svg
-                                                            className="w-4 h-4 ml-1"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                                            />
-                                                        </svg>
+                                                        <ArrowRight className="w-4 h-4 ml-1" />
                                                     </Link>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-
                                     <div className="mt-6 text-center">
                                         <Link
                                             href="/resources"
@@ -1126,7 +718,6 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                     </div>
                                 </div>
                             )}
-
                             {/* Mentor Dashboard */}
                             {activeTab === "mentor-dashboard" && (
                                 <div>
@@ -1216,26 +807,12 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                 Earnings
                                             </button>
                                         </div>
-
                                         {/* Mentor Session Content */}
                                         {activeMentorTab === "upcoming" ? (
                                             mentorUpcomingSessions.length ===
                                                 0 ? (
                                                 <div className="text-center py-12">
-                                                    <svg
-                                                        className="h-12 w-12 text-gray-400 mx-auto"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                                        />
-                                                    </svg>
+                                                    <Calendar className="h-12 w-12 text-gray-400 mx-auto" />
                                                     <p className="mt-4 text-text-secondary">
                                                         You don&apos;t have any
                                                         upcoming mentoring
@@ -1304,20 +881,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                         ) : activeMentorTab === "past" ? (
                                             mentorPastSessions.length === 0 ? (
                                                 <div className="text-center py-12">
-                                                    <svg
-                                                        className="h-12 w-12 text-gray-400 mx-auto"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                        />
-                                                    </svg>
+                                                    <Clock className="h-12 w-12 text-gray-400 mx-auto" />
                                                     <p className="mt-4 text-text-secondary">
                                                         You haven&apos;t
                                                         conducted any mentoring
