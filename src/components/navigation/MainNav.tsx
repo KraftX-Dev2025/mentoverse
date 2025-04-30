@@ -69,7 +69,6 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     {/* Primary Navigation - Desktop */}
                     <nav className="hidden md:flex items-center space-x-8">
                         {NAV_LINKS.map((link, index) => {
-                            // For links with dropdowns (Services)
                             if (link.hasDropdown) {
                                 return (
                                     <div key={index} className="relative group">

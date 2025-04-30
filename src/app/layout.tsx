@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { SITE_NAME, SITE_DESCRIPTION, SERVICES } from "@/lib/constants";
 import MainNav from "@/components/navigation/MainNav";
-import Footer from "@/components/footer";
+import Footer from "@/components/navigation/Footer";
 import "./globals.css";
 import logo from "../../public/logo_noBG.jpg"
 import logo2 from "../../public/logo_noBG.webp"
