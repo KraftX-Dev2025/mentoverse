@@ -34,6 +34,19 @@ export default function MentorsPageClient() {
         "LinkedIn Optimization",
         "Corporate Strategy",
     ];
+    const avatarColors = [
+        "bg-red-500", "bg-green-500", "bg-blue-500",
+        "bg-yellow-500", "bg-pink-500", "bg-purple-500",
+        "bg-orange-500", "bg-teal-500", "bg-indigo-500"
+    ];
+    function getColorForMentor(id: string) {
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+            hash = id.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % avatarColors.length;
+        return avatarColors[index];
+    }
 
     // Fetch mentors
     useEffect(() => {
@@ -256,7 +269,7 @@ export default function MentorsPageClient() {
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                         {/* Filters Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white p-6 rounded-lg shadow-sm">
+                            <div className="bg-white p-6 rounded-xl shadow-sm">
                                 <h2 className="text-xl font-bold mb-6">
                                     Filters
                                 </h2>
@@ -567,7 +580,7 @@ export default function MentorsPageClient() {
                                             </label>
                                             <select
                                                 id="sort"
-                                                className="form-control py-1 text-sm"
+                                                className="form-control py-1 text-sm rounded-xl"
                                                 defaultValue="rating"
                                             >
                                                 <option value="rating">
@@ -587,89 +600,58 @@ export default function MentorsPageClient() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {filteredMentors.map((mentor) => (
-                                            <div
-                                                key={mentor.id}
-                                                className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
-                                            >
-                                                <div className="p-6">
-                                                    <div className="flex items-center">
-                                                        <div className="w-20 h-20 rounded-full overflow-hidden mr-4">
-                                                            <Image
-                                                                src={
-                                                                    mentor.image
-                                                                }
-                                                                alt={
-                                                                    mentor.name
-                                                                }
-                                                                width={80}
-                                                                height={80}
-                                                                className="object-cover"
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            <h3 className="text-xl font-semibold">
-                                                                {mentor.name}
-                                                            </h3>
-                                                            <p className="text-primary">
-                                                                {mentor.title}
-                                                            </p>
-                                                            <p className="text-sm text-text-secondary">
-                                                                {mentor.company}
-                                                            </p>
-                                                            <div className="flex items-center mt-1">
-                                                                <span className="text-secondary font-semibold">
-                                                                    {
-                                                                        mentor.rating
-                                                                    }
-                                                                </span>
-                                                                <span className="ml-1 text-secondary">
-                                                                    ★
-                                                                </span>
+                                        {filteredMentors.map((mentor) => {
+                                            const colorClass = getColorForMentor(mentor.id);
+                                            return (
+                                                <div
+                                                    key={mentor.id}
+                                                    className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
+                                                >
+                                                    <div className="p-6">
+                                                        <div className="flex items-start space-x-4">
+                                                            <div
+                                                                className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold ${colorClass}`}
+                                                            >
+                                                                {mentor.name.charAt(0).toUpperCase()}
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <h3 className="text-lg font-semibold leading-tight">{mentor.name}</h3>
+                                                                <p className="text-primary text-sm">{mentor.title}</p>
+                                                                <p className="text-sm text-text-secondary">{mentor.company}</p>
+                                                                <div className="flex items-center mt-1">
+                                                                    <span className="text-secondary font-semibold">{mentor.rating}</span>
+                                                                    <span className="ml-1 text-secondary">★</span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <p className="mt-4 text-text-secondary text-sm line-clamp-3">
-                                                        {mentor.bio}
-                                                    </p>
+                                                        <p className="mt-4 text-text-secondary text-sm line-clamp-3">{mentor.bio}</p>
 
-                                                    <div className="mt-4 flex flex-wrap gap-2">
-                                                        {mentor.expertise.map(
-                                                            (exp) => (
+                                                        <div className="mt-4 flex flex-wrap gap-2">
+                                                            {mentor.expertise.map((exp) => (
                                                                 <span
                                                                     key={exp}
-                                                                    className="text-xs text-white bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-full"
+                                                                    className="text-sm text-black bg-white bg-opacity-10 px-2 py-1"
                                                                 >
                                                                     {exp}
                                                                 </span>
-                                                            )
-                                                        )}
-                                                    </div>
+                                                            ))}
+                                                        </div>
 
-                                                    <div className="mt-6 flex items-center">
-                                                        {/* <div>
-                                                            <span className="font-bold text-lg">
-                                                                {formatCurrency(
-                                                                    mentor.hourlyRate
-                                                                )}
-                                                            </span>
-                                                            <span className="text-text-secondary text-sm">
-                                                                {" "}
-                                                                / hour
-                                                            </span>
-                                                        </div> */}
-                                                        <Link
-                                                            href={`/booking?mentor=${mentor.id}`}
-                                                            className="btn-primary text-sm p-4 rounded-2xl shadow-lg shadow-white"
-                                                        >
-                                                            Book a Session
-                                                        </Link>
+                                                        <div className="mt-6 flex items-center">
+                                                            <Link
+                                                                href={`/booking?mentor=${mentor.id}`}
+                                                                className="btn-primary text-sm px-2 py-2 rounded-xl shadow-lg shadow-white"
+                                                            >
+                                                                Book a Session
+                                                            </Link>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
+
                                 </div>
                             )}
                         </div>
@@ -750,18 +732,18 @@ export default function MentorsPageClient() {
                                 </ul>
                                 <Link
                                     href="/contact-us"
-                                    className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white"
+                                    className="btn-secondary px-2 py-2 rounded-xl "
                                 >
                                     Apply Now
                                 </Link>
                             </div>
                             <div className="hidden md:block">
                                 <Image
-                                    src="/images/become-mentor.svg"
-                                    alt="Become a Mentor"
+                                    src="/mentor.jpeg"
+                                    alt="Become a Mntor"
                                     width={500}
                                     height={400}
-                                    className="mx-auto"
+                                    className="mx-auto rounded-xl"
                                 />
                             </div>
                         </div>

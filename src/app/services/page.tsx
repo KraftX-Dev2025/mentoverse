@@ -34,7 +34,7 @@ export default function ServicesPage() {
                 "Receive immediate feedback and actionable tips",
                 "Get a detailed performance report within 24 hours",
             ],
-            imageUrl: "/images/services/mock-interview.jpg",
+            imageUrl: "/one-on-one-mi.jpeg",
         },
         {
             id: "linkedin-review",
@@ -57,7 +57,7 @@ export default function ServicesPage() {
                 "Receive a comprehensive report with specific improvement suggestions",
                 "Get a 30-minute call to discuss the recommendations",
             ],
-            imageUrl: "/images/services/linkedin-review.jpg",
+            imageUrl: "/linkedin.jpeg",
         },
         {
             id: "cv-resume-review",
@@ -80,7 +80,7 @@ export default function ServicesPage() {
                 "Receive a comprehensive feedback report",
                 "Get a revised version with tracked changes and suggestions",
             ],
-            imageUrl: "/images/services/cv-review.jpg",
+            imageUrl: "/resume-review.jpeg",
         },
         {
             id: "group-discussion",
@@ -103,7 +103,7 @@ export default function ServicesPage() {
                 "Get real-time feedback from the moderator",
                 "Receive a personalized feedback report post-session",
             ],
-            imageUrl: "/images/services/group-discussion.jpg",
+            imageUrl: "/gd.jpeg",
         },
         {
             id: "career-guidance",
@@ -126,7 +126,7 @@ export default function ServicesPage() {
                 "Receive a personalized career development plan",
                 "Get a follow-up session after 3 months to track progress",
             ],
-            imageUrl: "/images/services/career-guidance.jpg",
+            imageUrl: "/one-on-one-cg.jpeg",
         },
         {
             id: "events-webinars",
@@ -149,7 +149,7 @@ export default function ServicesPage() {
                 "Participate in the live session with Q&A opportunities",
                 "Get access to event recordings and additional resources",
             ],
-            imageUrl: "/images/services/events-webinars.jpg",
+            imageUrl: "/webinar.jpeg",
         },
     ];
 
@@ -292,7 +292,7 @@ export default function ServicesPage() {
                         <div className="hidden lg:block">
                             <div className="relative h-[500px] w-full rounded-lg overflow-hidden shadow-lg">
                                 <Image
-                                    src="/images/services/career-guidance-detail.jpg"
+                                    src="/career-guidance.jpeg"
                                     alt="Career Guidance"
                                     fill
                                     className="object-cover"
@@ -320,8 +320,8 @@ export default function ServicesPage() {
                         <div key={service.id} id={`${service.id}-section`} className="mb-16 pt-8 -mt-8">
                             <div
                                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1
-                                        ? "lg:grid-flow-row-dense"
-                                        : ""
+                                    ? "lg:grid-flow-row-dense"
+                                    : ""
                                     }`}
                             >
                                 <div

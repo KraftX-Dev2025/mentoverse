@@ -68,50 +68,56 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                     {/* Primary Navigation - Desktop */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        {NAV_LINKS.map((link, index) => {
-                            if (link.hasDropdown) {
-                                return (
-                                    <div key={index} className="relative group">
-                                        <Link
-                                            href={link.href}
-                                            className="nav-link flex items-center"
-                                        >
-                                            {iconComponents[link.icon as keyof typeof iconComponents]}
-                                            {link.label}
-                                            <ChevronDown className="h-4 w-4 ml-1" />
-                                        </Link>
-                                        <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-lg z-50">
-                                            <div className="py-2">
-                                                {SERVICES.map((service) => (
-                                                    <Link
-                                                        key={service.id}
-                                                        href={`/services/${service.id}`}
-                                                        className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
-                                                    >
-                                                        <span className="mr-2">
-                                                            {service.icon}
-                                                        </span>
-                                                        {service.name}
-                                                    </Link>
-                                                ))}
+                        {NAV_LINKS
+                            .filter(link => {
+                                if (user && (link.label === "Home" || link.label === "About")) return false;
+                                return true;
+                            })
+                            .map((link, index) => {
+
+                                if (link.hasDropdown) {
+                                    return (
+                                        <div key={index} className="relative group">
+                                            <Link
+                                                href={link.href}
+                                                className="nav-link flex items-center"
+                                            >
+                                                {iconComponents[link.icon as keyof typeof iconComponents]}
+                                                {link.label}
+                                                <ChevronDown className="h-4 w-4 ml-1" />
+                                            </Link>
+                                            <div className="absolute left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-lg z-50">
+                                                <div className="py-2">
+                                                    {SERVICES.map((service) => (
+                                                        <Link
+                                                            key={service.id}
+                                                            href={`/services/${service.id}`}
+                                                            className="block px-4 py-2 text-sm hover:bg-background hover:text-primary"
+                                                        >
+                                                            <span className="mr-2">
+                                                                {service.icon}
+                                                            </span>
+                                                            {service.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            }
+                                    );
+                                }
 
-                            // Regular links
-                            return (
-                                <Link
-                                    key={index}
-                                    href={link.href}
-                                    className="nav-link flex items-center"
-                                >
-                                    {iconComponents[link.icon as keyof typeof iconComponents]}
-                                    {link.label}
-                                </Link>
-                            );
-                        })}
+                                // Regular links
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={link.href}
+                                        className="nav-link flex items-center"
+                                    >
+                                        {iconComponents[link.icon as keyof typeof iconComponents]}
+                                        {link.label}
+                                    </Link>
+                                );
+                            })}
                     </nav>
 
                     {/* CTA Buttons & Mobile Menu Trigger */}
