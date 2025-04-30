@@ -124,7 +124,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     <div className="flex items-center">
                         <div className="hidden xl:flex items-center space-x-4">
                             <LinkButton
-                                href="/booking"
+                                href="/mentors"
                                 variant="primary"
                                 size="md"
                             >
@@ -215,7 +215,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                         <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100">
                             <LinkButton
-                                href="/booking"
+                                href="/mentors"
                                 variant="primary"
                                 size="md"
                                 fullWidth

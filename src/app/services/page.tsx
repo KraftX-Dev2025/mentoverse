@@ -518,7 +518,7 @@ export default function ServicesPage() {
                             guidance from our mentors.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                                 Book a Session
                             </Link>
                             <Link

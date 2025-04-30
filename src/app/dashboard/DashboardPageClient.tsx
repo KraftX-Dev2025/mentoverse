@@ -114,7 +114,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-                            <Link href="/booking">
+                            <Link href="/mentors">
                                 Book a New Session
                             </Link>
                         </div>
@@ -313,7 +313,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                         upcoming sessions.
                                                     </p>
                                                     <Link
-                                                        href="/booking"
+                                                        href="/mentors"
                                                         className="mt-4 btn-primary inline-block p-4 rounded-2xl shadow-lg shadow-white"
                                                     >
                                                         Book a Session
@@ -391,7 +391,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                         sessions yet.
                                                     </p>
                                                     <Link
-                                                        href="/booking"
+                                                        href="/mentors"
                                                         className="mt-4 btn-primary inline-block"
                                                     >
                                                         Book Your First Session
