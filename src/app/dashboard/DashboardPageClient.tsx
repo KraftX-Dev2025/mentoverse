@@ -6,6 +6,9 @@ import Link from "next/link";
 import { Booking, Mentor } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 import { Transaction, MentorStats, MentorEarning } from "@/lib/types";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function DashboardPageClient({ userData }: { userData: any }) {
     const [activeTab, setActiveTab] = useState("upcoming");
@@ -28,6 +31,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
     const [mentorUpcomingSessions] = useState<Booking[]>([]);
     const [mentorPastSessions] = useState<Booking[]>([]);
     const [mentorEarnings, setMentorEarnings] = useState<MentorEarning[]>([]);
+    const router = useRouter();
     // Fetch dashboard data
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -217,6 +221,19 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
         return services[serviceId] || "Unknown Service";
     };
 
+    // Function to handle logout
+    const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log("User logged out");
+        try {
+            await signOut(auth);
+            router.push("/login");
+        } catch (error: any) {
+            console.error("Error logging out:", error);
+        }
+    }
+
+
     return (
         <>
             {/* Hero Section */}
@@ -268,8 +285,8 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                             </div>
                                         </div>
                                     </div>
-                                    <button className="mt-4 w-full text-sm text-black border border-primary rounded-md py-1 hover:bg-purple-300 hover:bg-opacity-5 transition-colors">
-                                        Edit Profile
+                                    <button className="mt-4 w-full text-sm text-black border border-red-500 rounded-md py-1 hover:bg-red-500 hover:bg-opacity-5 transition-colors" onClick={handleLogout}>
+                                        Logout
                                     </button>
                                 </div>
 
