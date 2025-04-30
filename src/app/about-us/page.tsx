@@ -278,7 +278,7 @@ export default function AboutUs() {
                             Mentoverse.`}
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/booking" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                                 Book a Session
                             </Link>
                             <Link

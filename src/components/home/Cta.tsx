@@ -46,7 +46,7 @@ const Cta = () => {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         viewport={{ once: true }}
                     >
-                        <Link href="/booking">
+                        <Link href="/mentors">
                             <Button
                                 variant="secondary"
                                 size="lg"

@@ -458,19 +458,19 @@ export default function BookingPageClient() {
             <section className="py-12 bg-background">
                 <div className="container">
                     {/* Booking Steps */}
-                    {step < 5 && (
+                    {step < 4 && (
                         <div className="mb-12">
                             <div className="flex justify-between items-center relative">
                                 {/* Progress Bar */}
                                 <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 z-0">
                                     <div
                                         className="h-full bg-primary transition-all duration-300"
-                                        style={{ width: `${(step - 1) * 33.33}%` }}
+                                        style={{ width: `${(step - 1) * 50}%` }}
                                     ></div>
                                 </div>
 
                                 {/* Step Indicators */}
-                                {[1, 2, 3, 4].map((stepNumber) => (
+                                {[1, 2, 3].map((stepNumber) => (
                                     <div
                                         key={stepNumber}
                                         className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${step >= stepNumber
@@ -488,13 +488,10 @@ export default function BookingPageClient() {
                                     Choose Service
                                 </div>
                                 <div className="text-center w-36 -ml-14 ">
-                                    Your Details
+                                    Schedule
                                 </div>
                                 <div className="text-center w-36 -ml-14">
                                     Payment
-                                </div>
-                                <div className="text-center w-36 -ml-14">
-                                    Success
                                 </div>
                             </div>
                         </div>
