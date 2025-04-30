@@ -76,7 +76,7 @@ export default function AboutUs() {
                         </div>
                         <div className="order-first md:order-last">
                             <Image
-                                src="/images/about/our-story.jpg"
+                                src="/our-story.jpeg"
                                 alt="Our Story"
                                 width={600}
                                 height={450}
@@ -190,7 +190,7 @@ export default function AboutUs() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>
                             <Image
-                                src="/images/vision-illustration.svg"
+                                src="/our-vision.png"
                                 alt="Our Vision"
                                 width={500}
                                 height={400}

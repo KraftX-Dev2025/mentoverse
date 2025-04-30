@@ -3,10 +3,27 @@ import Link from "next/link";
 import { SERVICES } from "@/lib/constants";
 
 export default function Home() {
+    const avatarColors = [
+        "bg-red-500",
+        "bg-blue-500",
+        "bg-green-500",
+        "bg-yellow-500",
+        "bg-pink-500",
+        "bg-purple-500",
+        "bg-indigo-500",
+        "bg-teal-500",
+        "bg-orange-500",
+    ];
+
+    const getColorClass = (name: string) => {
+        const hash = Array.from(name).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        return avatarColors[hash % avatarColors.length];
+    };
+
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white relative overflow-hidden h-screen">
+            <section className="bg-gradient-primary text-white relative overflow-hidden">
                 <div className="absolute inset-0 z-0 opacity-30">
                     <Image
                         src="/hero-bg-pattern.png"
@@ -15,7 +32,7 @@ export default function Home() {
                         style={{ objectFit: "cover" }}
                     />
                 </div>
-                <div className="container relative z-10 py-20 md:py-28">
+                <div className="container relative z-10 py-10 md:py-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div className="animate-fade-in">
                             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
@@ -45,12 +62,12 @@ export default function Home() {
                                 </Link>
                             </div>
                         </div>
-                        <div className="hidden md:block">
+                        <div className="hidden md:block ml-12">
                             <Image
-                                src="/images/hero-illustration.svg"
+                                src="/hero-section.png"
                                 alt="Mentorship Illustration"
-                                width={600}
-                                height={500}
+                                width={700}
+                                height={600}
                                 className="animate-fade-in"
                             />
                         </div>
@@ -171,59 +188,51 @@ export default function Home() {
                             {
                                 name: "Rahul Singh",
                                 role: "CA Student",
-                                image: "/images/testimonials/person1.jpg",
                                 text: "The one-on-one sessions with my mentor helped me clear my CA finals. The guidance was practical and exactly what I needed.",
                             },
                             {
                                 name: "Priya Sharma",
                                 role: "Finance Professional",
-                                image: "/images/testimonials/person2.jpg",
                                 text: "My LinkedIn profile review session was eye-opening. I'm getting 3x more profile views and better connection requests now.",
                             },
                             {
                                 name: "Amit Patel",
                                 role: "Startup Founder",
-                                image: "/images/testimonials/person3.jpg",
                                 text: "The financial compliance guidance I received helped me navigate the complex regulatory landscape for my startup.",
                             },
-                        ].map((testimonial, index) => (
-                            <div key={index} className="card p-6 rounded-2xl bg-gray-50">
-                                <div className="flex items-center mb-4">
-                                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                                        <Image
-                                            src={testimonial.image}
-                                            alt={testimonial.name}
-                                            width={48}
-                                            height={48}
-                                        />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold">
-                                            {testimonial.name}
-                                        </h4>
-                                        <p className="text-sm text-text-secondary">
-                                            {testimonial.role}
-                                        </p>
-                                    </div>
-                                </div>
-                                <p className="italic text-text-secondary">
-                                    {testimonial.text}
-                                </p>
-                                <div className="mt-4 flex text-secondary">
-                                    {[...Array(5)].map((_, i) => (
-                                        <svg
-                                            key={i}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
+                        ].map((testimonial, index) => {
+                            const colorClass = getColorClass(testimonial.name);
+                            return (
+                                <div key={index} className="card p-6 rounded-2xl bg-gray-50">
+                                    <div className="flex items-center mb-4">
+                                        <div
+                                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold mr-4 ${colorClass}`}
                                         >
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    ))}
+                                            {testimonial.name.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-semibold">{testimonial.name}</h4>
+                                            <p className="text-sm text-text-secondary">{testimonial.role}</p>
+                                        </div>
+                                    </div>
+                                    <p className="italic text-text-secondary">{testimonial.text}</p>
+                                    <div className="mt-4 flex text-secondary">
+                                        {[...Array(5)].map((_, i) => (
+                                            <svg
+                                                key={i}
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-5 w-5"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
+
                     </div>
                 </div>
             </section>

@@ -70,11 +70,10 @@ const Testimonials = () => {
                                     activeIndex === index ? "animate" : "exit"
                                 }
                                 variants={cardVariants}
-                                className={`p-8 rounded-xl shadow-lg bg-white border border-gray-100 absolute top-0 left-0 right-0 ${
-                                    activeIndex === index
+                                className={`p-8 rounded-xl shadow-lg bg-white border border-gray-100 absolute top-0 left-0 right-0 ${activeIndex === index
                                         ? "z-10"
                                         : "z-0 hidden"
-                                }`}
+                                    }`}
                             >
                                 <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                                     <div className="shrink-0">
@@ -94,11 +93,10 @@ const Testimonials = () => {
                                                 <svg
                                                     key={i}
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className={`h-5 w-5 ${
-                                                        i < testimonial.rating
+                                                    className={`h-5 w-5 ${i < testimonial.rating
                                                             ? "text-secondary"
                                                             : "text-gray-300"
-                                                    }`}
+                                                        }`}
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
                                                 >
@@ -131,11 +129,10 @@ const Testimonials = () => {
                             <button
                                 key={index}
                                 onClick={() => setActiveIndex(index)}
-                                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                    activeIndex === index
+                                className={`w-3 h-3 rounded-full transition-all duration-300 ${activeIndex === index
                                         ? "bg-primary w-8"
                                         : "bg-gray-300 hover:bg-primary/50"
-                                }`}
+                                    }`}
                                 aria-label={`Testimonial ${index + 1}`}
                             />
                         ))}
