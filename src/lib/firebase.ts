@@ -1,19 +1,30 @@
+"use client";
+
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
+import { getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAMr9wFFYxzxRsbuHefOJifVibEum_qNeQ",
-    authDomain: "mentoverse-web.firebaseapp.com",
-    projectId: "mentoverse-web",
-    storageBucket: "mentoverse-web.firebasestorage.app",
-    messagingSenderId: "361456596911",
-    appId: "1:361456596911:web:4e23ba98b5bff7e663a15a",
-    measurementId: "G-3BMJBJFL2Y"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Initialize Firebase conditionally (only in browser)
+// Explicitly type the variables
+let app;
+let auth: Auth;
+let db: Firestore;
+
+// Only initialize if in browser environment
+if (typeof window !== 'undefined') {
+    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    auth = getAuth(app);
+    db = getFirestore(app);
+}
 
 export { auth, db };

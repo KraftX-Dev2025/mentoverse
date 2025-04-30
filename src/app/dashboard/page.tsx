@@ -14,36 +14,44 @@ export default function DashboardPage() {
     const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if (currentUser) {
-                try {
-                    const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
+        // Only run the auth state observer if auth is defined
+        if (auth) {
+            const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+                if (currentUser) {
+                    try {
+                        const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
 
-                    const menteeDocSnap = await getDoc(menteeUserRef);
+                        const menteeDocSnap = await getDoc(menteeUserRef);
 
-                    if (menteeDocSnap.exists()) {
-                        console.log('User is authenticated and exists in the database.');
-                        setUser(menteeDocSnap.data() as User);
-                        router.push('/dashboard');
-                    } else {
-                        console.log('User is authenticated but does not exist in the database.');
-                        await signOut(auth);
+                        if (menteeDocSnap.exists()) {
+                            console.log('User is authenticated and exists in the database.');
+                            setUser(menteeDocSnap.data() as User);
+                            router.push('/dashboard');
+                        } else {
+                            console.log('User is authenticated but does not exist in the database.');
+                            await signOut(auth);
+                            setUser(null);
+                            router.push('/signup');
+                        }
+                    } catch (error) {
+                        console.error('Error checking user status:', error);
                         setUser(null);
                         router.push('/signup');
                     }
-                } catch (error) {
-                    console.error('Error checking user status:', error);
+                } else {
                     setUser(null);
                     router.push('/signup');
                 }
-            } else {
-                setUser(null);
-                router.push('/signup');
-            }
-            setIsLoading(false);
-        });
+                setIsLoading(false);
+            });
 
-        return () => unsubscribe();
+            return () => unsubscribe();
+        } else {
+            // If auth is not defined (e.g., during SSR), set loading to false and redirect
+            setIsLoading(false);
+            router.push('/signup');
+            return () => {}; // Return empty cleanup function
+        }
     }, [router]);
 
 

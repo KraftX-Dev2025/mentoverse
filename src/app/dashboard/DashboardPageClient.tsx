@@ -5,43 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Booking, Mentor } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-
-// Mock user data
-const mockUser = {
-    id: "user123",
-    name: "Rahul Sharma",
-    email: "rahul.sharma@example.com",
-    phone: "+91 9876543210",
-    image: "/images/users/profile.jpg",
-    role: "user" as const,
-    joinedOn: new Date("2023-10-15"),
-};
-
-// Define types for various state objects
-interface Transaction {
-    id: string;
-    date: Date;
-    description: string;
-    amount: number;
-    status: string;
-}
-
-interface MentorEarning {
-    id: string;
-    date: Date;
-    description: string;
-    amount: number;
-    status: string;
-}
-
-interface MentorStats {
-    totalSessions: number;
-    completedSessions: number;
-    upcomingSessions: number;
-    averageRating: number;
-    totalEarnings: number;
-    pendingPayments: number;
-}
+import { Transaction, MentorStats, MentorEarning } from "@/lib/types";
 
 export default function DashboardPageClient({ userData }: { userData: any }) {
     const [activeTab, setActiveTab] = useState("upcoming");
@@ -64,18 +28,10 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
     const [mentorUpcomingSessions] = useState<Booking[]>([]);
     const [mentorPastSessions] = useState<Booking[]>([]);
     const [mentorEarnings, setMentorEarnings] = useState<MentorEarning[]>([]);
-
-    console.log("user data", userData);
-
     // Fetch dashboard data
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                // In a real app, you would fetch this data from your API
-                // const response = await fetch('/api/dashboard');
-                // const data = await response.json();
-
-                // Using mock data for demonstration
                 const mockUpcomingSessions: Booking[] = [
                     {
                         id: "booking1",
@@ -125,7 +81,6 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                         amount: 1200,
                     },
                 ];
-
                 const mockMentors: Mentor[] = [
                     {
                         id: "mentor1",
@@ -273,11 +228,11 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                 Dashboard
                             </h1>
                             <p className="opacity-90">
-                                Welcome back, {userData.name}
+                                Welcome back, {userData?.name}
                             </p>
                         </div>
                         <div className="mt-4 md:mt-0">
-
+                            <Link href="/booking">
                                 Book a New Session
                             </Link>
                         </div>
@@ -286,7 +241,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
             </section>
 
             {/* Main Dashboard Section */}
-            <section className="py-12 bg-background">
+            < section className="py-12 bg-background" >
                 <div className="container">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                         {/* Sidebar */}
@@ -296,19 +251,19 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                 <div className="p-6 border-b border-gray-100">
                                     <div className="flex items-center">
                                         <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mr-4">
-                                            {userData.name?.charAt(0).toUpperCase() || "?"}
+                                            {userData?.name?.charAt(0).toUpperCase() || "?"}
                                         </div>
 
                                         <div>
                                             <h3 className="font-semibold text-lg">
-                                                {userData.name}
+                                                {userData?.name}
                                             </h3>
                                             <p className="text-text-secondary text-sm">
-                                                {userData.email}
+                                                {userData?.email}
                                             </p>
                                             <div className="mt-2">
                                                 <span className="text-xs bg-primary bg-opacity-10 text-white px-3 py-2 rounded-lg">
-                                                    {userData.role.toUpperCase()}
+                                                    {userData?.role?.toUpperCase()}
                                                 </span>
                                             </div>
                                         </div>
@@ -1504,7 +1459,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
         </>
     );
 }

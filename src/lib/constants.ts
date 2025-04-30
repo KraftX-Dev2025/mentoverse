@@ -25,3 +25,14 @@ export const BRAND_COLORS = {
     textPrimary: "#0A1A3B", // Dark Blue
     textSecondary: "#4A4A4A", // Dark Gray
 };
+
+// Mock user data
+export const mockUser = {
+    id: "user123",
+    name: "Rahul Sharma",
+    email: "rahul.sharma@example.com",
+    phone: "+91 9876543210",
+    image: "/images/users/profile.jpg",
+    role: "user" as const,
+    joinedOn: new Date("2023-10-15"),
+};

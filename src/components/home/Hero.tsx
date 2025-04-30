@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 
 // Hero Page Added
 const Hero = () => {
@@ -26,7 +26,7 @@ const Hero = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                        Revolutionizing the awareness of people towards their next step in education, career and beyond.
+                            Revolutionizing the awareness of people towards their next step in education, career and beyond.
                         </h1>
                         <h2 className="text-xl md:text-2xl mb-8 font-medium opacity-90">
                             Shaping Your Tomorrow

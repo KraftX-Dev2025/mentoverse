@@ -1,11 +1,11 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { auth, db } from '@/lib/firebase';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, User } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { getDoc, doc } from 'firebase/firestore';
+
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -118,7 +118,7 @@ export default function LoginForm() {
                     Login with Google
                 </button>
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                     <a href="/signup" className="font-medium text-purple-600 hover:underline">
                         Sign Up
                     </a>

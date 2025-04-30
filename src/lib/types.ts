@@ -10,7 +10,7 @@ export interface Mentor {
     image: string;
     hourlyRate: number;
     rating: number;
-    calendlyUrl: string;
+    calendlyUrl?: string;
 }
 
 export interface Service {
@@ -47,4 +47,29 @@ export interface Resource {
     url: string;
     description: string;
     category: string;
+}
+
+export interface Transaction {
+    id: string;
+    date: Date;
+    description: string;
+    amount: number;
+    status: string;
+}
+
+export interface MentorEarning {
+    id: string;
+    date: Date;
+    description: string;
+    amount: number;
+    status: string;
+}
+
+export interface MentorStats {
+    totalSessions: number;
+    completedSessions: number;
+    upcomingSessions: number;
+    averageRating: number;
+    totalEarnings: number;
+    pendingPayments: number;
 }

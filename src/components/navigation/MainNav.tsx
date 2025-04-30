@@ -112,11 +112,11 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 Book a Session
                             </LinkButton>
                             <LinkButton
-                                href="/dashboard"
+                                href={typeof window !== 'undefined' ? window.location.pathname === '/dashboard' ? '/logout' : '/login' : '/login'}
                                 variant="secondary"
                                 size="md"
                             >
-                                Login
+                                {typeof window !== 'undefined' && window.location.pathname === '/dashboard' ? 'Logout' : 'Login'}
                             </LinkButton>
                         </div>
 
@@ -208,7 +208,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 Book a Session
                             </LinkButton>
                             <LinkButton
-                                href="/dashboard"
+                                href="/login"
                                 variant="secondary"
                                 size="md"
                                 fullWidth
