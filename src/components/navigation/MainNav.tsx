@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
 import {
     Home,
@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { SERVICES, NAV_LINKS } from "@/lib/constants";
 import { LinkButton } from "../ui/Button";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 interface MainNavProps {
     logo: StaticImageData;
@@ -34,7 +36,20 @@ const iconComponents = {
 
 export default function MainNav({ logo, siteName }: MainNavProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                console.log('User is logged in.');
+                setUser(currentUser);
+            } else {
+                console.log('User is not logged in.');
+                setUser(null);
+            }
+        });
 
+        return () => unsubscribe();
+    }, []);
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
             <div className="container mx-auto px-4 py-3">
@@ -110,13 +125,25 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                             >
                                 Book a Session
                             </LinkButton>
-                            <LinkButton
-                                href={typeof window !== 'undefined' ? window.location.pathname === '/dashboard' ? '/logout' : '/login' : '/login'}
-                                variant="secondary"
-                                size="md"
-                            >
-                                {typeof window !== 'undefined' && window.location.pathname === '/dashboard' ? 'Logout' : 'Login'}
-                            </LinkButton>
+
+                            {user ? (
+                                <LinkButton
+                                    href="/dashboard"
+                                    variant="secondary"
+                                    size="md"
+                                >
+                                    Dashboard
+                                </LinkButton>
+                            ) : (
+                                <LinkButton
+                                    href="/login"
+                                    variant="secondary"
+                                    size="md"
+                                >
+                                    Login
+                                </LinkButton>
+                            )}
+
                         </div>
 
                         {/* Mobile Menu Trigger */}
