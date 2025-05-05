@@ -25,13 +25,13 @@ export default function LoginForm() {
             setIsLoading(true);
 
             try {
-                const isAdmin = currentUser.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+                // const isAdmin = currentUser.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
-                if (isAdmin) {
-                    setUser(currentUser);
-                    router.push('/mentor-onboarding');
-                    return;
-                }
+                // if (isAdmin) {
+                //     setUser(currentUser);
+                //     router.push('/mentor-onboarding');
+                //     return;
+                // }
 
                 const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
                 const mentorUserRef = doc(db, 'mentor', 'mentorData', 'userData', currentUser.uid);

@@ -2,21 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { EXPERTISE_AREAS } from '@/lib/constants';
-import Link from 'next/link';
 import { Loader, AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { collection, addDoc } from 'firebase/firestore';
+
 
 export default function MentorOnboardingPage() {
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [userId, setUserId] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
+    const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState<{
         name: string;
         email: string;
@@ -46,39 +44,6 @@ export default function MentorOnboardingPage() {
         availability: [],
         location: ''
     });
-
-    // Check if user is authenticated (no mentor role check)
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                router.push('/login');
-                return;
-            }
-
-            // User is authenticated, allow access
-            setUserId(user.uid);
-
-            // Pre-populate email if available
-            if (user.email) {
-                setFormData(prev => ({
-                    ...prev,
-                    email: user.email || '',
-                }));
-            }
-
-            // Pre-populate name if available
-            if (user.displayName) {
-                setFormData(prev => ({
-                    ...prev,
-                    name: user.displayName || '',
-                }));
-            }
-
-            setLoading(false);
-        });
-
-        return () => unsubscribe();
-    }, [router]);
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
@@ -145,31 +110,22 @@ export default function MentorOnboardingPage() {
         try {
             // Using the path structure from your firebaseServices.ts
 
-            // 1. Save mentor details - using the correct path structure
-            const mentorDetailsRef = doc(db, 'mentor', 'mentorData', 'mentorDetails', userId);
+            const mentorDetailsRef = collection(db, 'mentor', 'mentorData', 'mentorDetails');
 
-            await setDoc(mentorDetailsRef, {
+            await addDoc(mentorDetailsRef, {
                 ...formData,
-                userId: userId,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 status: 'pending'
             });
 
-            // 2. Update user data to include mentor role
-            const userDataRef = doc(db, 'mentor', 'mentorData', 'userData', userId);
-            await setDoc(userDataRef, {
-                name: formData.name,
-                email: formData.email,
-                role: 'mentor',
-                isMentorProfileComplete: true
-            }, { merge: true });
 
             setSuccessMessage('Your mentor profile has been submitted successfully! Redirecting to dashboard...');
+            setSubmitted(true);
 
             // Redirect to dashboard after a delay
             setTimeout(() => {
-                router.push('/dashboard');
+                router.push('/');
             }, 3000);
 
         } catch (error) {
@@ -179,12 +135,16 @@ export default function MentorOnboardingPage() {
         }
     };
 
-    if (loading) {
+    if (submitted) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="text-center">
-                    <Loader className="w-12 h-12 animate-spin text-primary mx-auto" />
-                    <p className="mt-4 text-lg text-gray-600">Loading form...</p>
+            <div className="bg-gray-50 min-h-screen py-10">
+
+                <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+                    <div className="bg-green-200 rounded-xl shadow-lg p-6 text-center">
+                        {/* <CheckCircle className="w-16 h-16 text-green-500 mb-4" /> */}
+                        <h2 className="text-xl font-bold text-gray-800 mb-2">Thank You!</h2>
+                        <p className="text-gray-600">{successMessage}</p>
+                    </div>
                 </div>
             </div>
         );
