@@ -37,6 +37,8 @@ const iconComponents = {
 export default function MainNav({ logo, siteName }: MainNavProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+    const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
@@ -174,32 +176,41 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                             if (link.hasDropdown) {
                                 return (
                                     <div key={index} className="py-2">
-                                        <div className="flex items-center justify-between">
-                                            <Link
-                                                href={link.href}
-                                                className="font-medium flex items-center"
-                                            >
+                                        <button
+                                            type="button"
+                                            onClick={() => setServicesDropdownOpen(prev => !prev)}
+                                            className="w-full font-medium flex items-center justify-between text-left"
+                                        >
+                                            <span className="flex items-center">
                                                 {iconComponents[link.icon as keyof typeof iconComponents]}
                                                 {link.label}
-                                            </Link>
-                                        </div>
-                                        <div className="mt-2 ml-4 space-y-2">
-                                            {SERVICES.map((service) => (
-                                                <Link
-                                                    key={service.id}
-                                                    href={`/services#${service.id}-section`}
-                                                    className="block py-1 text-sm text-text-secondary"
-                                                >
-                                                    <span className="mr-2">
-                                                        {service.icon}
-                                                    </span>
-                                                    {service.name}
-                                                </Link>
-                                            ))}
-                                        </div>
+                                            </span>
+                                            <ChevronDown
+                                                className={`h-4 w-4 ml-2 transform transition-transform ${servicesDropdownOpen ? "rotate-180" : ""
+                                                    }`}
+                                            />
+                                        </button>
+
+                                        {servicesDropdownOpen && (
+                                            <div className="mt-2 ml-4 space-y-2">
+                                                {SERVICES.map((service) => (
+                                                    <Link
+                                                        key={service.id}
+                                                        href={`/services#${service.id}-section`}
+                                                        className="block py-1 text-sm text-text-secondary"
+                                                    >
+                                                        <span className="mr-2">
+                                                            {service.icon}
+                                                        </span>
+                                                        {service.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             }
+
 
                             return (
                                 <Link
