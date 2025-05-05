@@ -402,7 +402,7 @@ export default function ServicesPage() {
                                     </div> */}
 
                                     <Link
-                                        href={`/booking?service=${service.id}`}
+                                        href={`/mentors`}
                                         className="btn-primary p-3 mt-4 rounded-2xl shadow-lg shadow-black"
                                     >
                                         Book Now

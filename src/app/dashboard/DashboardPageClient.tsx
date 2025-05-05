@@ -215,7 +215,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                 Resources
                                             </button>
                                         </li>
-                                        {(userRole === "mentor" ||
+                                        {/* {(userRole === "mentor" ||
                                             userRole === "both") && (
                                                 <li>
                                                     <button
@@ -234,7 +234,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                         Mentor Dashboard
                                                     </button>
                                                 </li>
-                                            )}
+                                            )} */}
                                     </ul>
                                 </nav>
                             </div>
@@ -496,18 +496,10 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                     className="border border-gray-200 rounded-lg p-4 hover:border-primary transition-colors"
                                                 >
                                                     <div className="flex items-start">
-                                                        <div className="w-16 h-16 rounded-full overflow-hidden mr-4 shrink-0">
-                                                            <Image
-                                                                src={
-                                                                    mentor.image
-                                                                }
-                                                                alt={
-                                                                    mentor.name
-                                                                }
-                                                                width={64}
-                                                                height={64}
-                                                                className="object-cover"
-                                                            />
+                                                        <div
+                                                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold bg-secondary ml-2 mr-1 `}
+                                                        >
+                                                            {mentor.name.charAt(0).toUpperCase()}
                                                         </div>
                                                         <div>
                                                             <h3 className="font-semibold">

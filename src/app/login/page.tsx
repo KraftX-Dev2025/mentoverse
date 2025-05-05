@@ -16,38 +16,54 @@ export default function LoginForm() {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if (currentUser) {
-                try {
-                    const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
-                    const mentorUserRef = doc(db, 'mentor', 'mentorData', 'userData', currentUser.uid);
+            if (!currentUser) {
+                setUser(null);
+                router.push('/login');
+                return;
+            }
 
-                    const menteeDocSnap = await getDoc(menteeUserRef);
-                    const mentorDocSnap = await getDoc(mentorUserRef);
+            setIsLoading(true);
 
-                    if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
-                        console.log('User is authenticated and exists in the database.');
-                        setUser(currentUser);
-                        router.push('/dashboard');
-                    } else {
-                        console.log('User is authenticated but does not exist in the database.');
-                        await signOut(auth);
-                        setUser(null);
-                        router.push('/login');
-                    }
-                } catch (error) {
-                    console.error('Error checking user status:', error);
+            try {
+                // const isAdmin = currentUser.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+
+                // if (isAdmin) {
+                //     setUser(currentUser);
+                //     router.push('/mentor-onboarding');
+                //     return;
+                // }
+
+                const menteeUserRef = doc(db, 'mentee', 'menteeData', 'userData', currentUser.uid);
+                const mentorUserRef = doc(db, 'mentor', 'mentorData', 'userData', currentUser.uid);
+
+                const [menteeDocSnap, mentorDocSnap] = await Promise.all([
+                    getDoc(menteeUserRef),
+                    getDoc(mentorUserRef),
+                ]);
+
+                if (menteeDocSnap.exists() || mentorDocSnap.exists()) {
+                    console.log('User is authenticated and exists in the database.');
+                    setUser(currentUser);
+                    router.push('/dashboard');
+                } else {
+                    console.log('User is authenticated but not registered.');
+                    await signOut(auth);
                     setUser(null);
                     router.push('/login');
                 }
-            } else {
+
+            } catch (error) {
+                console.error('Error during auth check:', error);
                 setUser(null);
                 router.push('/login');
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         });
 
         return () => unsubscribe();
     }, [router]);
+
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
