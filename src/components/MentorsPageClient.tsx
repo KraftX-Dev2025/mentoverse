@@ -109,6 +109,11 @@ export default function MentorsPageClient() {
         }
     };
 
+    // Generate slug from mentor name
+    const getMentorSlug = (name: string): string => {
+        return name.toLowerCase().replace(/\s+/g, '-');
+    };
+
     return (
         <>
             {/* Hero Section */}
@@ -257,65 +262,6 @@ export default function MentorsPageClient() {
                                     </div>
                                 </div>
 
-                                {/* Price Range */}
-                                {/* <div className="mb-6">
-                                    <h3 className="text-lg font-semibold mb-3">
-                                        Price Range (per hour)
-                                    </h3>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label
-                                                htmlFor="min-price"
-                                                className="form-label text-xs"
-                                            >
-                                                Min (₹)
-                                            </label>
-                                            <input
-                                                type="number"
-                                                id="min-price"
-                                                value={priceRange.min}
-                                                onChange={(e) =>
-                                                    setPriceRange({
-                                                        ...priceRange,
-                                                        min:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ) || 0,
-                                                    })
-                                                }
-                                                className="form-control"
-                                                min="0"
-                                                step="100"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label
-                                                htmlFor="max-price"
-                                                className="form-label text-xs"
-                                            >
-                                                Max (₹)
-                                            </label>
-                                            <input
-                                                type="number"
-                                                id="max-price"
-                                                value={priceRange.max}
-                                                onChange={(e) =>
-                                                    setPriceRange({
-                                                        ...priceRange,
-                                                        max:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ) || 10000,
-                                                    })
-                                                }
-                                                className="form-control"
-                                                min="0"
-                                                step="100"
-                                            />
-                                        </div>
-                                    </div>
-                                </div> */}
-
                                 {/* Reset Filters */}
                                 <button
                                     onClick={() => {
@@ -407,6 +353,8 @@ export default function MentorsPageClient() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {filteredMentors.map((mentor) => {
                                             const colorClass = getColorForMentor(mentor.id);
+                                            const mentorSlug = getMentorSlug(mentor.name);
+
                                             return (
                                                 <div
                                                     key={mentor.id}
@@ -420,7 +368,9 @@ export default function MentorsPageClient() {
                                                                 {mentor.name.charAt(0).toUpperCase()}
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <h3 className="text-lg font-semibold leading-tight">{mentor.name}</h3>
+                                                                <Link href={`/mentors/${mentorSlug}`} className="text-lg font-semibold leading-tight hover:text-primary transition-colors">
+                                                                    {mentor.name}
+                                                                </Link>
                                                                 <p className="text-primary text-sm">{mentor.title}</p>
                                                                 <p className="text-sm text-text-secondary font-bold">{mentor.company}</p>
                                                                 <div className="flex items-center mt-1">
@@ -443,7 +393,13 @@ export default function MentorsPageClient() {
                                                             ))}
                                                         </div>
 
-                                                        <div className="mt-6 flex items-center">
+                                                        <div className="mt-6 flex items-center justify-between">
+                                                            <Link
+                                                                href={`/mentors/${mentorSlug}`}
+                                                                className="text-primary font-medium hover:underline"
+                                                            >
+                                                                View Profile
+                                                            </Link>
                                                             <Link
                                                                 href={`/booking?mentor=${mentor.id}`}
                                                                 className="btn-primary text-sm px-2 py-2 rounded-xl shadow-lg shadow-white"
@@ -456,7 +412,6 @@ export default function MentorsPageClient() {
                                             );
                                         })}
                                     </div>
-
                                 </div>
                             )}
                         </div>

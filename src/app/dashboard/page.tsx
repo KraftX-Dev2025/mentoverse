@@ -1,6 +1,6 @@
 'use client';
 
-import DashboardPageClient from "./DashboardPageClient";
+import DashboardPageClient from "../../components/DashboardPageClient";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
-import ResourcesPageClient from "./ResourcesPageClient";
+import ResourcesPageClient from "../../components/ResourcesPageClient";
 
 export const metadata: Metadata = {
     title: `Resources | ${SITE_NAME} - Shaping Your Tomorrow`,

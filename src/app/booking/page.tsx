@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
-import BookingPageClient from "./BookingPageClient";
+import BookingPageClient from "../../components/BookingPageClient";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {

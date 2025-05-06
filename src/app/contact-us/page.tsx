@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
-import ContactUsClient from "./ContactUsClient";
+import ContactUsClient from "../../components/ContactUsClient";
 
 export const metadata: Metadata = {
     title: `Contact Us | ${SITE_NAME} - Shaping Your Tomorrow`,
