@@ -8,7 +8,6 @@ export const metadata: Metadata = {
         "Connect with our expert mentors from various industries for personalized guidance and career advice.",
 };
 
-// Export the server component
 export default function MentorsPage() {
     return (
         <div>
