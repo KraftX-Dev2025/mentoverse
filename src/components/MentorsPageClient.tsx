@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mentor } from "@/lib/types";
-import { MOCK_MENTORS } from "@/lib/mock-data";
 import { EXPERTISE_AREAS } from "@/lib/constants";
 import { Search, Loader, AlertCircle, CheckCircle } from 'lucide-react';
-// import { formatCurrency } from "@/lib/utils";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function MentorsPageClient() {
     const [mentors, setMentors] = useState<Mentor[]>([]);
@@ -23,6 +23,7 @@ export default function MentorsPageClient() {
         min: 0,
         max: 10000,
     });
+
     // All available expertise areas
     const expertiseAreas = EXPERTISE_AREAS;
     const avatarColors = [
@@ -30,6 +31,7 @@ export default function MentorsPageClient() {
         "bg-yellow-500", "bg-pink-500", "bg-purple-500",
         "bg-orange-500", "bg-teal-500", "bg-indigo-500"
     ];
+
     function getColorForMentor(id: string) {
         let hash = 0;
         for (let i = 0; i < id.length; i++) {
@@ -39,23 +41,59 @@ export default function MentorsPageClient() {
         return avatarColors[index];
     }
 
-    // Fetch mentors
+    // Fetch mentors from Firebase
     useEffect(() => {
         const fetchMentors = async () => {
             try {
-                // In a real implementation, you would fetch from your API
-                // const response = await fetch('/api/mentors');
-                // const data = await response.json();
-                // Using mock data for now
-                const mockMentors: Mentor[] = MOCK_MENTORS;
-                setMentors(mockMentors);
-                setFilteredMentors(mockMentors);
+                setLoading(true);
+
+                // Reference to the mentors collection
+                const mentorsRef = collection(db, 'mentor', 'mentorData', 'mentorDetails');
+                const q = query(mentorsRef);
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    console.log('No mentors found in the database');
+                    setMentors([]);
+                    setFilteredMentors([]);
+                    setLoading(false);
+                    return;
+                }
+
+                // Process the documents
+                const mentorsData: Mentor[] = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+
+                    // Map Firebase document to Mentor type
+                    const mentor: Mentor = {
+                        id: doc.id,
+                        name: data.name || 'Unknown Name',
+                        title: data.title || 'Mentor',
+                        company: data.company || 'Company',
+                        expertise: data.expertise || [],
+                        bio: data.bio || 'No bio available',
+                        image: data.profileImageUrl || '',
+                        hourlyRate: data.hourlyRate || 1000,
+                        rating: 4.5,
+                        calendlyUrl: data.calendlyUrl,
+                        experience: data.experience || 'No experience provided'
+                    };
+
+                    mentorsData.push(mentor);
+                });
+
+                console.log(`Found ${mentorsData.length} mentors in Firebase`);
+                setMentors(mentorsData);
+                setFilteredMentors(mentorsData);
                 setLoading(false);
-            } catch {
-                setError("Failed to fetch mentors. Please try again later.");
+            } catch (error) {
+                console.error('Error fetching mentors from Firebase:', error);
+                setError("Failed to load mentors. Please try again later.");
                 setLoading(false);
             }
         };
+
         fetchMentors();
     }, []);
 
@@ -362,11 +400,23 @@ export default function MentorsPageClient() {
                                                 >
                                                     <div className="p-6">
                                                         <div className="flex items-start space-x-4">
-                                                            <div
-                                                                className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold ${colorClass}`}
-                                                            >
-                                                                {mentor.name.charAt(0).toUpperCase()}
-                                                            </div>
+                                                            {mentor.image ? (
+                                                                <div className="w-12 h-12 rounded-full overflow-hidden relative flex-shrink-0">
+                                                                    <Image
+                                                                        src={mentor.image}
+                                                                        alt={mentor.name}
+                                                                        width={48}
+                                                                        height={48}
+                                                                        className="object-cover"
+                                                                    />
+                                                                </div>
+                                                            ) : (
+                                                                <div
+                                                                    className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold flex-shrink-0 ${colorClass}`}
+                                                                >
+                                                                    {mentor.name.charAt(0).toUpperCase()}
+                                                                </div>
+                                                            )}
                                                             <div className="flex flex-col">
                                                                 <Link href={`/mentors/${mentorSlug}`} className="text-lg font-semibold leading-tight hover:text-primary transition-colors">
                                                                     {mentor.name}
@@ -383,14 +433,19 @@ export default function MentorsPageClient() {
                                                         <p className="mt-4 text-text-secondary text-sm line-clamp-3">{mentor.bio}</p>
 
                                                         <div className="mt-4 flex flex-wrap gap-2">
-                                                            {mentor.expertise.map((exp) => (
+                                                            {mentor.expertise.slice(0, 3).map((exp) => (
                                                                 <span
                                                                     key={exp}
-                                                                    className="text-sm text-black bg-white bg-opacity-10 px-2 py-1"
+                                                                    className="text-sm text-black bg-gray-100 px-2 py-1 rounded"
                                                                 >
                                                                     {exp}
                                                                 </span>
                                                             ))}
+                                                            {mentor.expertise.length > 3 && (
+                                                                <span className="text-sm text-black bg-gray-100 px-2 py-1 rounded">
+                                                                    +{mentor.expertise.length - 3} more
+                                                                </span>
+                                                            )}
                                                         </div>
 
                                                         <div className="mt-6 flex items-center justify-between">
@@ -401,7 +456,7 @@ export default function MentorsPageClient() {
                                                                 View Profile
                                                             </Link>
                                                             <Link
-                                                                href={`https://pages.razorpay.com/pl_IvDppElicuMMnF/view`}
+                                                                href={`/booking?mentor=${mentor.id}`}
                                                                 className="btn-primary text-sm px-2 py-2 rounded-xl shadow-lg shadow-white"
                                                             >
                                                                 Book a Session
@@ -458,7 +513,7 @@ export default function MentorsPageClient() {
                                     </li>
                                 </ul>
                                 <Link
-                                    href="/contact-us"
+                                    href="/admin/d745d8b8845b8b51a9a12d7e6007f1508f2760bedb4cc41f8882ae99ffbf79e6"
                                     className="btn-secondary p-3 shadow-lg shadow-white rounded-xl "
                                 >
                                     Apply Now
@@ -467,7 +522,7 @@ export default function MentorsPageClient() {
                             <div className="hidden md:block">
                                 <Image
                                     src="/mentor.jpeg"
-                                    alt="Become a Mntor"
+                                    alt="Become a Mentor"
                                     width={500}
                                     height={400}
                                     className="mx-auto rounded-xl"

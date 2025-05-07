@@ -192,20 +192,19 @@ export default function AboutUs() {
             <section className="py-16 md:py-20 bg-background">
                 <div className="container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.team.title}</h2>
+                        <h2 className="text- 3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.team.title}</h2>
                         <p className="text-lg max-w-3xl mx-auto">{ABOUT_US_PAGE_CONTENT.team.subtitle}</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {TEAM_MEMBERS.map((member, index) => (
                             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md">
-                                <div className="h-64 relative">
+                                <div className="h-48 w-48 relative mx-auto mt-4 rounded-full overflow-hidden border-2 border-primary">
                                     <Image
                                         src={teamMemberImages[member.imageSrc as keyof typeof teamMemberImages]}
                                         alt={member.name}
                                         fill
-                                        style={{ objectFit: "contain" }}
-                                        className="pt-2"
+                                        style={{ objectFit: "cover" }}
                                     />
                                 </div>
                                 <div className="p-6">

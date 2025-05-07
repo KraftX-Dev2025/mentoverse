@@ -3,18 +3,21 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Mentor } from "@/lib/types";
-import { MOCK_MENTORS } from "@/lib/mock-data";
 import { formatCurrency } from "@/lib/utils";
-import { Briefcase, Building, Award, Star, Linkedin, Youtube, Instagram, Calendar } from 'lucide-react';
+import { Briefcase, Building, Award, Star, Linkedin, Youtube, Instagram, Calendar, Loader, AlertCircle } from 'lucide-react';
+import { collection, query, getDocs, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function MentorProfilePage() {
     const params = useParams();
+    const router = useRouter();
     const [mentor, setMentor] = useState<Mentor | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Avatar colors for fallback
     const avatarColors = [
         "bg-red-500", "bg-green-500", "bg-blue-500",
         "bg-yellow-500", "bg-pink-500", "bg-purple-500",
@@ -33,33 +36,61 @@ export default function MentorProfilePage() {
     useEffect(() => {
         const fetchMentor = async () => {
             try {
-
+                setLoading(true);
                 const slug = params.slug as string;
 
-                // Find the mentor by comparing lowercase slug with lowercase name
-                const foundMentor = MOCK_MENTORS.find(
-                    m => m.name.toLowerCase().replace(/\s+/g, '-') === slug
-                );
+                // Query the Firestore collection
+                const mentorsRef = collection(db, 'mentor', 'mentorData', 'mentorDetails');
+                const querySnapshot = await getDocs(mentorsRef);
+
+                // Find the mentor by comparing slugified name with route slug
+                let foundMentor: Mentor | null = null;
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data() as Mentor;
+                    const mentorSlug = data.name?.toLowerCase().replace(/\s+/g, '-');
+
+                    if (mentorSlug === slug) {
+                        foundMentor = {
+                            id: doc.id,
+                            name: data.name || 'Unknown Name',
+                            title: data.title || 'Mentor',
+                            company: data.company || 'Company',
+                            expertise: data.expertise || [],
+                            bio: data.bio || 'No bio available',
+                            image: data.profileImageUrl || '',
+                            hourlyRate: data.hourlyRate || 1500,
+                            rating: 4.9,
+                            calendlyUrl: data.calendlyUrl,
+                            experience: data.experience || 'No experience information available'
+                        };
+                    }
+                });
 
                 if (foundMentor) {
                     setMentor(foundMentor);
                 } else {
+                    console.log('No mentor found with slug:', slug);
                     setError("Mentor not found");
                 }
+
                 setLoading(false);
             } catch (error) {
+                console.error("Error fetching mentor data:", error);
                 setError("Failed to load mentor profile. Please try again later.");
                 setLoading(false);
             }
         };
 
-        fetchMentor();
+        if (params.slug) {
+            fetchMentor();
+        }
     }, [params.slug]);
 
     if (loading) {
         return (
             <div className="flex justify-center items-center h-96">
-                <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full"></div>
+                <Loader className="animate-spin h-10 w-10 text-primary" />
             </div>
         );
     }
@@ -67,6 +98,7 @@ export default function MentorProfilePage() {
     if (error || !mentor) {
         return (
             <div className="container py-16 text-center">
+                <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">{error || "Mentor not found"}</h1>
                 <p className="text-gray-600 mb-8">The mentor you're looking for doesn't seem to exist.</p>
                 <Link href="/mentors" className="btn-primary px-6 py-2 rounded-lg">
@@ -107,9 +139,20 @@ export default function MentorProfilePage() {
             <section className="bg-gradient-primary text-white py-12">
                 <div className="container">
                     <div className="flex flex-col md:flex-row items-center gap-8">
-                        <div className={`w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-7xl font-semibold ${colorClass}`}>
-                            {mentor.name.charAt(0).toUpperCase()}
-                        </div>
+                        {mentor.image ? (
+                            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden relative">
+                                <Image
+                                    src={mentor.image}
+                                    alt={mentor.name}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        ) : (
+                            <div className={`w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-7xl font-semibold ${colorClass}`}>
+                                {mentor.name.charAt(0).toUpperCase()}
+                            </div>
+                        )}
                         <div>
                             <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">{mentor.name}</h1>
                             <p className="text-xl mb-2">{mentor.title}</p>
@@ -129,7 +172,7 @@ export default function MentorProfilePage() {
                         </div>
                         <div className="md:ml-auto mt-6 md:mt-0">
                             <Link
-                                href={`https://pages.razorpay.com/pl_IvDppElicuMMnF/view`}
+                                href={`/booking?mentor=${mentor.id}`}
                                 className="btn-secondary px-6 py-3 rounded-xl shadow-lg text-white font-medium"
                             >
                                 Book a Session
@@ -150,13 +193,25 @@ export default function MentorProfilePage() {
                                 <h2 className="text-2xl font-bold mb-4">About {mentor.name}</h2>
                                 <p className="text-text-secondary mb-6">{mentor.bio}</p>
 
-                                {/* Additional Bio - In a real app, this would come from the database */}
-                                <p className="text-text-secondary">
-                                    With over {Math.floor(Math.random() * 10) + 5} years of professional experience in the industry,
-                                    {mentor.name} has helped numerous professionals achieve their career goals through
-                                    personalized mentorship and guidance. Their approach focuses on practical advice
-                                    and actionable insights that can be immediately applied to your career journey.
-                                </p>
+                                {/* Additional Bio - only show if not empty and different from main bio */}
+                                {mentor.experience && mentor.experience !== mentor.bio && (
+                                    <div className="mt-4">
+                                        <h3 className="text-xl font-semibold mb-2">Experience</h3>
+                                        <p className="text-text-secondary">
+                                            {mentor.experience}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Education - only show if available */}
+                                {mentor.education && (
+                                    <div className="mt-4">
+                                        <h3 className="text-xl font-semibold mb-2">Education & Background</h3>
+                                        <p className="text-text-secondary whitespace-pre-line">
+                                            {mentor.education}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Expertise Section */}
@@ -217,7 +272,11 @@ export default function MentorProfilePage() {
                                     </div>
                                     <div className="flex justify-between py-2 border-b border-gray-100">
                                         <span className="text-text-secondary">Availability:</span>
-                                        <span className="font-medium">Weekdays, Evenings</span>
+                                        <span className="font-medium">
+                                            {mentor.availability && mentor.availability.length > 0
+                                                ? Array.isArray(mentor.availability) ? mentor.availability.join(', ') : "Weekdays, Evenings"
+                                                : "Weekdays, Evenings"}
+                                        </span>
                                     </div>
                                     <div className="flex justify-between py-2">
                                         <span className="text-text-secondary">Session Duration:</span>
@@ -276,44 +335,22 @@ export default function MentorProfilePage() {
                 </div>
             </section>
 
-            {/* Other Mentors You May Like */}
+            {/* Book Session CTA */}
             <section className="py-16 bg-white">
                 <div className="container">
-                    <h2 className="text-2xl font-bold mb-8 text-center">Other Mentors You May Like</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {MOCK_MENTORS.filter(m => m.id !== mentor.id)
-                            .slice(0, 3)
-                            .map((otherMentor) => {
-                                const otherMentorColorClass = getColorForMentor(otherMentor.id);
-                                const mentorSlug = otherMentor.name.toLowerCase().replace(/\s+/g, '-');
-
-                                return (
-                                    <Link
-                                        key={otherMentor.id}
-                                        href={`/mentors/${mentorSlug}`}
-                                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
-                                    >
-                                        <div className="p-6">
-                                            <div className="flex items-start space-x-4">
-                                                <div
-                                                    className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold ${otherMentorColorClass}`}
-                                                >
-                                                    {otherMentor.name.charAt(0).toUpperCase()}
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold">{otherMentor.name}</h3>
-                                                    <p className="text-primary text-sm">{otherMentor.title}</p>
-                                                    <p className="text-sm text-text-secondary">{otherMentor.company}</p>
-                                                    <div className="flex items-center mt-1">
-                                                        <span className="text-secondary font-semibold">{otherMentor.rating}</span>
-                                                        <span className="ml-1 text-secondary">★</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                );
-                            })}
+                    <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                            Ready to accelerate your career growth?
+                        </h2>
+                        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-white opacity-90">
+                            Book a session with {mentor.name} and get personalized guidance from an industry expert.
+                        </p>
+                        <Link
+                            href={`/booking?mentor=${mentor.id}`}
+                            className="btn-secondary px-6 py-3 rounded-xl shadow-lg text-white font-medium"
+                        >
+                            Book Now
+                        </Link>
                     </div>
                 </div>
             </section>

@@ -12,6 +12,11 @@ export interface Mentor {
     hourlyRate: number;
     rating: number;
     calendlyUrl?: string;
+    profileImageUrl?: string;
+    experience?: string;
+    education?: string;
+    availability?: string[];
+
 }
 
 export interface Service {
@@ -48,6 +53,7 @@ export interface Resource {
     url: string;
     description: string;
     category: string;
+    thumbnail?:string;
 }
 
 export interface Transaction {
