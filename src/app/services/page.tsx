@@ -283,7 +283,7 @@ export default function ServicesPage() {
                                 </div>
                             </div> */}
                             <Link
-                                href="/booking?service=career-guidance"
+                                href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
                                 className="btn-primary p-4 rounded-2xl shadow-lg shadow-white"
                             >
                                 Book a Session
@@ -402,7 +402,7 @@ export default function ServicesPage() {
                                     </div> */}
 
                                     <Link
-                                        href={`/mentors`}
+                                        href={`https://pages.razorpay.com/pl_IvDppElicuMMnF/view`}
                                         className="btn-primary p-3 mt-4 rounded-2xl shadow-lg shadow-black"
                                     >
                                         Book Now
@@ -518,7 +518,7 @@ export default function ServicesPage() {
                             guidance from our mentors.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
                                 Book a Session
                             </Link>
                             <Link

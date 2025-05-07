@@ -199,7 +199,7 @@ export default function Home() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
 
-                            <Link href="/mentors" className="btn-secondary px-2 py-2 rounded-xl ">
+                            <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view" className="btn-secondary px-2 py-2 rounded-xl ">
 
                                 Book a Session
                             </Link>

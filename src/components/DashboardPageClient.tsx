@@ -313,7 +313,7 @@ export default function DashboardPageClient({ userData }: { userData: any }) {
                                                         upcoming sessions.
                                                     </p>
                                                     <Link
-                                                        href="/mentors"
+                                                        href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
                                                         className="mt-4 btn-primary inline-block p-4 rounded-2xl shadow-lg shadow-white"
                                                     >
                                                         Book a Session

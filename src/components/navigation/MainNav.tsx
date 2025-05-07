@@ -26,7 +26,7 @@ interface MainNavProps {
 
 // Map icon names to lucide components
 const iconComponents = {
-    Home: <Home className="h-5 w-5 mr-2" />,
+    // Home: <Home className="h-5 w-5 mr-2" />,
     Info: <Info className="h-5 w-5 mr-2" />,
     Users: <Users className="h-5 w-5 mr-2" />,
     Briefcase: <Briefcase className="h-5 w-5 mr-2" />,
@@ -126,7 +126,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     <div className="flex items-center">
                         <div className="hidden xl:flex items-center space-x-4">
                             <LinkButton
-                                href="/mentors"
+                                href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
                                 variant="primary"
                                 size="md"
                             >
@@ -226,7 +226,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                         <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100">
                             <LinkButton
-                                href="/mentors"
+                                href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
                                 variant="primary"
                                 size="md"
                                 fullWidth
@@ -234,12 +234,12 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 Book a Session
                             </LinkButton>
                             <LinkButton
-                                href="/login"
+                                href="/contact-us"
                                 variant="secondary"
                                 size="md"
                                 fullWidth
                             >
-                                Login
+                                Get Started
                             </LinkButton>
                         </div>
                     </nav>

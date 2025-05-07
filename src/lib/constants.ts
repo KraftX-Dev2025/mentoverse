@@ -187,7 +187,7 @@ export const CONTACT_INFO = [
 ];
 
 export const NAV_LINKS = [
-    { href: "/", label: "Home", icon: "Home" },
+    // { href: "/", label: "Home", icon: "Home" },
     { href: "/about-us", label: "About", icon: "Info" },
     { href: "/mentors", label: "Mentors", icon: "Users" },
     { href: "/services", label: "Services", hasDropdown: true, icon: "Briefcase" },

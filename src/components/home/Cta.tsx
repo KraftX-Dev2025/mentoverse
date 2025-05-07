@@ -46,7 +46,7 @@ const Cta = () => {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         viewport={{ once: true }}
                     >
-                        <Link href="/mentors">
+                        <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view">
                             <Button
                                 variant="secondary"
                                 size="lg"

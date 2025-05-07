@@ -129,7 +129,7 @@ export default function MentorProfilePage() {
                         </div>
                         <div className="md:ml-auto mt-6 md:mt-0">
                             <Link
-                                href={`/booking?mentor=${mentor.id}`}
+                                href={`https://pages.razorpay.com/pl_IvDppElicuMMnF/view`}
                                 className="btn-secondary px-6 py-3 rounded-xl shadow-lg text-white font-medium"
                             >
                                 Book a Session

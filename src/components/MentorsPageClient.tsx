@@ -401,7 +401,7 @@ export default function MentorsPageClient() {
                                                                 View Profile
                                                             </Link>
                                                             <Link
-                                                                href={`/booking?mentor=${mentor.id}`}
+                                                                href={`https://pages.razorpay.com/pl_IvDppElicuMMnF/view`}
                                                                 className="btn-primary text-sm px-2 py-2 rounded-xl shadow-lg shadow-white"
                                                             >
                                                                 Book a Session
