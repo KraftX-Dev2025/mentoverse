@@ -235,12 +235,12 @@ const SubmissionSuccess = ({
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button
+                {/* <button
                     onClick={() => router.push('/dashboard')}
                     className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors"
                 >
                     Go to Dashboard
-                </button>
+                </button> */}
                 <button
                     onClick={() => router.push('/')}
                     className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
@@ -365,7 +365,8 @@ export default function MentorOnboardingPage() {
 
     const validateForm = () => {
         // Basic validation logic
-        if (!formData.name || !formData.email || !formData.phone || !formData.title || !formData.company) {
+        // if (!formData.name || !formData.email || !formData.phone || !formData.title || !formData.company) {
+        if (!formData.name || !formData.title || !formData.company) {
             setError('Please fill in all required fields');
             return false;
         }
@@ -380,17 +381,17 @@ export default function MentorOnboardingPage() {
             return false;
         }
 
-        if (!formData.bio || formData.bio.length < 50) {
-            setError('Please provide a detailed professional bio (at least 50 characters)');
-            return false;
-        }
+        // if (!formData.bio || formData.bio.length < 50) {
+        //     setError('Please provide a detailed professional bio (at least 50 characters)');
+        //     return false;
+        // }
 
         // Validate profile image (optional but recommended)
 
-        if (!formData.profileImageUrl) {
-            setError('Please upload a profile picture');
-            return false;
-        }
+        // if (!formData.profileImageUrl) {
+        //     setError('Please upload a profile picture');
+        //     return false;
+        // }
 
 
         setError(null);
@@ -530,7 +531,7 @@ export default function MentorOnboardingPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email Address*
+                                    Email Address
                                 </label>
                                 <input
                                     type="email"
@@ -538,13 +539,13 @@ export default function MentorOnboardingPage() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    required
+                                // required
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Phone Number*
+                                    Phone Number
                                 </label>
                                 <input
                                     type="tel"
@@ -553,13 +554,13 @@ export default function MentorOnboardingPage() {
                                     onChange={handleChange}
                                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                                     placeholder="e.g., 9876543210"
-                                    required
+                                // required
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Location*
+                                    Location
                                 </label>
                                 <input
                                     type="text"
@@ -568,7 +569,7 @@ export default function MentorOnboardingPage() {
                                     onChange={handleChange}
                                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                                     placeholder="City, Country"
-                                    required
+                                // required
                                 />
                             </div>
 

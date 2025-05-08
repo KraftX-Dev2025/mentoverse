@@ -133,7 +133,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 Book a Session
                             </LinkButton>
 
-                            {user ? (
+                            {/* {user ? (
                                 <LinkButton
                                     href="/dashboard"
                                     variant="secondary"
@@ -149,7 +149,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                 >
                                     Login
                                 </LinkButton>
-                            )}
+                            )} */}
 
                         </div>
 

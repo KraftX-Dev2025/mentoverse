@@ -405,9 +405,9 @@ export default function MentorsPageClient() {
                                                                     <Image
                                                                         src={mentor.image}
                                                                         alt={mentor.name}
-                                                                        width={48}
-                                                                        height={48}
-                                                                        className="object-cover"
+                                                                        width={72}
+                                                                        height={72}
+                                                                        className="object-contain w-full h-full"
                                                                     />
                                                                 </div>
                                                             ) : (
@@ -430,7 +430,7 @@ export default function MentorsPageClient() {
                                                             </div>
                                                         </div>
 
-                                                        <p className="mt-4 text-text-secondary text-sm line-clamp-3">{mentor.bio}</p>
+                                                        <p className="mt-4 text-text-secondary text-sm line-clamp-3">{mentor.experience}</p>
 
                                                         <div className="mt-4 flex flex-wrap gap-2">
                                                             {mentor.expertise.slice(0, 3).map((exp) => (
@@ -513,7 +513,7 @@ export default function MentorsPageClient() {
                                     </li>
                                 </ul>
                                 <Link
-                                    href="/admin/d745d8b8845b8b51a9a12d7e6007f1508f2760bedb4cc41f8882ae99ffbf79e6"
+                                    href="/contact-us"
                                     className="btn-secondary p-3 shadow-lg shadow-white rounded-xl "
                                 >
                                     Apply Now
