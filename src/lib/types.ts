@@ -1,10 +1,14 @@
 // TypeScript type definitions
 import { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 
 export interface Mentor {
+    reviews: ReactNode;
+    experienceSummary: ReactNode;
+    price: ReactNode;
     id: string;
     name: string;
-    title: string;
+    title: string; 
     company: string;
     expertise: string[];
     bio: string;
@@ -12,6 +16,11 @@ export interface Mentor {
     hourlyRate: number;
     rating: number;
     calendlyUrl?: string;
+    profileImageUrl?: string;
+    experience?: string;
+    education?: string;
+    availability?: string[];
+
 }
 
 export interface Service {
@@ -48,6 +57,7 @@ export interface Resource {
     url: string;
     description: string;
     category: string;
+    thumbnail?:string;
 }
 
 export interface Transaction {

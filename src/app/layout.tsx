@@ -6,7 +6,6 @@ import MainNav from "@/components/navigation/MainNav";
 import Footer from "@/components/navigation/Footer";
 import "./globals.css";
 import logo from "../../public/logo_noBG.jpg"
-import logo2 from "../../public/logo_nobg.png"
 
 // Font configuration
 const poppins = Poppins({
@@ -25,9 +24,10 @@ const inter = Inter({
 
 // Navigation links object
 const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/about-us", label: "About Us" },
+    // { href: "/", label: "Home" },
     { href: "/mentors", label: "Mentors" },
+    { href: "/services", label: "Services" },
+    { href: "/about-us", label: "About Us" },
     { href: "/resources", label: "Resources" },
     { href: "/contact-us", label: "Contact Us" },
 ];
@@ -51,7 +51,7 @@ export default function RootLayout({
                 <main className="flex-grow bg-background">{children}</main>
 
                 <Footer
-                    logo={logo2}
+                    logo={logo}
                     siteName={SITE_NAME}
                     services={SERVICES}
                     navLinks={NAV_LINKS}

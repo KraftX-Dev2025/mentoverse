@@ -28,6 +28,7 @@ export default function ResourcesPageClient() {
         "Industry Insights",
     ];
 
+
     // Fetch resources
     useEffect(() => {
         const fetchResources = async () => {
@@ -46,6 +47,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Expert tips and strategies for CA Final preparation from top rankers.",
                         category: "CA Preparation",
+                        thumbnail: "/ca_final_exams1.png"
                     },
                     {
                         id: "2",
@@ -55,6 +57,7 @@ export default function ResourcesPageClient() {
                         description:
                             "A professionally designed resume template tailored for finance industry roles.",
                         category: "Resume Building",
+                        thumbnail: "/resume.png"
                     },
                     {
                         id: "3",
@@ -64,6 +67,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Learn how to optimize your LinkedIn profile to attract recruiters and opportunities.",
                         category: "LinkedIn Optimization",
+                        thumbnail: "/linkedin.png"
                     },
                     {
                         id: "4",
@@ -73,6 +77,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Essential financial compliance guidelines for early-stage startups in India.",
                         category: "Startup Guidance",
+                        thumbnail: "/financial.png"
                     },
                     {
                         id: "5",
@@ -82,6 +87,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Watch a real mock interview session for an investment banking role with expert feedback.",
                         category: "Interview Tips",
+                        thumbnail: "/mock_interview.png"
                     },
                     {
                         id: "6",
@@ -91,6 +97,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Explore various career paths in the finance industry with required qualifications and growth prospects.",
                         category: "Career Guidance",
+                        thumbnail: "/finance.png"
                     },
                     {
                         id: "7",
@@ -100,6 +107,7 @@ export default function ResourcesPageClient() {
                         description:
                             "Industry experts discuss how AI is transforming the finance sector and future job prospects.",
                         category: "Industry Insights",
+                        thumbnail: "/ai.png"
                     },
                     {
                         id: "8",
@@ -109,6 +117,7 @@ export default function ResourcesPageClient() {
                         description:
                             "A comprehensive checklist to ensure your LinkedIn profile stands out to recruiters.",
                         category: "LinkedIn Optimization",
+                        thumbnail: "/linkedin2.png"
                     },
                 ];
 
@@ -157,7 +166,7 @@ export default function ResourcesPageClient() {
     return (
         <>
             {/* Hero Section */}
-            <section className="bg-gradient-primary text-white py-16">
+            <section className="bg-gradient-primary text-white py-8 rounded-b-2xl">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
                         <h1 className="text-white text-4xl md:text-5xl font-bold mb-6">
@@ -172,7 +181,7 @@ export default function ResourcesPageClient() {
             </section>
 
             {/* Resources Section */}
-            <section className="py-16 bg-background">
+            <section className="py-4 bg-background">
                 <div className="container">
                     <div className="mb-12">
                         <h2 className="text-3xl font-bold mb-8 text-center">
@@ -180,14 +189,14 @@ export default function ResourcesPageClient() {
                         </h2>
 
                         {/* Filters */}
-                        <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
+                        <div className="bg-white p-6 rounded-xl shadow-sm mb-8">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {/* Search */}
                                 <div className="relative">
                                     <input
                                         type="text"
                                         placeholder="Search resources..."
-                                        className="form-control pl-10"
+                                        className="form-control pl-10 rounded-lg p-1"
                                         value={searchTerm}
                                         onChange={(e) =>
                                             setSearchTerm(e.target.value)
@@ -214,11 +223,12 @@ export default function ResourcesPageClient() {
                                 {/* Type Filter */}
                                 <div>
                                     <select
-                                        className="form-control"
+                                        className="form-control rounded-lg p-1"
                                         value={typeFilter}
                                         onChange={(e) =>
                                             setTypeFilter(e.target.value)
                                         }
+
                                     >
                                         <option value="all">All Types</option>
                                         <option value="video">Videos</option>
@@ -231,7 +241,7 @@ export default function ResourcesPageClient() {
                                 {/* Category Filter */}
                                 <div>
                                     <select
-                                        className="form-control"
+                                        className="form-control rounded-lg p-1"
                                         value={categoryFilter}
                                         onChange={(e) =>
                                             setCategoryFilter(e.target.value)
@@ -301,7 +311,7 @@ export default function ResourcesPageClient() {
                                 </p>
                             </div>
                         ) : filteredResources.length === 0 ? (
-                            <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+                            <div className="text-center py-12 bg-white rounded-xl shadow-sm">
                                 <svg
                                     className="h-12 w-12 text-gray-400 mx-auto"
                                     fill="none"
@@ -333,131 +343,117 @@ export default function ResourcesPageClient() {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {filteredResources.map((resource) => (
-                                    <div
-                                        key={resource.id}
-                                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
-                                    >
-                                        <div className="h-48 relative bg-gray-100">
-                                            {resource.type === "video" ? (
-                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                    <div className="w-16 h-16 rounded-full bg-primary bg-opacity-80 flex items-center justify-center">
-                                                        <svg
-                                                            className="w-8 h-8 text-white"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                fillRule="evenodd"
-                                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                                                clipRule="evenodd"
-                                                            />
-                                                        </svg>
+                                {filteredResources.map((resource) => {
+                                    return (
+                                        <div
+                                            key={resource.id}
+                                            className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
+                                        >
+                                            <div className="h-72 relative bg-gray-100">
+                                                <Image
+                                                    src={resource.thumbnail || '/finance.png'}
+                                                    alt={resource.title}
+                                                    fill
+                                                    className="object-cover"
+                                                    priority
+                                                />
+
+                                                {resource.type === "video" && (
+                                                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                                                        <div className="w-16 h-16 rounded-full bg-primary bg-opacity-80 flex items-center justify-center">
+                                                            <svg
+                                                                className="w-8 h-8 text-white"
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                                                    clipRule="evenodd"
+                                                                />
+                                                            </svg>
+                                                        </div>
                                                     </div>
-                                                    <Image
-                                                        src={`/images/resources/video-${
-                                                            (parseInt(
-                                                                resource.id
-                                                            ) %
-                                                                4) +
-                                                            1
-                                                        }.jpg`}
-                                                        alt={resource.title}
-                                                        fill
-                                                        className="object-cover z-0"
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                    <div className="w-16 h-16 rounded-full bg-secondary bg-opacity-80 flex items-center justify-center">
-                                                        <svg
-                                                            className="w-8 h-8 text-white"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path
-                                                                fillRule="evenodd"
-                                                                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                                                clipRule="evenodd"
-                                                            />
-                                                        </svg>
+                                                )}
+
+                                                {resource.type === "document" && (
+                                                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                                                        <div className="w-16 h-16 rounded-full bg-secondary bg-opacity-80 flex items-center justify-center">
+                                                            <svg
+                                                                className="w-8 h-8 text-white"
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                                    clipRule="evenodd"
+                                                                />
+                                                            </svg>
+                                                        </div>
                                                     </div>
-                                                    <Image
-                                                        src={`/images/resources/document-${
-                                                            (parseInt(
-                                                                resource.id
-                                                            ) %
-                                                                4) +
-                                                            1
-                                                        }.jpg`}
-                                                        alt={resource.title}
-                                                        fill
-                                                        className="object-cover z-0"
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="p-6">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <span
-                                                    className={`text-xs uppercase font-semibold px-2 py-1 rounded-full ${
-                                                        resource.type ===
-                                                        "video"
+                                                )}
+                                            </div>
+                                            <div className="p-6">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <span
+                                                        className={`text-xs uppercase font-semibold px-2 py-1 rounded-full ${resource.type ===
+                                                            "video"
                                                             ? "bg-primary bg-opacity-10 text-primary"
                                                             : "bg-secondary bg-opacity-10 text-secondary"
-                                                    }`}
-                                                >
-                                                    {resource.type}
-                                                </span>
-                                                <span className="text-xs text-text-secondary">
-                                                    {resource.category}
-                                                </span>
-                                            </div>
-                                            <h3 className="text-lg font-semibold mb-2">
-                                                {resource.title}
-                                            </h3>
-                                            <p className="text-text-secondary text-sm mb-4 line-clamp-2">
-                                                {resource.description}
-                                            </p>
-                                            <a
-                                                href={resource.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={`inline-flex items-center font-medium ${
-                                                    resource.type === "video"
+                                                            }`}
+                                                    >
+                                                        {resource.type}
+                                                    </span>
+                                                    <span className="text-xs text-text-secondary">
+                                                        {resource.category}
+                                                    </span>
+                                                </div>
+                                                <h3 className="text-lg font-semibold mb-2">
+                                                    {resource.title}
+                                                </h3>
+                                                <p className="text-text-secondary text-sm mb-4 line-clamp-2">
+                                                    {resource.description}
+                                                </p>
+                                                <a
+                                                    href={resource.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={`inline-flex items-center font-medium ${resource.type === "video"
                                                         ? "text-primary hover:text-primary-dark"
                                                         : "text-secondary hover:text-secondary-dark"
-                                                }`}
-                                            >
-                                                {resource.type === "video"
-                                                    ? "Watch Video"
-                                                    : "Download PDF"}
-                                                <svg
-                                                    className="w-4 h-4 ml-1"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                        }`}
                                                 >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                                    />
-                                                </svg>
-                                            </a>
+                                                    {resource.type === "video"
+                                                        ? "Watch Video"
+                                                        : "Download PDF"}
+                                                    <svg
+                                                        className="w-4 h-4 ml-1"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                                        />
+                                                    </svg>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
 
                     {/* Subscribe for Updates */}
-                    <div className="mt-16 bg-white p-8 rounded-lg shadow-sm">
+                    <div className="mt-16 bg-white p-8 rounded-xl shadow-sm">
                         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
                             <div className="md:col-span-3">
                                 <h3 className="text-2xl font-bold mb-2">
@@ -472,20 +468,20 @@ export default function ResourcesPageClient() {
                                     <input
                                         type="email"
                                         placeholder="Your email address"
-                                        className="form-control"
+                                        className="form-control rounded-xl p-2 border-1 border-primary"
                                     />
-                                    <button className="btn-primary whitespace-nowrap p-4 rounded-2xl shadow-lg shadow-white">
+                                    <button className="btn-primary whitespace-nowrap p-4 rounded-2xl  ">
                                         Subscribe
                                     </button>
                                 </div>
                             </div>
                             <div className="md:col-span-2 hidden md:block">
                                 <Image
-                                    src="/images/newsletter-illustration.svg"
+                                    src="/ca_final_exams.jpeg"
                                     alt="Newsletter"
-                                    width={300}
+                                    width={320}
                                     height={200}
-                                    className="mx-auto"
+                                    className="mx-auto rounded-2xl"
                                 />
                             </div>
                         </div>
@@ -505,7 +501,7 @@ export default function ResourcesPageClient() {
                             career journey, and we&apos;ll try our best to
                             create or source them for you.
                         </p>
-                        <Link href="/contact-us" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                        <Link href="/contact-us" className="btn-secondary p-4 rounded-2xl  ">
                             Request a Resource
                         </Link>
                     </div>

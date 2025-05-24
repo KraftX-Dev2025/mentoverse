@@ -84,7 +84,7 @@ export default function AboutUs() {
                         {/* Mission */}
                         <div className="bg-white p-8 rounded-lg shadow-md">
                             <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                                <Zap className="w-8 h-8 text-primary" />
+                                <Zap className="w-8 h-8 text-white" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.mission.title}</h2>
                             {ABOUT_US_PAGE_CONTENT.mission.paragraphs.map((paragraph, index) => (
@@ -97,7 +97,7 @@ export default function AboutUs() {
                         {/* Vision */}
                         <div className="bg-white p-8 rounded-lg shadow-md">
                             <div className="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                                <Eye className="w-8 h-8 text-secondary" />
+                                <Eye className="w-8 h-8 text-white" />
                             </div>
                             <h2 className="text-2xl md:text-3xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.vision.title}</h2>
                             {ABOUT_US_PAGE_CONTENT.vision.paragraphs.map((paragraph, index) => (
@@ -133,35 +133,17 @@ export default function AboutUs() {
                     </div>
                 </div>
             </section>
-
-            {/* Our Vision Section */}
-            <section className="py-16 bg-white">
+            <section className="py-16">
                 <div className="container">
+
                     <div className="text-center mb-16">
                         <h2 className="section-title font-bold">{ABOUT_US_PAGE_CONTENT.vision.title}</h2>
                         <p className="section-subtitle">
                             {ABOUT_US_PAGE_CONTENT.vision.subtitle}
                         </p>
                     </div>
-
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
-                        {/* Partner Logos */}
-                        {PARTNER_BRANDS.map((partner) => (
-                            <div
-                                key={partner}
-                                className="transition-all duration-300"
-                            >
-                                <Image
-                                    src={`/images/partners/${partner}`}
-                                    alt={`${partner} logo`}
-                                    width={120}
-                                    height={60}
-                                />
-                            </div>
-                        ))}
-                    </div>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
                         <div>
                             <Image
                                 src="/our-vision.png"
@@ -180,32 +162,30 @@ export default function AboutUs() {
                                     {paragraph}
                                 </p>
                             ))}
-                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="/about-us" className="btn-primary p-4 rounded-2xl">
                                 Learn More
                             </Link>
                         </div>
                     </div>
                 </div>
             </section>
-
             {/* Team Section */}
             <section className="py-16 md:py-20 bg-background">
                 <div className="container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.team.title}</h2>
+                        <h2 className="text- 3xl md:text-4xl font-bold mb-4">{ABOUT_US_PAGE_CONTENT.team.title}</h2>
                         <p className="text-lg max-w-3xl mx-auto">{ABOUT_US_PAGE_CONTENT.team.subtitle}</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {TEAM_MEMBERS.map((member, index) => (
                             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md">
-                                <div className="h-64 relative">
+                                <div className="h-48 w-48 relative mx-auto mt-4 rounded-full overflow-hidden border-2 border-primary">
                                     <Image
                                         src={teamMemberImages[member.imageSrc as keyof typeof teamMemberImages]}
                                         alt={member.name}
                                         fill
-                                        style={{ objectFit: "contain" }}
-                                        className="pt-2"
+                                        style={{ objectFit: "cover" }}
                                     />
                                 </div>
                                 <div className="p-6">
@@ -243,12 +223,12 @@ export default function AboutUs() {
                             {ABOUT_US_PAGE_CONTENT.cta.content}
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl">
                                 Book a Session
                             </Link>
                             <Link
                                 href="/contact-us"
-                                className="btn-outline border-white text-white hover:bg-white hover:text-primary p-4 rounded-2xl shadow-lg shadow-white"
+                                className="btn-outline border-white text-white hover:bg-white hover:text-primary p-4 rounded-2xl"
                             >
                                 Contact Us
                             </Link>

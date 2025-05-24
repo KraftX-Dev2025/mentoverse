@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { SITE_NAME, SERVICES } from "@/lib/constants";
+import { ChevronRight } from "lucide-react";
 // import { formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -156,7 +157,7 @@ export default function ServicesPage() {
     return (
         <>
             {/* Hero Section */}
-            <section id="services-hero" className="bg-gradient-primary text-white py-16">
+            <section id="services-hero" className="bg-gradient-primary text-white py-4">
                 <div className="container">
                     <div className="max-w-3xl mx-auto text-center">
                         <h1 className="text-4xl text-white md:text-5xl font-bold mb-6">
@@ -175,18 +176,17 @@ export default function ServicesPage() {
                 <div className="container">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {SERVICES.map((service) => (
-                            <Link
-                                key={service.id}
-                                href={`/services#${service.id}-section`}
-                                className="group"
-                            >
-                                <div className="bg-background rounded-lg p-8 h-full transition-all duration-300 hover:shadow-md hover:bg-primary hover:bg-opacity-5">
-                                    <div className="w-14 h-14 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-5 text-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                                        {service.icon}
+                            <div key={service.id} className="card group rounded-xl hover:scale-110">
+                                <div className="p-4">
+                                    <div className="flex items-center">
+
+                                        <div className="w-14 h-14 rounded-full bg-secondary bg-opacity-10 flex items-center justify-center mb-5 text-3xl text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                            {service.icon}
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-3 ml-4">
+                                            {service.name}
+                                        </h3>
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2">
-                                        {service.name}
-                                    </h3>
                                     <p className="text-text-secondary mb-4">
                                         {service.id === "mock-interview"
                                             ? "Practice with industry experts and get real-time feedback to improve your interview skills."
@@ -200,25 +200,16 @@ export default function ServicesPage() {
                                                             ? "Personalized career planning and guidance from industry professionals."
                                                             : "Stay updated with the latest industry trends through our events and webinars."}
                                     </p>
-                                    <span className="text-black font-medium inline-flex items-center">
+                                    <Link
+                                        // href={`/services/${service.id}`}
+                                        href={`/services#${service.id}-section`}
+                                        className="text-primary font-medium inline-flex items-center group-hover:underline"
+                                    >
                                         Learn More
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-4 w-4 ml-1 group-hover:ml-2 transition-all duration-300"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M9 5l7 7-7 7"
-                                            />
-                                        </svg>
-                                    </span>
+                                        <ChevronRight className="h-4 w-4 ml-1" />
+                                    </Link>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -283,8 +274,8 @@ export default function ServicesPage() {
                                 </div>
                             </div> */}
                             <Link
-                                href="/booking?service=career-guidance"
-                                className="btn-primary p-4 rounded-2xl shadow-lg shadow-white"
+                                href="/mentors"
+                                className="btn-primary p-4 rounded-2xl"
                             >
                                 Book a Session
                             </Link>
@@ -403,7 +394,7 @@ export default function ServicesPage() {
 
                                     <Link
                                         href={`/mentors`}
-                                        className="btn-primary p-3 mt-4 rounded-2xl shadow-lg shadow-black"
+                                        className="btn-primary p-3 mt-4 rounded-2xl shadow-md shadow-black"
                                     >
                                         Book Now
                                     </Link>
@@ -453,6 +444,11 @@ export default function ServicesPage() {
                             },
                             {
                                 question:
+                                    "How do I book a session with a mentor ?",
+                                answer: "To book a session, click on the Booka Session button, you will beredirected to the razorpay page, select 3 mentor preferences that matches your requirements, choose services, proceed to pay. We will get back to you after the payment is successful.",
+                            },
+                            {
+                                question:
                                     "What happens if I need to reschedule my booked session?",
                                 answer: "You can reschedule your session up to 24 hours before the scheduled time without any penalty. Simply go to your dashboard, find the booking, and click the reschedule option to select a new time slot that works for you.",
                             },
@@ -470,6 +466,11 @@ export default function ServicesPage() {
                                 question:
                                     "Can I get a refund if I'm not satisfied with the service?",
                                 answer: "We strive for 100% satisfaction. If you're not happy with the service you received, please contact us within 48 hours of your session, and our team will work with you to resolve your concerns. Refunds are handled on a case-by-case basis according to our refund policy.",
+                            },
+                            {
+                                question:
+                                    "How do I become a mentor on Mentoverse?",
+                                answer: "To become a mentor, click on the apply now button, fill the popUp form with all the necessary and accurate details, our team will get back to you.",
                             },
                         ].map((faq, index) => (
                             <div
@@ -518,12 +519,12 @@ export default function ServicesPage() {
                             guidance from our mentors.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl shadow-lg shadow-white">
+                            <Link href="/mentors" className="btn-secondary p-4 rounded-2xl">
                                 Book a Session
                             </Link>
                             <Link
                                 href="/mentors"
-                                className="btn-outline border-white text-white hover:bg-white hover:text-primar p-4 rounded-2xl shadow-lg shadow-white"
+                                className="btn-outline border-white text-white hover:bg-white hover:text-primary p-4 rounded-2xl"
                             >
                                 Browse Mentors
                             </Link>

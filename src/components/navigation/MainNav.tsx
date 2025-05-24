@@ -52,9 +52,21 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
         return () => unsubscribe();
     }, []);
+
+    // Handler to close mobile menu on navigation
+    const handleNavLinkClick = () => {
+        setMobileMenuOpen(false);
+    };
+
+    // Handler to close both mobile menu and services dropdown
+    const handleServiceItemClick = () => {
+        setMobileMenuOpen(false);
+        setServicesDropdownOpen(false);
+    };
+
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
-            <div className="container mx-auto px-4 py-3">
+            <div className="container mx-auto px-4 py-2 ">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center mb-2 sm:mb-4">
@@ -69,12 +81,8 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     </Link>
 
                     {/* Primary Navigation - Desktop */}
-                    <nav className="hidden xl:flex items-center space-x-8">
+                    <nav className="hidden md:flex items-center space-x-8">
                         {NAV_LINKS
-                            .filter(link => {
-                                if (user && (link.label === "Home" || link.label === "About")) return false;
-                                return true;
-                            })
                             .map((link, index) => {
 
                                 if (link.hasDropdown) {
@@ -82,7 +90,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                         <div key={index} className="relative group">
                                             <Link
                                                 href={link.href}
-                                                className="nav-link flex items-center"
+                                                className="nav-link flex items-center text-primary hover:text-secondary"
                                             >
                                                 {iconComponents[link.icon as keyof typeof iconComponents]}
                                                 {link.label}
@@ -113,7 +121,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                     <Link
                                         key={index}
                                         href={link.href}
-                                        className="nav-link flex items-center"
+                                        className="nav-link flex items-center text-primary hover:text-secondary"
                                     >
                                         {iconComponents[link.icon as keyof typeof iconComponents]}
                                         {link.label}
@@ -124,38 +132,15 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                     {/* CTA Buttons & Mobile Menu Trigger */}
                     <div className="flex items-center">
-                        <div className="hidden xl:flex items-center space-x-4">
-                            <LinkButton
-                                href="/mentors"
-                                variant="primary"
-                                size="md"
-                            >
+                        <div className="hidden md:flex items-center space-x-4">
+                            <Link href="/mentors" className="btn-secondary px-3 py-2 rounded-lg ">
                                 Book a Session
-                            </LinkButton>
-
-                            {user ? (
-                                <LinkButton
-                                    href="/dashboard"
-                                    variant="secondary"
-                                    size="md"
-                                >
-                                    Dashboard
-                                </LinkButton>
-                            ) : (
-                                <LinkButton
-                                    href="/login"
-                                    variant="secondary"
-                                    size="md"
-                                >
-                                    Login
-                                </LinkButton>
-                            )}
-
+                            </Link>
                         </div>
 
                         {/* Mobile Menu Trigger */}
                         <button
-                            className="xl:hidden focus:outline-none ml-4"
+                            className="md:hidden focus:outline-none ml-4"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             {mobileMenuOpen ? (
@@ -166,12 +151,15 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                         </button>
                     </div>
                 </div>
-            </div>
 
-            {/* Mobile Menu */}
-            {mobileMenuOpen && (
-                <div className="flex items-center justify-center bg-white border-t overflow-x-auto border-gray-100 py-4 px-4">
-                    <nav className="flex flex-col space-y-4">
+                {/* Mobile Menu - Floating Dropdown Panel */}
+                <div
+                    className={`md:hidden absolute top-full right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-50 overflow-hidden transition-all duration-300 origin-top-left ${mobileMenuOpen
+                        ? "opacity-100 scale-100 translate-y-0"
+                        : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                        }`}
+                >
+                    <nav className="flex flex-col p-4">
                         {NAV_LINKS.map((link, index) => {
                             if (link.hasDropdown) {
                                 return (
@@ -181,7 +169,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                             onClick={() => setServicesDropdownOpen(prev => !prev)}
                                             className="w-full font-medium flex items-center justify-between text-left"
                                         >
-                                            <span className="flex items-center">
+                                            <span className="flex items-center text-primary">
                                                 {iconComponents[link.icon as keyof typeof iconComponents]}
                                                 {link.label}
                                             </span>
@@ -191,32 +179,36 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                                             />
                                         </button>
 
-                                        {servicesDropdownOpen && (
-                                            <div className="mt-2 ml-4 space-y-2">
-                                                {SERVICES.map((service) => (
-                                                    <Link
-                                                        key={service.id}
-                                                        href={`/services#${service.id}-section`}
-                                                        className="block py-1 text-sm text-text-secondary"
-                                                    >
-                                                        <span className="mr-2">
-                                                            {service.icon}
-                                                        </span>
-                                                        {service.name}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        )}
+                                        <div
+                                            className={`mt-2 ml-4 space-y-2 overflow-hidden transition-all duration-200 ${servicesDropdownOpen
+                                                ? "max-h-64 opacity-100"
+                                                : "max-h-0 opacity-0"
+                                                }`}
+                                        >
+                                            {SERVICES.map((service) => (
+                                                <Link
+                                                    key={service.id}
+                                                    href={`/services#${service.id}-section`}
+                                                    onClick={handleServiceItemClick}
+                                                    className="block py-1 text-sm text-primary"
+                                                >
+                                                    <span className="mr-2">
+                                                        {service.icon}
+                                                    </span>
+                                                    {service.name}
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </div>
                                 );
                             }
-
 
                             return (
                                 <Link
                                     key={index}
                                     href={link.href}
-                                    className="py-2 font-medium flex items-center"
+                                    className="py-2 font-medium flex items-center text-primary"
+                                    onClick={handleNavLinkClick}
                                 >
                                     {iconComponents[link.icon as keyof typeof iconComponents]}
                                     {link.label}
@@ -224,27 +216,16 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                             );
                         })}
 
-                        <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100">
-                            <LinkButton
-                                href="/mentors"
-                                variant="primary"
-                                size="md"
-                                fullWidth
-                            >
-                                Book a Session
-                            </LinkButton>
-                            <LinkButton
-                                href="/login"
-                                variant="secondary"
-                                size="md"
-                                fullWidth
-                            >
-                                Login
-                            </LinkButton>
+                        <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100 mt-2">
+                            <div onClick={handleNavLinkClick}>
+                                <Link href="/mentors" className="btn-secondary px-3 py-2 rounded-lg inline-block">
+                                    Book a Session
+                                </Link>
+                            </div>
                         </div>
                     </nav>
                 </div>
-            )}
+            </div>
         </header>
     );
 }

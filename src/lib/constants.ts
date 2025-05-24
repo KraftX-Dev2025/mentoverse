@@ -1,7 +1,7 @@
 // Site constants
 export const SITE_NAME = "Mentoverse";
 export const SITE_DESCRIPTION = "Revolutionizing the awareness of people towards their next step in education, career and beyond.";
-export const CONTACT_EMAIL = "contact@mentoverse.com";
+export const CONTACT_EMAIL = "mentoverse@gmail.com";
 
 export const SERVICES = [
     {
@@ -17,15 +17,12 @@ export const SERVICES = [
 ];
 
 export const AVATAR_COLORS = [
-    "bg-red-500",
-    "bg-blue-500",
-    "bg-green-500",
-    "bg-yellow-500",
-    "bg-pink-500",
-    "bg-purple-500",
-    "bg-indigo-500",
-    "bg-teal-500",
-    "bg-orange-500",
+    "#EA63C4",  
+    // "#D475EE",  
+    // "#9861FF",  
+    // "#C662DE",  
+    
+     
 ];
 
 // Add this to your existing constants.ts file
@@ -51,7 +48,7 @@ export const ABOUT_US_PAGE_CONTENT = {
         ]
     },
     vision: {
-        title: "Our Vision",
+        title: "Our Partners",
         paragraphs: [
             "To create a world where every individual has access to the mentorship they need to navigate their career journey successfully. We envision Mentoverse as the go-to platform for career guidance across various industries.",
             "Our focus on niche areas like CA, finance, and startup advisory sets us apart, providing specialized guidance where it's most needed."
@@ -123,7 +120,7 @@ export const mockUser = {
     id: "user123",
     name: "Rahul Sharma",
     email: "rahul.sharma@example.com",
-    phone: "+91 9876543210",
+    phone: "+91 8080899428",
     image: "/images/users/profile.jpg",
     role: "user" as const,
     joinedOn: new Date("2023-10-15"),
@@ -168,31 +165,28 @@ export const SOCIAL_LINKS = [
 export const CONTACT_INFO = [
     {
         id: "email",
-        value: "contact@mentoverse.com",
-        href: "mailto:contact@mentoverse.com",
+        value: "mentoverse@gmail.com",
+        href: "mailto:mentoverse@gmail.com",
         iconName: "Mail",
     },
     {
         id: "phone-1",
-        value: "+91 8080899428",
+        value: "+918080899428",
         href: null,
         iconName: "Phone",
     },
-    {
-        id: "phone-2",
-        value: "+91 9940018446",
-        href: null,
-        iconName: "Phone",
-    },
+
 ];
 
 export const NAV_LINKS = [
     { href: "/", label: "Home", icon: "Home" },
-    { href: "/about-us", label: "About", icon: "Info" },
+    // { href: "/about-us", label: "About", icon: "Info" },
     { href: "/mentors", label: "Mentors", icon: "Users" },
     { href: "/services", label: "Services", hasDropdown: true, icon: "Briefcase" },
     { href: "/resources", label: "Resources", icon: "BookOpen" },
-    { href: "/contact-us", label: "Contact", icon: "MessageSquare" },
+    // { href: "/contact-us", label: "Contact", icon: "MessageSquare" },
+    // { href: "/webinars", label: "Webinars", icon: "MessageSquare" },
+    // { href: "/events", label: "Events", icon: "MessageSquare" },
 ];
 
 export const stats = [
@@ -284,7 +278,7 @@ export const TEAM_MEMBERS = [
             },
             {
                 name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
+                href: "/mentors",
                 iconName: "CreditCard",
             },
         ],
@@ -307,7 +301,7 @@ export const TEAM_MEMBERS = [
             },
             {
                 name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
+                href: "/mentors",
                 iconName: "CreditCard",
             },
         ],
