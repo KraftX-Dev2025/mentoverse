@@ -12,6 +12,7 @@ export interface Mentor {
     hourlyRate: number;
     rating: number;
     calendlyUrl?: string;
+    experience: string;
 }
 
 export interface Service {
