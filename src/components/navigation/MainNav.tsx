@@ -133,7 +133,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
                     {/* CTA Buttons & Mobile Menu Trigger */}
                     <div className="flex items-center">
                         <div className="hidden md:flex items-center space-x-4">
-                            <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view" className="btn-secondary px-3 py-2 rounded-lg ">
+                            <Link href="/mentors" className="btn-secondary px-3 py-2 rounded-lg ">
                                 Book a Session
                             </Link>
                         </div>
@@ -218,7 +218,7 @@ export default function MainNav({ logo, siteName }: MainNavProps) {
 
                         <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100 mt-2">
                             <div onClick={handleNavLinkClick}>
-                                <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view" className="btn-secondary px-3 py-2 rounded-lg inline-block">
+                                <Link href="/mentors" className="btn-secondary px-3 py-2 rounded-lg inline-block">
                                     Book a Session
                                 </Link>
                             </div>

@@ -917,7 +917,7 @@ export default function MentorsPageClient() {
 
                                                         <div className="mt-4 flex justify-center md:justify-between items-center flex-wrap gap-4">
                                                             <Link
-                                                                href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
+                                                                href={`/booking?mentor=${mentor.id}`}
                                                                 className="bg-secondary text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
                                                             >
                                                                 Book a Session

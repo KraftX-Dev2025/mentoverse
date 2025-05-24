@@ -278,7 +278,7 @@ export const TEAM_MEMBERS = [
             },
             {
                 name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
+                href: "/mentors",
                 iconName: "CreditCard",
             },
         ],
@@ -301,7 +301,7 @@ export const TEAM_MEMBERS = [
             },
             {
                 name: "Razorpay",
-                href: "https://pages.razorpay.com/pl_IvDppElicuMMnF/view",
+                href: "/mentors",
                 iconName: "CreditCard",
             },
         ],
