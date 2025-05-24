@@ -7,6 +7,8 @@ import { formatCurrency } from "@/lib/utils";
 import { FaCreditCard } from "react-icons/fa";
 import { FaGooglePay } from "react-icons/fa";
 import { timeSlots } from "@/lib/constants";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function BookingPageClient() {
     const searchParams = useSearchParams();
@@ -62,6 +64,7 @@ export default function BookingPageClient() {
     const [, setBookingSuccess] = useState(false);
     const [bookingReference, setBookingReference] = useState("");
     const [calendlyEventDetails, setCalendlyEventDetails] = useState<any>(null);
+
     useEffect(() => {
         const handleCalendlyEvent = (e: any) => {
             console.log("Calendly event:", e.data);
@@ -78,16 +81,51 @@ export default function BookingPageClient() {
         };
     }, []);
 
+    // Fetch mentor data from Firestore
+    const fetchMentorFromFirestore = async (mentorId: string): Promise<Mentor | null> => {
+        try {
+            console.log("Fetching mentor with ID:", mentorId);
+            const mentorDocRef = doc(db, 'mentor', 'mentorData', 'mentorDetails', mentorId);
+            const mentorDoc = await getDoc(mentorDocRef);
+
+            if (mentorDoc.exists()) {
+                const mentorData = mentorDoc.data();
+                console.log("Mentor data from Firestore:", mentorData);
+
+                // Map Firestore data to Mentor interface
+                const mentor: Mentor = {
+                    id: mentorDoc.id,
+                    name: mentorData.name || 'Unknown Name',
+                    title: mentorData.title || 'Mentor',
+                    company: mentorData.company || 'Company',
+                    expertise: mentorData.expertise || [],
+                    bio: mentorData.bio || mentorData.experience || 'No bio available',
+                    image: mentorData.profileImageUrl || '',
+                    hourlyRate: mentorData.hourlyRate || 1500,
+                    rating: 4.5, // Default rating as it's not stored in current schema
+                    calendlyUrl: mentorData.calendlyUrl || "https://calendly.com/sureshjat20092002/demo",
+                    experience: mentorData.experience || 'No experience provided',
+                    reviews: undefined,
+                    experienceSummary: undefined,
+                    price: undefined
+                };
+
+                return mentor;
+            } else {
+                console.log("No mentor found with ID:", mentorId);
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching mentor from Firestore:", error);
+            throw error;
+        }
+    };
+
     // Load services and mentors
     useEffect(() => {
         const fetchData = async () => {
-            // Fetch services
+            // Fetch services (keeping the existing mock data structure)
             try {
-                // In a real implementation, you would fetch from your API
-                // const servicesResponse = await fetch('/api/services');
-                // const servicesData = await servicesResponse.json();
-
-                // Using mock data for now
                 const mockServices: Service[] = [
                     {
                         id: "mock-interview",
@@ -194,94 +232,32 @@ export default function BookingPageClient() {
                 setLoading((prev) => ({ ...prev, services: false }));
             }
 
-            // Fetch mentors
+            // Fetch mentor data from Firestore if mentor ID is provided
             try {
-                // In a real implementation, you would fetch from your API
-                // const mentorsResponse = await fetch('/api/mentors');
-                // const mentorsData = await mentorsResponse.json();
+                setLoading((prev) => ({ ...prev, mentors: true }));
 
-                // Using mock data for now
-                const mockMentors: Mentor[] = [
-                    {
-                        id: "1",
-                        name: "Rajiv Mehta",
-                        title: "Senior Finance Manager",
-                        company: "Mahindra Group",
-                        expertise: [
-                            "Finance",
-                            "Career Guidance",
-                            "Corporate Strategy",
-                        ],
-                        bio: "15+ years of experience in corporate finance with expertise in financial planning and analysis.",
-                        image: "/images/mentors/mentor1.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1500,
-                        rating: 4.9,
-                    },
-                    {
-                        id: "2",
-                        name: "Priya Sharma",
-                        title: "Chartered Accountant",
-                        company: "KPMG",
-                        expertise: ["CA", "Accounting", "Startups"],
-                        bio: "Certified CA with experience in auditing and financial consulting for startups and established businesses.",
-                        image: "/images/mentors/mentor2.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1200,
-                        rating: 4.8,
-                    },
-                    {
-                        id: "3",
-                        name: "Akash Gupta",
-                        title: "Marketing Director",
-                        company: "Aditya Birla Group",
-                        expertise: [
-                            "Marketing",
-                            "Career Guidance",
-                            "LinkedIn Optimization",
-                        ],
-                        bio: "Passionate about digital marketing and helping professionals build their personal brand.",
-                        image: "/images/mentors/mentor3.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 1000,
-                        rating: 4.7,
-                    },
-                    {
-                        id: "4",
-                        name: "Sneha Patel",
-                        title: "Investment Banker",
-                        company: "Kotak Investment Banking",
-                        expertise: [
-                            "Finance",
-                            "Startups",
-                            "Corporate Strategy",
-                        ],
-                        bio: "Worked on numerous M&A deals and helped startups raise capital.",
-                        image: "/images/mentors/mentor4.jpg",
-                        calendlyUrl: "https://calendly.com/sureshjat20092002/demo",
-                        hourlyRate: 2000,
-                        rating: 4.9,
-                    },
-                ];
-
-                setLoading((prev) => ({ ...prev, mentors: false }));
-
-                // If a mentor ID is in the URL, pre-select it
                 if (preSelectedMentorId) {
-                    const mentor =
-                        mockMentors.find((m) => m.id === preSelectedMentorId) ||
-                        null;
+                    console.log("Pre-selected mentor ID:", preSelectedMentorId);
+                    const mentor = await fetchMentorFromFirestore(preSelectedMentorId);
+
                     if (mentor) {
                         setSelectedMentor(mentor);
+                        console.log("Selected mentor:", mentor);
+
                         if (preSelectedServiceId) {
-                            setStep(3); // Move to date/time selection if both service and mentor are pre-selected
+                            setStep(2); // Move to scheduling if both service and mentor are pre-selected
                         } else {
                             setStep(1); // Stay on service selection if only mentor is pre-selected
                         }
+                    } else {
+                        setError("Mentor not found. Please select a different mentor.");
                     }
                 }
-            } catch {
-                setError("Failed to load mentors. Please try again later.");
+
+                setLoading((prev) => ({ ...prev, mentors: false }));
+            } catch (error) {
+                console.error("Error loading mentor data:", error);
+                setError("Failed to load mentor data. Please try again later.");
                 setLoading((prev) => ({ ...prev, mentors: false }));
             }
         };
@@ -289,22 +265,13 @@ export default function BookingPageClient() {
         fetchData();
     }, [preSelectedServiceId, preSelectedMentorId]);
 
-
     // Load available time slots when date is selected
     useEffect(() => {
         if (selectedDate) {
-            // In a real implementation, you would fetch time slots for the specific date
-            // const fetchTimeSlots = async () => {
-            //   const response = await fetch(`/api/mentors/${selectedMentor.id}/availability?date=${selectedDate}`);
-            //   const data = await response.json();
-            //   setAvailableTimeSlots(data.timeSlots);
-            // };
-
-            // Mock data for available time slots (random selection of the predefined time slots)
+            // Mock time slots functionality remains the same
             const mockTimeSlots = () => {
                 return timeSlots.filter(() => Math.random() > 0.3);
             };
-
         }
     }, [selectedDate, selectedMentor]);
 
@@ -314,7 +281,7 @@ export default function BookingPageClient() {
         setStep(2); // Move to mentor selection
     };
 
-    // Handle mentor selection
+    // Handle mentor selection (keeping existing functionality)
     const handleMentorSelect = (mentor: Mentor) => {
         setSelectedMentor(mentor);
         setStep(3); // Move to date/time selection
@@ -403,20 +370,6 @@ export default function BookingPageClient() {
 
         // Simulate API call to book session
         try {
-            // In a real implementation, you would send booking data to your API
-            // const response = await fetch('/api/bookings', {
-            //   method: 'POST',
-            //   body: JSON.stringify({
-            //     serviceId: selectedService?.id,
-            //     mentorId: selectedMentor?.id,
-            //     date: selectedDate,
-            //     timeSlot: selectedTimeSlot,
-            //     userData,
-            //     paymentMethod
-            //   })
-            // });
-            // const data = await response.json();
-
             // Simulate API delay and response
             await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -434,6 +387,22 @@ export default function BookingPageClient() {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    // Avatar color generator for mentors without profile images
+    const getColorForMentor = (id: string) => {
+        const colors = [
+            "bg-red-500", "bg-green-500", "bg-blue-500",
+            "bg-yellow-500", "bg-pink-500", "bg-purple-500",
+            "bg-orange-500", "bg-teal-500", "bg-indigo-500"
+        ];
+
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+            hash = id.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % colors.length;
+        return colors[index];
     };
 
     return (
@@ -681,13 +650,9 @@ export default function BookingPageClient() {
                                         >
                                             Continue
                                         </button>
-
                                     </div>
                                 </div>
                             )}
-
-
-
 
                             {step === 3 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -712,7 +677,6 @@ export default function BookingPageClient() {
                                                 >
                                                     <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
                                                         <FaCreditCard />
-
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -736,7 +700,6 @@ export default function BookingPageClient() {
                                                 >
                                                     <div className="w-10 h-10 rounded-full bg-opacity-10 flex items-center justify-center mr-3 shrink-0">
                                                         <FaGooglePay />
-
                                                     </div>
                                                     <div>
                                                         <div className="font-medium">
@@ -905,7 +868,7 @@ export default function BookingPageClient() {
                                 </div>
                             )}
 
-                            {/* Step 4: Your Details */}
+                            {/* Step 4: Success */}
                             {step === 4 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -973,12 +936,6 @@ export default function BookingPageClient() {
                                         </div>
                                     </div>
 
-                                    {/* <p className="text-sm text-text-secondary mb-6">
-                                        The session link will be sent to your
-                                        email ({userData.email}) 15 minutes
-                                        before the scheduled time.
-                                    </p> */}
-
                                     <div className="flex flex-col md:flex-row justify-center gap-4">
                                         <Link
                                             href="/dashboard"
@@ -995,8 +952,6 @@ export default function BookingPageClient() {
                                     </div>
                                 </div>
                             )}
-
-
                         </div>
 
                         {/* Order Summary Sidebar */}
@@ -1006,6 +961,7 @@ export default function BookingPageClient() {
                                     <h2 className="text-xl font-bold mb-6">
                                         Booking Summary
                                     </h2>
+
                                     {/* Service */}
                                     <div className="mb-4 pb-4 border-b border-gray-100">
                                         <div className="text-text-secondary text-sm mb-1">
@@ -1032,45 +988,35 @@ export default function BookingPageClient() {
                                         <div className="text-text-secondary text-sm mb-1">
                                             Mentor
                                         </div>
-                                        <div className="flex justify-between">
-                                            <span className="font-medium">
-                                                {selectedMentor
-                                                    ? selectedMentor.name
-                                                    : "Not selected"}
-                                            </span>
-                                        </div>
-                                        {selectedMentor && (
-                                            <div className="text-sm text-text-secondary mt-1">
-                                                {selectedMentor.title},{" "}
-                                                {selectedMentor.company}
+                                        {selectedMentor ? (
+                                            <div className="flex items-center space-x-3">
+                                                {selectedMentor.image ? (
+                                                    <img
+                                                        src={selectedMentor.image}
+                                                        alt={selectedMentor.name}
+                                                        className="w-12 h-12 rounded-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-lg font-semibold ${getColorForMentor(selectedMentor.id)}`}>
+                                                        {selectedMentor.name.charAt(0).toUpperCase()}
+                                                    </div>
+                                                )}
+                                                <div>
+                                                    <div className="font-medium">
+                                                        {selectedMentor.name}
+                                                    </div>
+                                                    <div className="text-sm text-text-secondary">
+                                                        {selectedMentor.title}
+                                                    </div>
+                                                    <div className="text-sm text-text-secondary">
+                                                        {selectedMentor.company}
+                                                    </div>
+                                                </div>
                                             </div>
+                                        ) : (
+                                            <span className="font-medium">Not selected</span>
                                         )}
                                     </div>
-
-                                    {/* Date & Time
-                                    <div className="mb-4 pb-4 border-b border-gray-100">
-                                        <div className="text-text-secondary text-sm mb-1">
-                                            Date & Time
-                                        </div>
-                                        <div className="font-medium">
-                                            {selectedDate
-                                                ? selectedDate.toLocaleDateString(
-                                                    "en-US",
-                                                    {
-                                                        weekday: "short",
-                                                        day: "numeric",
-                                                        month: "short",
-                                                        year: "numeric",
-                                                    }
-                                                )
-                                                : "Not selected"}
-                                        </div>
-                                        {selectedTimeSlot && (
-                                            <div className="text-sm text-text-secondary mt-1">
-                                                {selectedTimeSlot}
-                                            </div>
-                                        )}
-                                    </div> */}
 
                                     {/* Pricing */}
                                     <div className="mb-6">
@@ -1123,7 +1069,7 @@ export default function BookingPageClient() {
                                             to contact us.
                                         </p>
                                         <a
-                                            href="mailto:support@mentoverse.com"
+                                            href="mailto:mentoverse@gmail.com"
                                             className="text-primary text-sm font-medium flex items-center"
                                         >
                                             <svg
@@ -1140,16 +1086,15 @@ export default function BookingPageClient() {
                                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                                 />
                                             </svg>
-                                            support@mentoverse.com
+                                            mentoverse@gmail.com
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
-
                 </div>
-            </section >
+            </section>
         </>
     );
 }
