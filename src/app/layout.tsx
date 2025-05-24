@@ -24,9 +24,10 @@ const inter = Inter({
 
 // Navigation links object
 const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/about-us", label: "About Us" },
+    // { href: "/", label: "Home" },
     { href: "/mentors", label: "Mentors" },
+    { href: "/services", label: "Services" },
+    { href: "/about-us", label: "About Us" },
     { href: "/resources", label: "Resources" },
     { href: "/contact-us", label: "Contact Us" },
 ];

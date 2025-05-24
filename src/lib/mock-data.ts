@@ -13,6 +13,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor1.jpg",
         hourlyRate: 1500,
         rating: 4.9,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "2",
@@ -24,6 +27,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor2.jpg",
         hourlyRate: 1200,
         rating: 4.8,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "3",
@@ -35,6 +41,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor3.jpg",
         hourlyRate: 1000,
         rating: 4.7,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "4",
@@ -46,6 +55,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor4.jpg",
         hourlyRate: 2000,
         rating: 4.9,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "5",
@@ -57,6 +69,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor5.jpg",
         hourlyRate: 1800,
         rating: 4.6,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "6",
@@ -72,6 +87,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor6.jpg",
         hourlyRate: 950,
         rating: 4.8,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "7",
@@ -83,6 +101,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor7.jpg",
         hourlyRate: 1600,
         rating: 4.9,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
     {
         id: "8",
@@ -98,6 +119,9 @@ export const MOCK_MENTORS: Mentor[] = [
         image: "/images/mentors/mentor8.jpg",
         hourlyRate: 900,
         rating: 4.7,
+        reviews: undefined,
+        experienceSummary: undefined,
+        price: undefined
     },
 ];
 

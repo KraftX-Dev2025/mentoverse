@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AVATAR_COLORS, SERVICES, stats, testimonials } from "@/lib/constants";
+import { ABOUT_US_PAGE_CONTENT, AVATAR_COLORS, PARTNER_BRANDS, SERVICES, stats, testimonials } from "@/lib/constants";
 import { ChevronRight, Star } from 'lucide-react';
+import { FaUserTie, FaAward, FaGlobe } from "react-icons/fa";
+import { RiTeamFill } from "react-icons/ri";
 
 export default function Home() {
     const avatarColors = AVATAR_COLORS;
+    const statIcons = [FaAward, FaUserTie, RiTeamFill, FaGlobe];
 
     const getColorClass = (name: string) => {
         const hash = Array.from(name).reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -15,7 +18,7 @@ export default function Home() {
         <>
             {/* Hero Section */}
             <section className="bg-gradient-primary text-white relative overflow-hidden">
-                <div className="absolute inset-0 z-0 opacity-30">
+                <div className="absolute inset-0 z-0 opacity-40">
                     <Image
                         src="/hero-bg-pattern.png"
                         alt="Background Pattern"
@@ -41,19 +44,19 @@ export default function Home() {
                             <div className="flex flex-wrap gap-4">
                                 <Link
                                     href="/services"
-                                    className="btn-secondary px-2 py-2 rounded-xl  border-2 flex justify-center items-center"
+                                    className="btn-secondary px-3 py-2 rounded-lg flex justify-center items-center"
                                 >
                                     Explore Now
                                 </Link>
                                 <Link
                                     href="/mentors"
-                                    className="btn-outline border-white text-white hover:bg-white hover:text-primary px-2 py-2 rounded-xl border-2 flex justify-center items-center"
+                                    className="btn-outline border-white text-white hover:bg-white hover:text-primary px-3 py-2 rounded-lg border-2 flex justify-center items-center"
                                 >
                                     Meet Our Mentors
                                 </Link>
                             </div>
                         </div>
-                        <div className="hidden md:block ml-12">
+                        <div className="ml-12">
                             <Image
                                 src="/hero-section.png"
                                 alt="Mentorship Illustration"
@@ -82,13 +85,16 @@ export default function Home() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {SERVICES.map((service) => (
                             <div key={service.id} className="card group rounded-xl hover:scale-110">
-                                <div className="p-6">
-                                    <div className="w-14 h-14 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-5 text-2xl text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                                        {service.icon}
+                                <div className="p-4">
+                                    <div className="flex items-center">
+
+                                        <div className="w-14 h-14 rounded-full bg-secondary bg-opacity-10 flex items-center justify-center mb-5 text-3xl text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                            {service.icon}
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-3 ml-4">
+                                            {service.name}
+                                        </h3>
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-3">
-                                        {service.name}
-                                    </h3>
                                     <p className="text-text-secondary mb-4">
                                         {service.id === "mock-interview"
                                             ? "Practice with industry experts and get real-time feedback to improve your interview skills."
@@ -116,34 +122,71 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
-            {/* Stats Showcase Section */}
-
-            <section className="py-16 bg-gradient-primary text-white mt-4 rounded-xl">
+            {/* Our Vision Section */}
+            <section className="py-16 bg-white">
                 <div className="container">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                            We are good with numbers
-                        </h2>
+                    <div className="text-center mb-16">
+                        <h2 className="section-title font-bold">Our Mentors From</h2>
+                        <p className="section-subtitle">
+                            {ABOUT_US_PAGE_CONTENT.vision.subtitle}
+                        </p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-primary">
-                        {stats.map((stat, index) => (
-                            <div
-                                key={index}
-                                className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-8 text-center hover:scale-110"
-                            >
-                                <div className="text-4xl md:text-5xl font-bold mb-2 text-primary">
-                                    {stat.number}
-                                </div>
-                                <div className="text-lg  opacity-80 text-primary">
 
-                                    {stat.label}
-                                </div>
+                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
+                        {/* Partner Logos */}
+                        {PARTNER_BRANDS.map((partner) => (
+                            <div
+                                key={partner}
+                                className="transition-all duration-300"
+                            >
+                                <Image
+                                    src={`/images/partners/${partner}`}
+                                    alt={`${partner} logo`}
+                                    width={120}
+                                    height={60}
+                                />
                             </div>
                         ))}
                     </div>
+
+
                 </div>
             </section>
+            {/* Stats Showcase Section */}
+
+            <section className="py-12 bg-gradient-to-r from-accent via-purple-400 to-primary text-white mt-8 rounded-2xl shadow-xl overflow-hidden">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-extrabold leading-tight mb-4 text-white">
+                            We Are Good With Numbers
+                        </h2>
+                        <p className="text-lg opacity-90">Data that speaks for itself</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {stats.map((stat, index) => {
+                            const Icon = statIcons[index];
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-white bg-opacity-30 backdrop-blur-xl rounded-xl p-6 text-center transform hover:scale-105 transition duration-300 ease-in-out shadow-md"
+                                >
+                                    <div className="flex justify-center mb-3">
+                                        <Icon className="text-4xl sm:text-5xl text-primary opacity-40 drop-shadow" />
+                                    </div>
+                                    <div className="text-3xl sm:text-6xl font-bold mb-2 text-primary drop-shadow-lg">
+                                        {stat.number}
+                                    </div>
+                                    <div className="text-xl text-primary font-medium opacity-90 tracking-wide">
+                                        {stat.label}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
 
             {/* Testimonials Section */}
             <section className="section-padding bg-white py-[4rem]">
@@ -163,10 +206,15 @@ export default function Home() {
                                 <div key={index} className="card p-6 rounded-2xl bg-gray-50 hover:scale-110">
                                     <div className="flex items-center mb-4">
                                         <div
-                                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold mr-4 ${colorClass}`}
+                                            className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold mr-4"
+                                            style={{
+                                                backgroundColor: colorClass,
+
+                                            }}
                                         >
                                             {testimonial.name.charAt(0).toUpperCase()}
                                         </div>
+
                                         <div>
                                             <h4 className="font-semibold">{testimonial.name}</h4>
                                             <p className="text-sm text-text-secondary">{testimonial.role}</p>
@@ -184,10 +232,10 @@ export default function Home() {
 
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* CTA Section */}
-            <section className="py-16 bg-background">
+            < section className="py-16 bg-background" >
                 <div className="container">
                     <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
@@ -199,13 +247,13 @@ export default function Home() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
 
-                            <Link href="/mentors" className="btn-secondary px-2 py-2 rounded-xl ">
+                            <Link href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view" className="btn-secondary px-3 py-2 rounded-lg ">
 
                                 Book a Session
                             </Link>
                             <Link
                                 href="/mentors"
-                                className="btn-outline border-white text-white hover:bg-white hover:text-primary px-2 py-2 rounded-xl "
+                                className="btn-outline border-white text-white hover:bg-white hover:text-primary px-3 py-2 rounded-lg "
                             >
                                 Explore Mentors
                             </Link>

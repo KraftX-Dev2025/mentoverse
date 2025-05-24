@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CONTACT_EMAIL } from "@/lib/constants";
+import { BsSend } from "react-icons/bs";
 
 export default function ContactUsClient() {
     const [formData, setFormData] = useState({
@@ -32,19 +33,15 @@ export default function ContactUsClient() {
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        // Simulate API call
         try {
-            // In a real implementation, you would send the form data to your API
-            // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
+            const whatsappMessage = `Hello, my name is ${formData.name}. 
+                Subject: ${formData.subject}
+                Email: ${formData.email}
+                Phone: ${formData.phone}
+                Message: ${formData.message}`;
+            const whatsappUrl = `https://wa.me/918080899428?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(whatsappUrl, "_blank");
 
-            // Simulating API delay
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            setSubmitStatus({
-                success: true,
-                message:
-                    "Thank you for contacting us! We will get back to you soon.",
-            });
             setFormData({
                 name: "",
                 email: "",
@@ -55,8 +52,7 @@ export default function ContactUsClient() {
         } catch {
             setSubmitStatus({
                 success: false,
-                message:
-                    "There was an error submitting your form. Please try again.",
+                message: "There was an error. Please try again.",
             });
         } finally {
             setIsSubmitting(false);
@@ -151,10 +147,10 @@ export default function ContactUsClient() {
                                             Phone
                                         </h3>
                                         <a
-                                            href="tel:+919876543210"
+                                            href="tel:+918080899428"
                                             className="text-primary hover:underline"
                                         >
-                                            +91 9876543210
+                                            +91 8080899428
                                         </a>
                                         <p className="text-sm text-text-secondary mt-1">
                                             Mon-Fri from 9am to 6pm
@@ -225,16 +221,15 @@ export default function ContactUsClient() {
                         {/* Contact Form */}
                         <div>
                             <div className="bg-background p-8 rounded-xl shadow-lg ">
-                                <h2 className="text-2xl font-bold mb-6">
+                                <h2 className="text-2xl font-bold mb-6 text-center">
                                     Send Us a Message
                                 </h2>
                                 {submitStatus && (
                                     <div
-                                        className={`p-4 mb-6 rounded-md ${
-                                            submitStatus.success
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-red-100 text-red-700"
-                                        }`}
+                                        className={`p-4 mb-6 rounded-md ${submitStatus.success
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-red-100 text-red-700"
+                                            }`}
                                     >
                                         {submitStatus.message}
                                     </div>
@@ -254,7 +249,7 @@ export default function ContactUsClient() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className="form-control p-2 rounded-2xl"
+                                                className="form-control p-2 rounded-2xl text-black"
                                                 required
                                             />
                                         </div>
@@ -271,7 +266,7 @@ export default function ContactUsClient() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="form-control p-2 rounded-2xl"
+                                                className="form-control p-2 rounded-2xl text-black"
                                                 required
                                             />
                                         </div>
@@ -291,7 +286,7 @@ export default function ContactUsClient() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className="form-control p-2 rounded-2xl"
+                                                className="form-control p-2 rounded-2xl text-black"
                                             />
                                         </div>
                                         <div>
@@ -306,7 +301,7 @@ export default function ContactUsClient() {
                                                 name="subject"
                                                 value={formData.subject}
                                                 onChange={handleChange}
-                                                className="form-control p-2 rounded-2xl"
+                                                className="form-control p-2 rounded-2xl text-black"
                                                 required
                                             >
                                                 <option value="">
@@ -347,14 +342,14 @@ export default function ContactUsClient() {
                                             value={formData.message}
                                             onChange={handleChange}
                                             rows={5}
-                                            className="form-control p-2 rounded-2xl"
+                                            className="form-control p-2 rounded-2xl text-black"
                                             required
                                         ></textarea>
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="btn-primary w-1/2 p-3 rounded-2xl shadow-lg shadow-white"
+                                        className="btn-primary w-1/2 p-3 rounded-2xl flex items-center justify-center mx-auto"
                                         disabled={isSubmitting}
                                     >
                                         {isSubmitting ? (
@@ -382,7 +377,10 @@ export default function ContactUsClient() {
                                                 Sending...
                                             </span>
                                         ) : (
-                                            "Send Message"
+                                            <>
+                                                Send
+                                                <BsSend className="ml-2" />
+                                            </>
                                         )}
                                     </button>
                                 </form>

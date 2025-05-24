@@ -1,10 +1,24 @@
-import MentorOnboarding from '@/components/MentorOnBoarding'
-import React from 'react'
+'use client';
+import MentorOnboarding from '@/components/MentorOnBoarding';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-const page = () => {
-    return (
-        <MentorOnboarding />
-    )
-}
+const Page = () => {
+    const router = useRouter();
 
-export default page
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                router.push('/login');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [router]);
+
+    return <MentorOnboarding />;
+};
+
+export default Page;

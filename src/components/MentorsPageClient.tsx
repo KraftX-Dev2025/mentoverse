@@ -35,6 +35,7 @@ export default function MentorsPageClient() {
         fullName: "",
         contactNumber: "",
         linkedinUrl: "",
+        professionalTitle: "",
         professionalExperience: "",
         profileImage: null as File | null
     });
@@ -44,6 +45,7 @@ export default function MentorsPageClient() {
         fullName: "",
         contactNumber: "",
         linkedinUrl: "",
+        professionalTitle: "",
         professionalExperience: ""
     });
 
@@ -103,7 +105,10 @@ export default function MentorsPageClient() {
                         hourlyRate: data.hourlyRate || 1000,
                         rating: 4.5,
                         calendlyUrl: data.calendlyUrl,
-                        experience: data.experience || 'No experience provided'
+                        experience: data.experience || 'No experience provided',
+                        reviews: undefined,
+                        experienceSummary: undefined,
+                        price: undefined
                     };
 
                     mentorsData.push(mentor);
@@ -190,6 +195,7 @@ export default function MentorsPageClient() {
             fullName: "",
             contactNumber: "",
             linkedinUrl: "",
+            professionalTitle: "",
             professionalExperience: "",
             profileImage: null
         });
@@ -197,6 +203,7 @@ export default function MentorsPageClient() {
             fullName: "",
             contactNumber: "",
             linkedinUrl: "",
+            professionalTitle: "",
             professionalExperience: ""
         });
         setImagePreview(null);
@@ -216,24 +223,6 @@ export default function MentorsPageClient() {
                 ...formErrors,
                 [name]: ""
             });
-        }
-    };
-
-    // Handle image upload
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            setFormData({
-                ...formData,
-                profileImage: file
-            });
-
-            // Create preview URL for the image
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
         }
     };
 
@@ -304,6 +293,7 @@ export default function MentorsPageClient() {
             fullName: "",
             contactNumber: "",
             linkedinUrl: "",
+            professionalTitle: "",
             professionalExperience: ""
         };
 
@@ -346,7 +336,7 @@ export default function MentorsPageClient() {
         e.preventDefault();
 
         if (validateForm()) {
-            const message = `*Mentor Application*\n\n*Full Name:* ${formData.fullName}\n\n*Contact Number:* ${formData.contactNumber}\n\n*LinkedIn URL:* ${formData.linkedinUrl}\n\n*Professional Experience:* ${formData.professionalExperience}\n\n${formData.profileImage ? "*Profile Image:* Will be shared separately" : ""}`;
+            const message = `*Mentor Application*\n\n*Full Name:* ${formData.fullName}\n\n*Contact Number:* ${formData.contactNumber}\n\n*LinkedIn URL:* ${formData.linkedinUrl}\n\n*Professional Title:* ${formData.professionalTitle}\n\n*Professional Experience:* ${formData.professionalExperience}\n\n${formData.profileImage ? "*Profile Image:* Will be shared separately" : ""}`;
 
             const encodedMessage = encodeURIComponent(message);
 
@@ -414,7 +404,7 @@ export default function MentorsPageClient() {
                                         type="text"
                                         id="mobile-search"
                                         placeholder="Search mentors..."
-                                        className="form-control pl-10 w-full"
+                                        className="form-control pl-10 py-1 w-full border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                                         value={searchTerm}
                                         onChange={(e) => {
                                             setSearchTerm(e.target.value);
@@ -453,11 +443,22 @@ export default function MentorsPageClient() {
 
                                             setFilteredMentors(result);
                                         }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                setIsFilterOpen(false);
+                                            }
+                                        }}
                                     />
                                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <Search className="w-5 h-5 text-gray-400" />
+                                        <Search className="w-5 h-5 text-secondary" />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="flex justify-between items-center mb-6">
+                                <p className="text-text-secondary">
+                                    Showing {filteredMentors.length} of{" "}
+                                    {mentors.length} mentors
+                                </p>
                             </div>
 
                             {/* Expertise */}
@@ -685,13 +686,13 @@ export default function MentorsPageClient() {
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                         {/* Desktop Filters Sidebar - Always visible on desktop */}
                         <div className="hidden lg:block lg:col-span-1">
-                            <div className="bg-white p-6 rounded-xl shadow-sm">
+                            <div className="sticky top-20 bg-white p-6 rounded-xl shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto">
                                 <h2 className="text-xl font-bold mb-6">
                                     Filters
                                 </h2>
 
                                 {/* Search */}
-                                <div className="mb-6">
+                                <div className="mb-2">
                                     <label
                                         htmlFor="search"
                                         className="form-label"
@@ -703,18 +704,22 @@ export default function MentorsPageClient() {
                                             type="text"
                                             id="search"
                                             placeholder="Search mentors..."
-                                            className="form-control pl-10"
+                                            className="form-control pl-10 py-1 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                                             value={searchTerm}
                                             onChange={(e) =>
                                                 setSearchTerm(e.target.value)
                                             }
                                         />
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <Search className="w-5 h-5 text-gray-400" />
+                                            <Search className="w-5 h-5 text-secondary" />
                                         </div>
                                     </div>
                                 </div>
-
+                                <div className="flex justify-between items-center">
+                                    <p className="text-gray-500 font-semibold">
+                                        {filteredMentors.length} mentors found
+                                    </p>
+                                </div>
                                 {/* Expertise */}
                                 <div className="mb-6">
                                     <h3 className="text-lg font-semibold mb-3">
@@ -851,60 +856,56 @@ export default function MentorsPageClient() {
                                     </button>
                                 </div>
                             ) : (
-                                <div>
-                                    <div className="flex justify-between items-center mb-6">
-                                        <p className="text-text-secondary">
-                                            Showing {filteredMentors.length} of{" "}
-                                            {mentors.length} mentors
-                                        </p>
-                                    </div>
+                                <div className="grid grid-cols-1 gap-6">
+                                    {filteredMentors.map((mentor) => {
+                                        const colorClass = getColorForMentor(mentor.id);
+                                        // const mentorSlug = getMentorSlug(mentor.name);
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {filteredMentors.map((mentor) => {
-                                            const colorClass = getColorForMentor(mentor.id);
-                                            const mentorSlug = getMentorSlug(mentor.name);
-
-                                            return (
-                                                <div
-                                                    key={mentor.id}
-                                                    className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300"
-                                                >
-                                                    <div className="p-6">
-                                                        <div className="flex items-start space-x-4">
-                                                            {mentor.image ? (
-                                                                <div className="w-24 h-24 rounded-full overflow-hidden relative flex-shrink-0 border-2 border-primary">
-                                                                    <Image
-                                                                        src={mentor.image}
-                                                                        alt={mentor.name}
-                                                                        width={72}
-                                                                        height={72}
-                                                                        className="object-fill w-full h-full"
-                                                                    />
-                                                                </div>
-                                                            ) : (
-                                                                <div
-                                                                    className={`w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold flex-shrink-0 ${colorClass}`}
-                                                                >
-                                                                    {mentor.name.charAt(0).toUpperCase()}
-                                                                </div>
-                                                            )}
-                                                            <div className="flex flex-col">
-                                                                <Link href={`/mentors/${mentorSlug}`} className="text-lg font-semibold leading-tight hover:text-primary transition-colors">
-                                                                    {mentor.name}
-                                                                </Link>
-                                                                <p className="text-primary text-sm">{mentor.title}</p>
-                                                                <p className="text-sm text-text-secondary font-bold">{mentor.company}</p>
-                                                                <div className="flex items-center mt-1">
-                                                                    <span className="text-secondary font-semibold">{mentor.rating}</span>
-                                                                    <span className="ml-1 text-secondary">★</span>
-                                                                </div>
+                                        return (
+                                            <div
+                                                key={mentor.id}
+                                                className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                                            >
+                                                <div className="flex flex-col md:flex-row p-4 md:p-6 space-y-4 md:space-y-0 md:space-x-6">
+                                                    <div className="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden border border-primary flex-shrink-0 self-center md:self-start">
+                                                        {mentor.image ? (
+                                                            <Image
+                                                                src={mentor.image}
+                                                                alt={mentor.name}
+                                                                width={128}
+                                                                height={128}
+                                                                className="object-full w-full h-full"
+                                                            />
+                                                        ) : (
+                                                            <div
+                                                                className={`w-full h-full rounded-xl flex items-center justify-center text-white text-2xl font-semibold ${colorClass}`}
+                                                            >
+                                                                {mentor.name.charAt(0).toUpperCase()}
                                                             </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex flex-col flex-grow">
+                                                        <div className="flex flex-wrap items-center gap-2">
+                                                            <h2 className="text-xl md:text-3xl font-semibold">{mentor.name}</h2>
+                                                            {/* Optional badge: */}
+                                                            {/* <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full">Quick Responder</span> */}
                                                         </div>
 
-                                                        <p className="mt-4 text-text-secondary text-sm line-clamp-3">{mentor.experience}</p>
+                                                        <p className="text-lg font-medium mt-2">
+                                                            {mentor.title} at <span className="font-bold">{mentor.company}</span>
+                                                        </p>
+                                                        <div className="flex items-center mt-1 text-sm text-gray-600 flex-wrap gap-1">
+                                                            <span className="font-semibold text-secondary">{mentor.rating}</span>
+                                                            <span className="text-secondary">★</span>
+                                                            <span className="text-gray-500">(99+ Reviews)</span>
+                                                        </div>
 
-                                                        <div className="mt-4 flex flex-wrap gap-2">
-                                                            {mentor.expertise.slice(0, 3).map((exp) => (
+
+                                                        <p className="mt-2 text-md text-gray-600 line-clamp-3">{mentor.experience}</p>
+
+                                                        <div className="flex flex-wrap gap-2 mt-3">
+                                                            {mentor.expertise.map((exp) => (
                                                                 <span
                                                                     key={exp}
                                                                     className="text-sm text-black bg-gray-100 px-2 py-1 rounded"
@@ -912,27 +913,25 @@ export default function MentorsPageClient() {
                                                                     {exp}
                                                                 </span>
                                                             ))}
-                                                            {mentor.expertise.length > 3 && (
-                                                                <span className="text-sm text-black bg-gray-100 px-2 py-1 rounded">
-                                                                    +{mentor.expertise.length - 3} more
-                                                                </span>
-                                                            )}
                                                         </div>
 
-                                                        <div className="mt-6 flex items-center justify-center">
+                                                        <div className="mt-4 flex justify-center md:justify-between items-center flex-wrap gap-4">
                                                             <Link
                                                                 href="https://pages.razorpay.com/pl_IvDppElicuMMnF/view"
-                                                                className="btn-primary text-sm px-3 py-3 rounded-lg"
+                                                                className="bg-secondary text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
                                                             >
                                                                 Book a Session
                                                             </Link>
                                                         </div>
+
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
+
+
                             )}
                         </div>
                     </div>
@@ -1001,7 +1000,7 @@ export default function MentorsPageClient() {
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
                         <div className="p-6">
                             <div className="flex justify-between items-center mb-6">
@@ -1073,6 +1072,25 @@ export default function MentorsPageClient() {
                                     />
                                     {formErrors.linkedinUrl && (
                                         <p className="mt-1 text-sm text-red-600">{formErrors.linkedinUrl}</p>
+                                    )}
+                                </div>
+                                {/* Professional Title */}
+                                <div className="mb-4">
+                                    <label htmlFor="professionalTitle" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Professional Title *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="professionalTitle"
+                                        name="professionalTitle"
+                                        value={formData.professionalTitle}
+                                        onChange={handleInputChange}
+                                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${formErrors.professionalTitle ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-primary-200'
+                                            }`}
+                                        placeholder="Software Engineer"
+                                    />
+                                    {formErrors.professionalTitle && (
+                                        <p className="mt-1 text-sm text-red-600">{formErrors.professionalTitle}</p>
                                     )}
                                 </div>
 
